@@ -1,4 +1,8 @@
 <?php
+// Esto lo puse yo
+// use App\User;
+use App\Article;
+use Faker\Generator;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,13 +16,19 @@
 */
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(App\User::class, function (Faker\Generator $faker) {
-    static $password;
+
+$factory->define(Article::class, function (Generator $faker) {
+    // static $password;
 
     return [
-        'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail,
-        'password' => $password ?: $password = bcrypt('secret'),
-        'remember_token' => str_random(10),
+        'title'       => $faker->name,
+        'content'     => 'kljlkjlkjlkjlkjlkjlkjlkjlkjlkjkljkljllkjlkjlkjlkjkljkljllkjlkjlkjlkjkljkljllkjlkjlkjlkjkljkljllkjlkjlkjlkjkljkljl',
+        'code'        => str_random(10),
+        'status'      => 'active',
+        'user_id'     => '1',
+        'category_id' => '22',
+        'slug'        => $faker->name,
+        'image'       => 'test.jpg'
     ];
+    return $array;
 });

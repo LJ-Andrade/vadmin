@@ -1,0 +1,367 @@
+// .section-container
+// 	background-color: $main-color
+
+
+//////////////////////////////////////
+//                                  //
+//            BUTTONS               //
+//                                  //
+//////////////////////////////////////
+
+
+.btnRed
+	border-radius: 0
+	background-color: #E43636
+	color: #fff
+	&:hover
+		background-color: #F94141
+
+.btnHollow
+	border-radius: 0
+	background-color: transparent
+	border: 1px solid #fff
+	color: #fff
+	@include transition(0.2s)
+	&:hover
+		cursor: pointer
+		background-color: #fff
+		color: #383838
+
+//////////////////////////////////////
+//                                  //
+//              TAGS                //
+//                                  //
+//////////////////////////////////////
+
+.tag
+	padding: 4px 14px
+	margin-left: 1px
+	margin-right: 1px
+	line-height: 35px
+	border-radius: 50px
+	white-space: nowrap
+	font-size: 1.2rem
+	font-family: $font2
+	font-weight: $f2w1
+	@include transition(0.4s)
+
+.blue-tag
+	background-color: #476AEA
+	color: #fff
+	&:hover
+		background-color: #4A3FB8
+		cursor: pointer
+
+.red-tag
+	background-color: $main-red
+	color: #fff
+	&:hover
+		background-color: #E64646
+		cursor: pointer
+
+.badgeBlue
+	background-color: #424B6E
+	color: #fff
+	font-size: 1.1rem
+	font-family: $font2
+	font-weight: $f2w1
+	@include transition(0.2s)
+	margin-left: 2px
+	a
+		color: #fff
+	&:hover
+		background-color: #60619B
+		color: #fff
+		cursor: pointer
+		a
+			color: #fff
+
+.badgeRed
+	background-color: #CA5858
+	color: #fff
+	font-size: 1.1rem
+	font-family: $font2
+	font-weight: $f2w1
+	@include transition(0.2s)
+	margin-left: 2px
+	a
+		color: #fff
+	&:hover
+		background-color: #D87575
+		color: #fff
+		cursor: pointer
+		a
+			color: #fff
+		
+
+.badgeGrey
+	background-color: #F8F8F8
+	font-size: 1.2rem
+	font-family: $font2
+	font-weight: $f2w1
+	@include transition(0.2s)
+	margin-left: 2px
+	a
+		color: #fff
+	&:hover
+		background-color: #D9D9D9
+		cursor: pointer
+		a
+			color: #7D7D7D
+
+
+.sqbadge-red
+	border-radius: 0
+	font-size: 1.2rem
+	font-family: $font2
+	font-weight: $f2w1
+	margin: 3px 1px
+	@include transition(0.2s)
+	margin-left: 2px
+	a
+		color: #fff
+	&:hover
+		background-color: #fff
+		a
+			color: #383838
+
+
+
+//////////////////////////////////////
+//                                  //
+//           DECORATION             //
+//                                  //
+//////////////////////////////////////
+
+
+
+
+.left-divider-small
+	width: 100px
+	height: 4px
+	background-color: #fff
+
+body::-webkit-scrollbar
+	width: 10px
+	
+body::-webkit-scrollbar-track
+	background: rgba(0, 0, 0, 0.1)
+	
+body::-webkit-scrollbar-thumb
+	background-color: #302E36
+	outline: 1px solid #FFF
+
+.dark-hr
+	border-top: 1px solid #424453
+
+.grey-hr
+	border-top: 1px solid #c3c3c3
+
+
+//////////////////////////////////////
+//                                  //
+//              LISTS               //
+//                                  //
+//////////////////////////////////////
+///// Vertical List ///
+.vertical-list
+	ul
+		padding-left: 0
+		padding: 0
+		margin: 0
+		list-style: none
+		li
+			list-style: none
+			display: block
+			// float: left
+			// width: 100px
+			// line-height: 80px
+			// vertical-align: middle
+
+//// Grid View /////
+.horizontal-list
+	ul
+		padding-left: 0
+		padding: 0
+		margin: 0
+		li
+			display: inline-block
+			list-style: none
+
+
+.loader
+	position: fixed
+	top: 0
+	left: 0
+	width: 100%
+	height: 100%
+	z-index: 9999
+	@include grad-background
+	@include flex-column
+	overflow: hidden
+	span
+		margin-top: 20px
+		font-size: 1.6rem
+		font-family: $font2
+		font-weight: $f2w1
+		color: #383838
+
+.loader-solo
+	position: absolute
+	z-index: 9999
+	top: 0
+	left: 0
+
+////////////////////////////////////////
+//                                    //
+//              FLEXBOX               //
+//                                    //
+////////////////////////////////////////
+
+.flexCentVert
+	display: -webkit-box
+	display: -ms-flexbox
+	display: flex
+	-webkit-box-align: center
+	-ms-flex-align: center
+	-ms-grid-row-align: center
+	align-items: center
+	-webkit-box-pack: center
+	-ms-flex-pack: center
+	align-self: center
+	align-content: center
+
+.flexSameH
+	display: flex
+	flex-wrap: wrap
+
+.flexEqual
+	display: -webkit-box
+	display: -ms-flexbox
+	display: flex
+	height: auto
+
+.flexW
+	display: -webkit-box
+	display: -ms-flexbox
+	display: flex
+	-ms-flex-wrap: wrap
+	flex-wrap: wrap
+	align-items: center
+
+.flexV
+	display: -webkit-box
+	display: -ms-flexbox
+	display: flex
+	-webkit-box-align: center
+	-ms-flex-align: center
+	-ms-grid-row-align: center
+	align-items: center
+	-webkit-box-pack: center
+	-ms-flex-pack: center
+	justify-content: center
+	-webkit-box-orient: vertical
+	-webkit-box-direction: normal
+	-ms-flex-direction: column
+	flex-direction: column
+
+.flexCenter
+	display: -webkit-box
+	display: -ms-flexbox
+	display: flex
+	-webkit-box-align: center
+	-ms-flex-align: center
+	-ms-grid-row-align: center
+	align-items: center
+	-webkit-box-pack: center
+	-ms-flex-pack: center
+	justify-content: center
+
+
+	// For same height use class="row row-flex row-flex-wrap" in parent
+.row-flex, .row-flex  
+	display: -webkit-box
+	display: -moz-box
+	display: -ms-flexbox
+	display: -webkit-flex
+	display: flex
+	flex: 1 1 auto
+
+.row-flex-wrap
+	-webkit-flex-flow: row wrap
+	align-content: flex-start
+	flex: 0
+
+
+
+////////////////////////////////////////
+//                                    //
+//              SLIDER                //
+//                                    //
+////////////////////////////////////////
+
+
+
+.single-item-slider 
+	width: 500px
+	max-width: 100%
+	overflow: hidden
+	margin: 0 auto
+
+
+.slide-wrapper 
+	font-size: 0
+	padding: 0
+
+
+.slider-item 
+	list-style: none
+	font-size: 0
+	display: inline-block
+	width: 500px
+	max-width: 100%
+
+
+.slider-image
+	max-width: 100% 
+
+.slider-nav 
+	margin: 0 auto
+	padding: 0
+	display: block
+	text-align: center
+
+
+.slider-button 
+	display: inline-block
+	list-style: none
+	margin: 0.75rem 0.25rem
+	background-color: $color3
+	@include transition(0.2s)
+	border-radius: 50px
+	padding: 10px 30px
+	&:hover,&:focus,&:active
+		cursor: pointer
+		background-color: $color3Hover
+		a,i
+			color: #fff
+
+
+.slider-link 
+	color: #fff
+	display: block
+	text-decoration: none
+
+
+
+//////////////////////////////////////
+//                                  //
+//              ALERTS              //
+//                                  //
+//////////////////////////////////////
+
+.mail-error
+	display: none
+
+.mail-success
+	display: none
