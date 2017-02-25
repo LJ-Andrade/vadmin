@@ -13,7 +13,8 @@ define('LARAVEL_START', microtime(true));
 | loading of any our classes "manually". Feels great to relax.
 |
 */
-
+// To prevent error on C9 Https
+require __DIR__.'/../app/Helpers/AssetHelper.php';
 require __DIR__.'/../vendor/autoload.php';
 
 /*

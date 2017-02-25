@@ -10,7 +10,7 @@
 		  </div>
 		  <div class="collapse navbar-collapse" id="expand-nav">
 				<ul class="nav navbar-nav navbar-left">
-					 <li><a href="{{ url('/vadmin') }}">FASCINATION | Panel de Control</a></li>
+					 <li><a href="{{ url('/vadmin') }}">VADmin | Panel de Control</a></li>
 				</ul>
 				
 				<ul class="nav navbar-nav navbar-right">
