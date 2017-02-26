@@ -9,7 +9,7 @@
 	 <div class="container">
 		  <div class="row">
 				<h2>Últimos artículos agregados</h2>
-				@foreach($articles as $article)
+		{{--		@foreach($articles as $article)
 				<a href="{!! route('web.portfolio.article',$article->slug ) !!}" target="_blank">
 					 <div class="col-md-4">
 						  <div class="row big-list">
@@ -31,7 +31,7 @@
 						  </div>
 					 </div>
 				</a>
-				@endforeach
+				@endforeach--}}
 		  </div>
 	 </div>  
 

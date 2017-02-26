@@ -33,7 +33,6 @@ class UsersController extends Controller
      */
     public function create()
     {
-        // dd('create');
         return view('vadmin.users.create');
     }
 
@@ -178,10 +177,6 @@ class UsersController extends Controller
     // ---------- List -------------- //
     public function ajax_list()
     {
-        //  $users = User::orderBy('id', 'ASC')->paginate(10);
-
-        // return view('vadmin.users.index')->with('users', $users);
-
         $users = User::orderBy('id', 'ASC')->paginate(12);
         return view('vadmin/users/list')->with('users', $users);
     }
@@ -206,12 +201,6 @@ class UsersController extends Controller
             'password.min'      => 'La contraseña debe tener 4 caracteres como mínimo',
             'password.max'      => 'La contraseña debe tener 120 caracteres como máximo',
         ]);
-
-
-        // $user = new User($request->all());
-        // $user->password = bcrypt($request->password);
-        // $user->save();
-        // return redirect()->route('users.index')->with('message','Usuario Creado');
 
         if ($request->ajax())
         {            

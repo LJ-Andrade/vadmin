@@ -52,7 +52,7 @@
 				<ul class="nav navbar-nav navbar-right">
 					 <li><a href="{{ url('/') }}">Web</a></li>
 					 <li><a href="{{ route('users.index') }}">Usuarios</a></li>
-					 <li class="dropdown">
+					{{-- <li class="dropdown">
 						  <a class="dropdown-toggle" data-toggle="dropdown" href="#">Productos
 						  <span class="caret"></span></a>
 						  <ul class="dropdown-menu">
@@ -61,7 +61,7 @@
 								<li><a href="{{ route('categories.index') }}"><i class="ion-ios-shuffle-strong"></i> Categorías</a></li>
 								<li><a href="{{ route('tags.index') }}"><i class="ion-ios-pricetag"></i> Talles</a></li>
 						  </ul>
-					 </li>
+					 </li>--}}
 				</ul>
 		  </div>
 	 </div>
