@@ -6,36 +6,39 @@
 
 
 // ----------------- LISTS ---------------------- //
+$(document).ready(function() {
 
+	$('.List-Actions').hide();
 
-$('.List-Actions').hide();
+	// Show Actions
+	$(document).on("click",".Lists-Actions-Trigger",function(e) {
+		e.preventDefault();
+		e.stopPropagation();
+		$(this).parent().parent().siblings('.List-Actions').removeClass('Hidden');
+	});
 
-// Show Actions
-$('.Lists-Actions-Trigger').click(function(e){
-	e.preventDefault();
-	e.stopPropagation();
-	$(this).parent().parent().siblings('.List-Actions').show();
+	// Close Actions
+	$(document).on("click",".Close-Actions-Btn",function(e) {
+		e.preventDefault();
+		e.stopPropagation();
+		$(this).parent().addClass('Hidden');
+	})
+
+	// Show Batch Delete Button
+
+	$('.Batch-Controller').on('click', function(){
+		var countSelected = $('.row-selected').length;
+
+		if(countSelected >= 2) {
+			$('#BatchDeleteBtn').removeClass('Hidden');
+		} else  {
+			$('#BatchDeleteBtn').addClass('Hidden');
+		}
+	});
 });
 
-// Close Actions
-$('.Close-Actions-Btn').click(function(e) {
-	e.preventDefault();
-	e.stopPropagation();
-	$(this).parent().hide();
-})
 
-// Show Batch Delete Button
 
-$('.Batch-Controller').on('click', function(){
-	var countSelected = $('.row-selected').length;
-
-	if(countSelected >= 2) {
-		$('#BatchDeleteBtn').removeClass('Hidden');
-	} else  {
-		$('#BatchDeleteBtn').addClass('Hidden');
-	}
-
-});
 
 //////////////////////////////
 // 							//

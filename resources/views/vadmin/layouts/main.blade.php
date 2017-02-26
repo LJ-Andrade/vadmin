@@ -16,6 +16,7 @@
 	<link rel="stylesheet" type="text/css" href="{{ asset('plugins/bootstrap/css/bootstrap.min.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('plugins/animate/animate.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('plugins/ionicons/ionicons.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ asset('plugins/validation/parsley.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('plugins/sweetalert/sweetalert2.min.css') }}">
 	@yield('styles')
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/vadmin.css') }}">

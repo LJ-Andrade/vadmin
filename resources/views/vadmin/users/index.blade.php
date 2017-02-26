@@ -14,62 +14,16 @@
 		</div>
 	</div>  
 	<div id="Error"></div>
+
+	
 @endsection
 
-{{-- NEW MODAL --}}
-@component('vadmin.layouts.components.modal')
-
-	@slot('id','New')
-	@slot('title', 'Nuevo Usuario')
-
-	@slot('content')
-		{!! Form::open(['id'=>'NewForm']) !!}
-			<div class="form-group">
-				{!! Form::label('name', 'Nombre:') !!}
-				{!! Form::text('name', null, ['class' => 'Name form-control', 'placeholder' => 'Ingrese el nombre de la categoría', 'required' => '']) !!}
-				{!! Form::label('email', 'Email:') !!}
-				{!! Form::text('email', null, ['class' => 'Email form-control', 'placeholder' => 'Ingrese su email', 'required' => '']) !!}
-				{!! Form::label('password', 'Contraseña:') !!}
-				{!! Form::text('password', null, ['class' => 'Password form-control', 'placeholder' => 'Ingrese su contraseña', 'required' => '']) !!}
-			</div>
-			<div class="ModalError"></div>
-			
-		{!! Form::close() !!}
-	@endslot
-	@slot('actionBtnId','NewBtn')
-	@slot('acceptBtn', 'Crear Usuario')
-
-@endcomponent
-
-{{-- EDIT MODAL --}}
-@component('vadmin.layouts.components.modal')
-
-	@slot('id','Edit')
-	@slot('title', 'Editar Usuario')
-
-	@slot('content')
-		{!! Form::open(['id'=>'EditForm']) !!}
-			<div class="form-group">
-				{!! Form::label('name', 'Nombre:') !!}
-				{!! Form::text('name', null, ['class' => 'CategoryName form-control', 'placeholder' => 'Ingrese el nombre de la categoría', 'required']) !!}
-			</div>
-			<div class="ModalError"></div>
-			
-		{!! Form::close() !!}
-	@endslot
-
-	@slot('actionBtnId','EditBtn')
-	@slot('acceptBtn', 'Editar Usuario')
-
-@endcomponent
-
-
+@include('vadmin.users.modals')
 
 {{-- CUSTOM JS SCRIPTS--}}
 @section('custom_js')
 
 	<script type="text/javascript">
-	
 
 	// Prevent submit on press ENTER Key
 	$(document).ready(function() {
@@ -134,7 +88,6 @@
 			dataType: 'json',
 			data: dataString,
 			success: function(data){
-
 				if(data.success == 'true'){
 					console.log(data);
 					$('.CloseModal').click();
@@ -143,17 +96,67 @@
 				} else if(data.success == 'false') {
 					var response = data.responseJSON.name[0];
 					$('.ModalError').html(response);
+					// $('#Error').html(response);
 				}
 			},
 			error: function(data){
-				// var response = data.responseJSON.name[0];
-				$('.ModalError').html(data.responseText);
+				console.log(data);
+				// $('#Error').html(data.responseText);
+				var response = data.responseJSON;
+				$('.ModalError').html('');
+				var error;
+				$.each( response, function( key, value ) {
+					error =  value;
+					$('.ModalError').append(error + '<br>');
+				});
 			}
 		}); 
 	});
 
-	
+	// ----- Category Edit - Ajax ------- //
+	var ajax_edit_user = function(id){
+		var route = "{{ url('user') }}/"+id+"/ajax_edit_user";
+		
+		$.get(route, function(data){
+			console.log(data);
+			$('#ModalIdInput').val(data.id);
+			$('#ModalNameInput').val(data.name);
+		});
+	}
 
+	$('.UpdateBtn').click(function(){
+
+		var data  = $("#EditForm").serialize();
+		var route = "{{ url('vadmin/categories') }}/"+id+"";
+		var token = $('#update_moda_token').val();
+
+		console.log(route);
+
+
+		$.ajax({
+
+			url: route,
+			headers: {'X-CSRF-TOKEN': token},
+			type: 'PUT',
+			dataType: 'json',
+			data: {name: name},
+			success: function(data) {
+				if(data.success == 'true' ){
+					ajax_list();
+					$('.CloseModal').click();
+					alert_ok('Ok','Categoría editada')
+				}
+			},
+			error: function(data) {
+				var response = data.responseJSON.name[0];
+				$('.EditModalError').html(response);
+				console.log(data);
+			}
+
+
+		});
+
+	});
 
 
 	</script>
