@@ -216,6 +216,23 @@ class UsersController extends Controller
     }
 
 
+    // ---------- Ajax Bach Delete -------------- //
+    public function ajax_batch_delete(Request $request, $id)
+    {
+        $ids = $request->id;
+
+        foreach ($ids as $id) {
+        
+            $user  = User::find($id);
+            $path  = 'images/users/';
+            File::Delete(public_path( $path . $user->avatar));
+
+        }
+        echo 1;
+    }
+
+
+
 
 
 }

@@ -1,3 +1,9 @@
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+
 //////////////////////////////
 // 							//
 //           SKIN           //
@@ -5,10 +11,14 @@
 //////////////////////////////
 
 
-// ----------------- LISTS ---------------------- //
+
+//--------------------- LISTS ------------------------- //
+
+// ----------------- List Actions---------------------- //
+
 $(document).ready(function() {
 
-	$('.List-Actions').hide();
+	// $('.List-Actions').hide();
 
 	// Show Actions
 	$(document).on("click",".Lists-Actions-Trigger",function(e) {
@@ -24,20 +34,34 @@ $(document).ready(function() {
 		$(this).parent().addClass('Hidden');
 	})
 
-	// Show Batch Delete Button
-
-	$('.Batch-Controller').on('click', function(){
-		var countSelected = $('.row-selected').length;
-
-		if(countSelected >= 2) {
-			$('#BatchDeleteBtn').removeClass('Hidden');
-		} else  {
-			$('#BatchDeleteBtn').addClass('Hidden');
-		}
-	});
 });
 
+// ----------------- Batch Delete --------------------- //
 
+$(document).on("click", ".BatchDelete", function(e){
+
+	batch_select(this);
+
+	var checkbox = $(this).prop('checked');
+	if(checkbox){
+		$(this).parent().addClass('row-selected');
+	} else {
+		$(this).parent().removeClass('row-selected');
+	}
+
+});
+
+function batch_select(trigger) {
+	
+	var countSelected = $('input:checkbox:checked').length;
+
+	if(countSelected >= 2) {
+		$('#BatchDeleteBtn').removeClass('Hidden');
+	} else  {
+		$('#BatchDeleteBtn').addClass('Hidden');
+	}
+
+}
 
 
 //////////////////////////////
@@ -46,7 +70,8 @@ $(document).ready(function() {
 //                          //
 //////////////////////////////
 
-function confirm_delete(id,bigtext,smalltext) {
+
+function confirm_delete(id, route, bigtext, smalltext) {
 	swal({
 		title: bigtext,
 		text: smalltext,
@@ -63,6 +88,7 @@ function confirm_delete(id,bigtext,smalltext) {
 		delete_item(id);
 	});
 }
+
 
 function confirm_batch_delete(id,bigtext,smalltext) {
 	swal({
@@ -84,22 +110,6 @@ function confirm_batch_delete(id,bigtext,smalltext) {
 
 
 
-function batch_delete(trigger) {
-
-	$(trigger)
-		.filter(':has(:checkbox:checked)')
-		.addClass('row-selected')
-		.end()
-		.click(function(event) {
-			$(this).toggleClass('row-selected');
-				if (event.target.type !== 'checkbox') {
-					$(':checkbox', this).attr('checked', function() {
-					return !this.checked;
-			});
-		}
-	});
-
-}
 
 //////////////////////////////
 // 							//

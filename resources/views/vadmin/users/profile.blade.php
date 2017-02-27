@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col-md-12">
 	            <h2>Usuario: {{ $user->name }}</h2>
-	            <img src="webimages/users/{{ $user->avatar }}">
+	            <img src="images/users/{{ $user->avatar }}">
 	            <br>
 	            <label>Cambiar imágen</label>
 	            {!! Form::open(['url' => 'profile', 'method' => 'POST', 'files' => true]) !!}

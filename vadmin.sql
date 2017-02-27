@@ -2,10 +2,10 @@
 -- version 4.5.1
 -- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1
--- Generation Time: Jan 19, 2017 at 11:19 PM
--- Server version: 10.1.19-MariaDB
--- PHP Version: 5.6.28
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 27-02-2017 a las 19:47:38
+-- Versión del servidor: 10.1.19-MariaDB
+-- Versión de PHP: 5.6.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,100 +17,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `vadmin`
+-- Base de datos: `vadmin`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `articles`
---
-
-CREATE TABLE `articles` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `content` text COLLATE utf8_unicode_ci NOT NULL,
-  `user_id` int(10) UNSIGNED NOT NULL,
-  `category_id` int(10) UNSIGNED NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Dumping data for table `articles`
---
-
-INSERT INTO `articles` (`id`, `title`, `content`, `user_id`, `category_id`, `created_at`, `updated_at`) VALUES
-(1, 'Articulo de prueba', '<p>Texto del contenido del articulo de pruebaTexto del contenido del articulo de prueba</p>', 1, 2, '2017-01-20 01:18:42', '2017-01-20 01:18:42');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `article_tag`
---
-
-CREATE TABLE `article_tag` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `article_id` int(10) UNSIGNED NOT NULL,
-  `tag_id` int(10) UNSIGNED NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Dumping data for table `article_tag`
---
-
-INSERT INTO `article_tag` (`id`, `article_id`, `tag_id`, `created_at`, `updated_at`) VALUES
-(1, 1, 2, NULL, NULL);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `categories`
---
-
-CREATE TABLE `categories` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `name` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Dumping data for table `categories`
---
-
-INSERT INTO `categories` (`id`, `name`, `created_at`, `updated_at`) VALUES
-(1, 'DiseñoWeb', '2017-01-20 01:17:20', '2017-01-20 01:17:24'),
-(2, 'DiseñoGrafico', '2017-01-20 01:17:32', '2017-01-20 01:17:32'),
-(3, 'Logos', '2017-01-20 01:17:39', '2017-01-20 01:17:39');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `images`
---
-
-CREATE TABLE `images` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `article_id` int(10) UNSIGNED NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Dumping data for table `images`
---
-
-INSERT INTO `images` (`id`, `name`, `article_id`, `created_at`, `updated_at`) VALUES
-(1, 'user_1_1484864322.jpeg', 1, '2017-01-20 01:18:42', '2017-01-20 01:18:42');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `migrations`
+-- Estructura de tabla para la tabla `migrations`
 --
 
 CREATE TABLE `migrations` (
@@ -120,7 +33,7 @@ CREATE TABLE `migrations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `migrations`
+-- Volcado de datos para la tabla `migrations`
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
@@ -129,12 +42,13 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (3, '2017_01_14_060743_add_categories_table', 1),
 (4, '2017_01_14_061057_add_articles_table', 1),
 (5, '2017_01_14_061856_add_images_table', 1),
-(6, '2017_01_14_063259_add_tags_table', 1);
+(6, '2017_01_14_063259_add_tags_table', 1),
+(7, '2017_01_19_190731_AddSlugToArticlesTable', 2);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `password_resets`
+-- Estructura de tabla para la tabla `password_resets`
 --
 
 CREATE TABLE `password_resets` (
@@ -146,28 +60,7 @@ CREATE TABLE `password_resets` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tags`
---
-
-CREATE TABLE `tags` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Dumping data for table `tags`
---
-
-INSERT INTO `tags` (`id`, `name`, `created_at`, `updated_at`) VALUES
-(1, 'Logos', '2017-01-20 01:17:53', '2017-01-20 01:17:53'),
-(2, 'WebDesign', '2017-01-20 01:18:03', '2017-01-20 01:18:03');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `users`
+-- Estructura de tabla para la tabla `users`
 --
 
 CREATE TABLE `users` (
@@ -175,6 +68,7 @@ CREATE TABLE `users` (
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `avatar` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'user-gen.jpg',
   `type` enum('member','admin') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'member',
   `remember_token` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -182,139 +76,88 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `users`
+-- Volcado de datos para la tabla `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `password`, `type`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'javzero', 'javzero@hotmail.com', '$2y$10$gOwPzwLnHjhwPOpLSAR7AO6fsbKbDW7ajTgBITSYraDLEkjY338OW', 'admin', NULL, '2017-01-19 07:04:46', '2017-01-20 00:48:13'),
-(2, 'viole', 'admstudiovimana@gmail.com', '$2y$10$aPHI05LSwJITbE35zHQEeetRB4Imcb6WsMLooyhhPUvjCib8xHmVi', 'member', NULL, '2017-01-19 23:53:30', '2017-01-19 23:53:30'),
-(3, 'dasda', 'admstudiovimana@gmail.comdasdas', '$2y$10$.87spSxKT6H72GsF2xuTfuq//Ga/Lfj3eZrtY1tqf5vOvLOxhFz.6', 'admin', NULL, '2017-01-19 23:57:48', '2017-01-19 23:57:48'),
-(4, 'perro', '2javzero@hotmail.com', '$2y$10$dgLZPzotBS6yWRd0Yswf3.3mSI1p5zuKjz.qhE/KbIPuUq8cVWYgW', 'admin', NULL, '2017-01-20 00:00:52', '2017-01-20 00:00:52'),
-(5, 'sdasdasd', 'admin@adsdadmin.com', '$2y$10$k5N3.KeHaHuAzrocPtUfh.S4rzIfU.i3Rk1GEQCNxBW01AVSMmWO.', 'member', NULL, '2017-01-20 00:01:03', '2017-01-20 00:01:03'),
-(6, 'dasdasdas', 'javzerods@hotmail.com', '$2y$10$kzReLPFup/oCSAFTJAgWW.Icrkdb9QSo9bd9vbQkBiLNjVBijTj/W', 'admin', NULL, '2017-01-20 00:01:17', '2017-01-20 00:01:17');
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `avatar`, `type`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'javzero', 'javzero@hotmail.com', '$2y$10$gOwPzwLnHjhwPOpLSAR7AO6fsbKbDW7ajTgBITSYraDLEkjY338OW', '1488150234.jpg', 'admin', 'riIMmmPqAcLwzBgfpBFIzcUVCtrEMKBna4OPgTzLCnkKkz8JVi9eh0aq79Nw', '2017-01-19 07:04:46', '2017-02-27 02:03:56'),
+(2, 'viole', 'admstudiovimana@gmail.com', '$2y$10$gOwPzwLnHjhwPOpLSAR7AO6fsbKbDW7ajTgBITSYraDLEkjY338OW', 'user-gen.jpg', 'member', 'kBjqKvoCevhP5X5iyMftxAuEHlm5pmH6PC8W7gNQGuM7FbHziQudgDskGE7m', '2017-01-19 23:53:30', '2017-01-22 08:21:40'),
+(3, 'dasda', 'admstudiovimana@gmail.comdasdas', '$2y$10$.87spSxKT6H72GsF2xuTfuq//Ga/Lfj3eZrtY1tqf5vOvLOxhFz.6', 'user-gen.jpg', 'admin', NULL, '2017-01-19 23:57:48', '2017-01-19 23:57:48'),
+(5, 'sdasdasd', 'admin@adsdadmin.com', '$2y$10$k5N3.KeHaHuAzrocPtUfh.S4rzIfU.i3Rk1GEQCNxBW01AVSMmWO.', 'user-gen.jpg', 'member', NULL, '2017-01-20 00:01:03', '2017-01-20 00:01:03'),
+(10, 'Mr. Benny Will IV', 'ashleigh46@davis.net', '12121212', 'user-gen.jpg', 'member', NULL, '2017-02-27 21:25:41', '2017-02-27 21:25:41'),
+(11, 'Dorothy Schmitt', 'onie.hartmann@runte.com', '12121212', 'user-gen.jpg', 'member', NULL, '2017-02-27 21:25:41', '2017-02-27 21:25:41'),
+(13, 'Dr. Garrison Kessler PhD', 'amparo.mcglynn@mayer.com', '12121212', 'user-gen.jpg', 'member', NULL, '2017-02-27 21:25:42', '2017-02-27 21:25:42'),
+(15, 'Ms. Evangeline Cummings DVM', 'herbert.cartwright@haley.com', '12121212', 'user-gen.jpg', 'member', NULL, '2017-02-27 21:25:42', '2017-02-27 21:25:42'),
+(18, 'Gretchen Shields', 'bergstrom.tiffany@ledner.com', '12121212', 'user-gen.jpg', 'member', NULL, '2017-02-27 21:25:42', '2017-02-27 21:25:42'),
+(20, 'Mrs. Laurine Hintz II', 'vvon@morissette.info', '12121212', 'user-gen.jpg', 'member', NULL, '2017-02-27 21:25:42', '2017-02-27 21:25:42'),
+(21, 'Afton Stoltenberg', 'lilian28@hotmail.com', '12121212', 'user-gen.jpg', 'member', NULL, '2017-02-27 21:25:42', '2017-02-27 21:25:42'),
+(22, 'Savanna Veum', 'elisabeth13@hotmail.com', '12121212', 'user-gen.jpg', 'member', NULL, '2017-02-27 21:25:42', '2017-02-27 21:25:42'),
+(23, 'Alexandrea Klocko', 'cristal91@yahoo.com', '12121212', 'user-gen.jpg', 'member', NULL, '2017-02-27 21:25:42', '2017-02-27 21:25:42'),
+(24, 'Marlon Nicolas', 'stracke.arnold@marks.com', '12121212', 'user-gen.jpg', 'member', NULL, '2017-02-27 21:25:42', '2017-02-27 21:25:42'),
+(25, 'Dr. Damien Barrows', 'tullrich@kris.com', '12121212', 'user-gen.jpg', 'member', NULL, '2017-02-27 21:25:42', '2017-02-27 21:25:42'),
+(26, 'Lorenzo Russel III', 'pcarter@hotmail.com', '12121212', 'user-gen.jpg', 'member', NULL, '2017-02-27 21:25:42', '2017-02-27 21:25:42'),
+(27, 'Miss Lexie Armstrong DVM', 'sydnee.torp@gmail.com', '12121212', 'user-gen.jpg', 'member', NULL, '2017-02-27 21:25:42', '2017-02-27 21:25:42'),
+(28, 'Gerardo Deckow', 'wsanford@gmail.com', '12121212', 'user-gen.jpg', 'member', NULL, '2017-02-27 21:25:42', '2017-02-27 21:25:42'),
+(29, 'Jarrett Gorczany', 'vrutherford@yahoo.com', '12121212', 'user-gen.jpg', 'member', NULL, '2017-02-27 21:25:42', '2017-02-27 21:25:42'),
+(30, 'Jasmin Simonis', 'hermann.trinity@rowe.com', '12121212', 'user-gen.jpg', 'member', NULL, '2017-02-27 21:25:42', '2017-02-27 21:25:42'),
+(31, 'Kadin Hyatt MD', 'qschmidt@hotmail.com', '12121212', 'user-gen.jpg', 'member', NULL, '2017-02-27 21:25:42', '2017-02-27 21:25:42'),
+(32, 'Mr. Lesley Gislason', 'anna28@gmail.com', '12121212', 'user-gen.jpg', 'member', NULL, '2017-02-27 21:25:42', '2017-02-27 21:25:42'),
+(33, 'Iva Gorczany', 'forrest.runte@koch.net', '12121212', 'user-gen.jpg', 'member', NULL, '2017-02-27 21:25:42', '2017-02-27 21:25:42'),
+(34, 'Brayan Yundt', 'simonis.oceane@yahoo.com', '12121212', 'user-gen.jpg', 'member', NULL, '2017-02-27 21:25:42', '2017-02-27 21:25:42'),
+(35, 'Dr. Theodore Koepp', 'bethany.pfannerstill@gmail.com', '12121212', 'user-gen.jpg', 'member', NULL, '2017-02-27 21:25:42', '2017-02-27 21:25:42'),
+(36, 'Kailee Swaniawski Sr.', 'njaskolski@yahoo.com', '12121212', 'user-gen.jpg', 'member', NULL, '2017-02-27 21:25:42', '2017-02-27 21:25:42'),
+(37, 'Dr. Margot Marks', 'morar.vesta@gmail.com', '12121212', 'user-gen.jpg', 'member', NULL, '2017-02-27 21:25:42', '2017-02-27 21:25:42'),
+(38, 'Matt Bauch', 'goconner@moore.com', '12121212', 'user-gen.jpg', 'member', NULL, '2017-02-27 21:25:42', '2017-02-27 21:25:42'),
+(39, 'Alejandra Ondricka', 'logan10@mosciski.com', '12121212', 'user-gen.jpg', 'member', NULL, '2017-02-27 21:25:42', '2017-02-27 21:25:42'),
+(40, 'Eloise Tillman Jr.', 'mose39@conroy.com', '12121212', 'user-gen.jpg', 'member', NULL, '2017-02-27 21:25:42', '2017-02-27 21:25:42'),
+(41, 'Aleen Hilpert', 'heaney.odessa@gmail.com', '12121212', 'user-gen.jpg', 'member', NULL, '2017-02-27 21:25:42', '2017-02-27 21:25:42'),
+(42, 'Miss Maude DuBuque DDS', 'jamaal40@pfannerstill.com', '12121212', 'user-gen.jpg', 'member', NULL, '2017-02-27 21:25:42', '2017-02-27 21:25:42'),
+(43, 'Ms. Marcelle Collins MD', 'lebsack.deshawn@yahoo.com', '12121212', 'user-gen.jpg', 'member', NULL, '2017-02-27 21:25:42', '2017-02-27 21:25:42'),
+(44, 'Winston Schaden', 'eleazar.schoen@turcotte.com', '12121212', 'user-gen.jpg', 'member', NULL, '2017-02-27 21:25:42', '2017-02-27 21:25:42'),
+(45, 'Danika Bergnaum', 'hagenes.loyal@brakus.com', '12121212', 'user-gen.jpg', 'member', NULL, '2017-02-27 21:25:42', '2017-02-27 21:25:42'),
+(46, 'Augustus Hudson', 'isabel96@rutherford.biz', '12121212', 'user-gen.jpg', 'member', NULL, '2017-02-27 21:25:42', '2017-02-27 21:25:42'),
+(47, 'Julien Pfannerstill', 'yschulist@rutherford.biz', '12121212', 'user-gen.jpg', 'member', NULL, '2017-02-27 21:25:42', '2017-02-27 21:25:42'),
+(48, 'Leland Waelchi', 'terrence.boyle@eichmann.info', '12121212', 'user-gen.jpg', 'member', NULL, '2017-02-27 21:25:42', '2017-02-27 21:25:42'),
+(49, 'Oren Hane', 'gturner@yahoo.com', '12121212', 'user-gen.jpg', 'member', NULL, '2017-02-27 21:25:42', '2017-02-27 21:25:42');
 
 --
--- Indexes for dumped tables
+-- Índices para tablas volcadas
 --
 
 --
--- Indexes for table `articles`
---
-ALTER TABLE `articles`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `articles_user_id_foreign` (`user_id`),
-  ADD KEY `articles_category_id_foreign` (`category_id`);
-
---
--- Indexes for table `article_tag`
---
-ALTER TABLE `article_tag`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `article_tag_article_id_foreign` (`article_id`),
-  ADD KEY `article_tag_tag_id_foreign` (`tag_id`);
-
---
--- Indexes for table `categories`
---
-ALTER TABLE `categories`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `images`
---
-ALTER TABLE `images`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `images_article_id_foreign` (`article_id`);
-
---
--- Indexes for table `migrations`
+-- Indices de la tabla `migrations`
 --
 ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `password_resets`
+-- Indices de la tabla `password_resets`
 --
 ALTER TABLE `password_resets`
   ADD KEY `password_resets_email_index` (`email`),
   ADD KEY `password_resets_token_index` (`token`);
 
 --
--- Indexes for table `tags`
---
-ALTER TABLE `tags`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `users`
+-- Indices de la tabla `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `users_email_unique` (`email`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT de las tablas volcadas
 --
 
 --
--- AUTO_INCREMENT for table `articles`
---
-ALTER TABLE `articles`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT for table `article_tag`
---
-ALTER TABLE `article_tag`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT for table `categories`
---
-ALTER TABLE `categories`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
---
--- AUTO_INCREMENT for table `images`
---
-ALTER TABLE `images`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT for table `migrations`
+-- AUTO_INCREMENT de la tabla `migrations`
 --
 ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
--- AUTO_INCREMENT for table `tags`
---
-ALTER TABLE `tags`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `articles`
---
-ALTER TABLE `articles`
-  ADD CONSTRAINT `articles_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `articles_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
-
---
--- Constraints for table `article_tag`
---
-ALTER TABLE `article_tag`
-  ADD CONSTRAINT `article_tag_article_id_foreign` FOREIGN KEY (`article_id`) REFERENCES `articles` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `article_tag_tag_id_foreign` FOREIGN KEY (`tag_id`) REFERENCES `tags` (`id`) ON DELETE CASCADE;
-
---
--- Constraints for table `images`
---
-ALTER TABLE `images`
-  ADD CONSTRAINT `images_article_id_foreign` FOREIGN KEY (`article_id`) REFERENCES `articles` (`id`) ON DELETE CASCADE;
-
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

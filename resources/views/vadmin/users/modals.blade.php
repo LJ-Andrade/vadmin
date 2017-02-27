@@ -28,10 +28,8 @@
 				    {!! Form::select('role_id', ['user','admin', 'superadmin'], null, ['class' => 'form-control', 'placeholder' => 'Seleccione una opcion', 'required' => '']) !!}
 					</div>
 				</div>
-				
 			</div>
-			<div class="ModalError"></div>
-			
+			<div class="ModalError"></div>	
 		{!! Form::close() !!}
 	@endslot
 	@slot('actionBtnId','NewBtn')

@@ -42,9 +42,11 @@ Route::group(['middleware' => ['auth', 'admin']], function()
 {
 	// ---------------- USERS ---------------------//
 	Route::get('ajax_list_users/{page?}', 'UsersController@ajax_list');
+	Route::post('ajax_delete_user/{id}', 'UsersController@destroy');
+	Route::post('ajax_batch_delete_users/{id}', 'UsersController@ajax_batch_delete');
+
 
 });
-
 
 
 /////////////////////////////////////////////////

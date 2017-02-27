@@ -11,6 +11,18 @@ use File;
 class UsersController extends Controller
 {
 
+    public function index()
+    {
+        // Trae toda la data de users
+        // $users = User::all();
+        // dd($users);
+        $users = User::orderBy('id', 'ASC')->paginate(10);
+
+        return view('vadmin.users.index')->with('users', $users);
+
+    } 
+
+
     // ----------- List --------------- //
     public function ajax_list()
     {
@@ -53,6 +65,72 @@ class UsersController extends Controller
         }
         
     }
+    
+    /////////////////////////////////////////////////
+    //             PROFILE                         //
+    /////////////////////////////////////////////////
 
+
+    // ---------- Profile --------------- //
+    public function profile()
+    {
+        return view('vadmin.users.profile', ['user' => Auth::user() ] );
+    }
+
+
+    // ---------- Update Avatar --------------- //
+    public function updateAvatar(Request $request)
+    {
+        if ($request->hasFile('avatar')) {
+            $avatar   = $request->file('avatar');
+            $filename = time() . '.' . $avatar->getClientOriginalExtension();
+            Image::make($avatar)->resize(300, 300)->save( public_path('images/users/' . $filename ) );
+        
+            if (Auth::user()->avatar != "user-gen.jpg") {
+                $path = 'images/users/';
+                $lastpath= Auth::user()->avatar;
+                File::Delete(public_path( $path . $lastpath) );
+            }
+            
+            $user = Auth::user();
+            $user->avatar = $filename;
+            $user->save();
+
+            return view('vadmin.users.profile', array('user' => Auth::user() ) );
+        }
+    }
+
+    
+    /////////////////////////////////////////////////
+    //                     DELETE                  //
+    /////////////////////////////////////////////////
+
+    public function destroy($id)
+    {
+
+        $user = User::find($id);
+        $user->delete();
+
+        echo 1;
+        // return redirect()->route('users.index')->with('message', $user->name.' ha sido eliminado');
+    }
+
+    // ---------- Ajax Bach Delete -------------- //
+    public function ajax_batch_delete(Request $request, $id)
+    {
+
+        $ids = $request->id;
+     
+        foreach ($ids as $id1) {
+        
+            $user  = User::find($id1);
+            $path  = 'images/users/';
+            File::Delete(public_path( $path . $user->avatar));
+            $user->delete();
+            
+
+        }
+        echo 1;
+    }
 
 }

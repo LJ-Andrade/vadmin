@@ -19,7 +19,7 @@
 						  @if((Auth::user()==null))
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
 								<img style="width: 30px; margin-right: 5px; border-radius: 100%; padding: 0"
-									 src="{{ asset('webimages/gen/genuser.jpg') }}">
+									 src="{{ asset('images/gen/user-gen.jpg') }}">
 								{{ 'Who Are you?' }}
 								<span class="caret"></span>
 								
@@ -29,7 +29,7 @@
 								
 
 								<img style="width: 30px; margin-right: 5px; border-radius: 100%; padding: 0"
-									 src="{{ asset('webimages/users/'.Auth::user()->avatar) }}">
+									 src="{{ asset('images/users/'.Auth::user()->avatar) }}">
 								
 								{{ Auth::user()->name }}
 								<span class="caret"></span>

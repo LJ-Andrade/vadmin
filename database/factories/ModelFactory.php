@@ -1,7 +1,7 @@
 <?php
 // Esto lo puse yo
 // use App\User;
-use App\Article;
+use App\User;
 use Faker\Generator;
 
 /*
@@ -17,18 +17,14 @@ use Faker\Generator;
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-$factory->define(Article::class, function (Generator $faker) {
+$factory->define(User::class, function (Generator $faker) {
     // static $password;
 
     return [
-        'title'       => $faker->name,
-        'content'     => 'kljlkjlkjlkjlkjlkjlkjlkjlkjlkjkljkljllkjlkjlkjlkjkljkljllkjlkjlkjlkjkljkljllkjlkjlkjlkjkljkljllkjlkjlkjlkjkljkljl',
-        'code'        => str_random(10),
-        'status'      => 'active',
-        'user_id'     => '1',
-        'category_id' => '22',
-        'slug'        => $faker->name,
-        'image'       => 'test.jpg'
+        'name'        => $faker->name,
+        'email'       => $faker->email,
+        'password'    => '12121212',
+        'avatar'       => 'user-gen.jpg'
     ];
     return $array;
 });
