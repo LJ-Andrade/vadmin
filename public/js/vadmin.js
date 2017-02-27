@@ -71,7 +71,7 @@ function batch_select(trigger) {
 //////////////////////////////
 
 
-function confirm_delete(id, route, bigtext, smalltext) {
+function confirm_delete(id, bigtext, smalltext) {
 	swal({
 		title: bigtext,
 		text: smalltext,
@@ -159,6 +159,7 @@ $('.OpenFilters').click(function(){
 
 	if(screen.width > 768){
 		$('.filter-desk').fadeIn(200);
+		$('.filter-desk').css('display','block');
 	} else {
 		$('.filter-full').fadeIn(200);
 	}

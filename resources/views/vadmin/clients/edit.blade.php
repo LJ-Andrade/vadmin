@@ -1,7 +1,7 @@
 @extends('vadmin.layouts.main')
 
-@section('title', 'Vadmin | ')
-@section('header_title', 'Titulo') 
+@section('title', 'Vadmin | Usuarios')
+@section('header_title', 'Listado de Usuarios') 
 
 @section('content')
     <div class="container">
@@ -9,9 +9,9 @@
 
             <div class="col-md-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Create New %%modelName%%</div>
+                    <div class="panel-heading">Edit Client #{{ $client->id }}</div>
                     <div class="panel-body">
-                        <a href="{{ url('/%%routeGroup%%%%viewName%%') }}" title="Back"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                        <a href="{{ url('/vadmin/clients') }}" title="Back"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <br />
                         <br />
 
@@ -23,9 +23,14 @@
                             </ul>
                         @endif
 
-                        {!! Form::open(['url' => '/%%routeGroup%%%%viewName%%', 'class' => 'form-horizontal', 'files' => true]) !!}
+                        {!! Form::model($client, [
+                            'method' => 'PATCH',
+                            'url' => ['/vadmin/clients', $client->id],
+                            'class' => 'form-horizontal',
+                            'files' => true
+                        ]) !!}
 
-                        @include ('%%viewTemplateDir%%.form')
+                        @include ('vadmin.clients.form', ['submitButtonText' => 'Update'])
 
                         {!! Form::close() !!}
 

@@ -20,7 +20,7 @@
 			</div>
 			{{-- Column --}}
 			<div class="col-xs-6 col-sm-3 col-md-4 mobile-hide inner-tags">
-				
+				{{ $user->type}}
 			</div>
 			{{-- Action Button --}}
 			<div class="col-xs-2 col-sm-2 col-md-3 lists-actions-trigger">

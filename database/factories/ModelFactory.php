@@ -1,8 +1,7 @@
 <?php
-// Esto lo puse yo
-// use App\User;
-use App\User;
+
 use Faker\Generator;
+use App\User;
 
 /*
 |--------------------------------------------------------------------------

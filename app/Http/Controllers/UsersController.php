@@ -13,9 +13,7 @@ class UsersController extends Controller
 
     public function index()
     {
-        // Trae toda la data de users
-        // $users = User::all();
-        // dd($users);
+
         $users = User::orderBy('id', 'ASC')->paginate(10);
 
         return view('vadmin.users.index')->with('users', $users);
@@ -24,10 +22,11 @@ class UsersController extends Controller
 
 
     // ----------- List --------------- //
-    public function ajax_list()
+    public function ajax_list(Request $request)
     {
-        $users = User::orderBy('id', 'ASC')->paginate(12);
-        return view('vadmin/users/list')->with('users', $users);
+            $users = User::orderBy('id', 'ASC')->paginate(12);
+            return view('vadmin/users/list')->with('users', $users);
+        
     }
 
     // ---------- Store --------------- //
@@ -54,7 +53,9 @@ class UsersController extends Controller
         ]);
 
         if ($request->ajax())
-        {            
+        {  
+
+            // dd($request->all());
             $result = User::create($request->all());
             if ($result)
             {
@@ -109,6 +110,12 @@ class UsersController extends Controller
     {
 
         $user = User::find($id);
+        $path = 'images/users/';
+        if($user->avatar == 'user-gen.jpg'){
+        } else {
+            File::Delete(public_path( $path . $user->avatar));
+        }
+
         $user->delete();
 
         echo 1;
@@ -118,19 +125,32 @@ class UsersController extends Controller
     // ---------- Ajax Bach Delete -------------- //
     public function ajax_batch_delete(Request $request, $id)
     {
+        // $ids = $request->id;
 
-        $ids = $request->id;
-     
-        foreach ($ids as $id1) {
+        foreach ($request->id as $id) {
         
-            $user  = User::find($id1);
+            $user  = User::find($id);
             $path  = 'images/users/';
-            File::Delete(public_path( $path . $user->avatar));
-            $user->delete();
-            
-
+            if($user->avatar == 'user-gen.jpg'){
+            } else {
+                File::Delete(public_path( $path . $user->avatar));
+            }
+            User::destroy($id);
         }
         echo 1;
     }
 
-}
+    /////////////////////////////////////////////////
+    //                   SEARCH                    //
+    /////////////////////////////////////////////////
+
+    public function search($name)
+    {
+        // $user   = User::SearchUser($name)->first();
+
+        // return view('users.index')->with('articles', $articles);
+        dd($name);
+    }
+
+
+} // End

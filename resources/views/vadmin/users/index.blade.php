@@ -3,15 +3,22 @@
 @section('title', 'Vadmin | Usuarios')
 @section('header_title', 'Listado de Usuarios') 
 
-@section('head_extra')
-
+@section('styles')
+	{!! Html::style('plugins/chosen/chosen.min.css') !!}
+	{!! Html::style('plugins/validation/parsley.css') !!}
 @endsection
 
-@section('content')
 
+
+@section('content')
+	<div class="container">
+		@include('vadmin.users.headoptions')
+	</div>
     <div class="container">
 		<div class="row">
-			<button type="button" class="animated fadeIn button buttonOther" data-toggle="modal" data-target="#New">Nuevo Usuario</button>
+			
+			
+			
 			<hr>
 			<div id="List"></div>
 			<br>
@@ -24,6 +31,13 @@
 @endsection
 
 @include('vadmin.users.modals')
+
+@section('scripts')
+
+	{!! Html::script('plugins/jqueryfiler/jquery.filer.min.js') !!}
+	{!! Html::script('plugins/chosen/chosen.jquery.min.js') !!}
+	
+@endsection
 
 {{-- CUSTOM JS SCRIPTS--}}
 @section('custom_js')
@@ -40,7 +54,11 @@
 		});
 	});
 
-	// ----- Category List - Ajax ------- //
+	/////////////////////////////////////////////////
+    //                 LIST                        // 
+    /////////////////////////////////////////////////
+
+
 	$(document).ready(function(){
 		ajax_list();
 	});
@@ -78,6 +96,11 @@
 		});
 	});
 
+
+	/////////////////////////////////////////////////
+    //                 CREATION                    //
+    /////////////////////////////////////////////////
+
 	// ----- Create - Ajax ------- //
 	$(document).on("click", "#NewBtn", function(e){
 
@@ -93,19 +116,26 @@
 			dataType: 'json',
 			data: dataString,
 			success: function(data){
+							
+				// $('#Error').html(data.responseJSON);
+				// console.log(data);
+
 				if(data.success == 'true'){
 					console.log(data);
 					$('.CloseModal').click();
 					ajax_list();
+					$('.ModalError').html(data);
+					console.log(data);
 
 				} else if(data.success == 'false') {
 					var response = data.responseJSON.name[0];
 					$('.ModalError').html(response);
 					// $('#Error').html(response);
 				}
+
 			},
 			error: function(data){
-				console.log(data);
+				// console.log(data.responseText);
 				// $('#Error').html(data.responseText);
 				var response = data.responseJSON;
 				$('.ModalError').html('');
@@ -117,6 +147,11 @@
 			}
 		}); 
 	});
+
+
+	/////////////////////////////////////////////////
+    //                    EDIT                     //
+    /////////////////////////////////////////////////
 
 	// // ----- Category Edit - Ajax ------- //
 	// var ajax_edit_user = function(id){
@@ -158,7 +193,14 @@
 	// 	});
 	// });
 
-	// ---------- Delete Article ---------- //
+
+	/////////////////////////////////////////////////
+    //                     DELETE                  //
+    /////////////////////////////////////////////////
+
+
+	// -------------- Single Delete -------------- //
+	// --------------------------------------------//
 	$(document).on('click', '.Delete', function(e){
 		e.preventDefault();
 		var id = $(this).data('id');
@@ -183,18 +225,18 @@
 					alert_error('Ups!','Ha ocurrido un error');
 				}
 			},
-			complete: function(data)
-			{ },
 			error: function(data)
 			{
-				$('#Test').html(data.responseText);
+				$('#Error').html(data.responseText);
 				console.log(data);	
 			},
 		});
 	}
 
-	// ----- Batch Deletex ------- //
-	// Batch Confirm Deletion
+	// -------------- Batch Deletex -------------- //
+	// --------------------------------------------//
+
+	// ---- Batch Confirm Deletion ---- //
 	$(document).on('click', '#BatchDeleteBtn', function(e) { 
 
 		var rowsToDelete = [];  
@@ -207,7 +249,7 @@
 		
 	});
 
-
+	// ---- Delete ---- //
 	function batch_delete_item(id) {
 
 		var route = "{{ url('ajax_batch_delete_users') }}/"+id+"";
@@ -216,13 +258,14 @@
 			url: route,
 			method: 'post',             
 			dataType: "json",
+			data: {id: id},
 			success: function(data){
 				for(i=0; i < id.length ; i++){
 					$('#Id'+id[i]).hide(200);
 				}
 				$('#BatchDeleteBtn').addClass('Hidden');
-				$('#Test').html(data);
-				console.log(data);
+				ajax_list();
+				// $('#Error').html(data.responseText);
 			},
 			error: function(data)
 			{

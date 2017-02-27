@@ -18,7 +18,10 @@ Route::get('guest', function () {
 Route::get('profile', 'UsersController@profile')->middleware('admin');
 Route::post('profile', 'UsersController@updateAvatar')->middleware('admin');
 
-
+Route::get('users/{name}', [
+	'uses' => 'userController@search',
+	'as'   => 'web.search'
+]);
 
 /////////////////////////////////////////////////
 //                   CRUDS                     //
@@ -31,6 +34,8 @@ Route::group(['prefix' => 'vadmin', 'middleware' => ['auth','admin']], function(
 		'uses' => 'UsersController@destroy',
 		'as'   => 'users.destroy'
 	]);
+
+	Route::get('clients', 'ClientController@index');
 
 });
 
@@ -66,3 +71,7 @@ Route::get('catalogo', [
 	'uses' => 'WebController@portfolio',
 ]);
 
+
+Route::resource('vadmin/clients', 'Client\\ClientsController');
+Route::resource('vadmin/clients', 'Client\\ClientsController');
+Route::resource('vadmin/clients', 'Client\\ClientsController');
