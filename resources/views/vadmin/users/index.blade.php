@@ -8,18 +8,15 @@
 	{!! Html::style('plugins/validation/parsley.css') !!}
 @endsection
 
-
-
 @section('content')
+
 	<div class="container">
 		@include('vadmin.users.headoptions')
 	</div>
     <div class="container">
-		<div class="row">
-			
-			
-			
+		<div class="row">		
 			<hr>
+			@include('vadmin.users.forms')
 			<div id="List"></div>
 			<br>
 		</div>
@@ -44,14 +41,61 @@
 
 	<script type="text/javascript">
 
-	// Prevent submit on press ENTER Key
-	$(document).ready(function() {
-		$('#NewForm').keydown(function(event){
-			if(event.keyCode == 13) {
-				event.preventDefault();
-				return false;
-			}
-		});
+	/////////////////////////////////////////////////
+    //                 FORM SKIN                   // 
+    /////////////////////////////////////////////////
+
+	$('.ShowNewBtn').click(function(){
+		// $('#List').addClass('Hidden');
+		$('.ShowNewBtn').addClass('Hidden');
+		$('#NewFormContainer').removeClass('Hidden');
+		$('.ShowListBtn').removeClass('Hidden');
+		$('#EditFormContainer').addClass('Hidden');
+	});
+
+	$('.ShowListBtn').click(function(){
+		$('#List').removeClass('Hidden');
+		$('.ShowNewBtn').removeClass('Hidden');
+		$('#NewFormContainer').addClass('Hidden');
+		$('#EditFormContainer').addClass('Hidden');
+		$('.ShowListBtn').addClass('Hidden');
+	});
+
+	$('.CloseFormBtn').click(function(e){
+		e.preventDefault();
+		$('#NewFormContainer').addClass('Hidden');
+		$('#EditFormContainer').addClass('Hidden');
+		$('.ShowNewBtn').removeClass('Hidden');
+		$('.ShowListBtn').addClass('Hidden');
+		$('.ShowPassInputBtn').show();
+		$('.PasswordSlot').html('');
+	});
+
+
+
+	$(document).on("click", ".ShowEditBtn", function(e){
+		$('#NewFormContainer').addClass('Hidden');
+		var id = $(this).data('id');
+		$('#EditFormContainer').removeClass('Hidden');
+		var data = $('#Id'+id).data('data');
+
+		$('#EditId').val(id);
+		$('#EditTitle').html(data.name);
+		$('#EditName').val(data.name);
+		$('#EditEmail').val(data.email);
+		$('#EditPassword').val(data.password);
+		$('#EditRole').val(data.type).change();
+
+
+	});
+
+	$('.ShowPassInputBtn').click(function(e){
+		e.preventDefault();
+		var input = "<input id='EditPassword' class='form-control' name='password' type='password'>";
+
+		$(this).hide();
+		$('.PasswordSlot').append(input);
+
 	});
 
 	/////////////////////////////////////////////////
@@ -96,62 +140,103 @@
 		});
 	});
 
-
 	/////////////////////////////////////////////////
     //                 CREATION                    //
     /////////////////////////////////////////////////
 
-	// ----- Create - Ajax ------- //
-	$(document).on("click", "#NewBtn", function(e){
+	$(document).ready(function() {
+		$("#NewForm").on('submit', function(e){
+			e.preventDefault();
+			var form = $(this);
 
-		var data       = $('#NewForm').serialize();
-		var token      = $('input[name=_token]').val();
-		var route      = "{{ route('users.store') }}";
-		var dataString = "name="+data;
+			form.parsley().validate();
 
-		$.ajax({
-			url: route,
-			headers: {'X-CSRF-TOKEN':token},
-			type: 'post',
-			dataType: 'json',
-			data: dataString,
-			success: function(data){
-							
-				// $('#Error').html(data.responseJSON);
-				// console.log(data);
+			if (form.parsley().isValid()){
+				var data       = $('#NewForm').serialize();
+				var route      = "{{ route('users.store') }}";
+				console.log(data);
 
-				if(data.success == 'true'){
-					console.log(data);
-					$('.CloseModal').click();
-					ajax_list();
-					$('.ModalError').html(data);
-					console.log(data);
 
-				} else if(data.success == 'false') {
-					var response = data.responseJSON.name[0];
-					$('.ModalError').html(response);
-					// $('#Error').html(response);
-				}
+				$.ajax({
+					url: route,
+					type: 'post',
+					dataType: 'json',
+					data: data,
+					success: function(data){
+						console.log('SUCCESS pa '+data);
 
-			},
-			error: function(data){
-				// console.log(data.responseText);
-				// $('#Error').html(data.responseText);
-				var response = data.responseJSON;
-				$('.ModalError').html('');
-				var error;
-				$.each( response, function( key, value ) {
-					error =  value;
-					$('.ModalError').append(error + '<br>');
-				});
-			}
-		}); 
+						if(data.success == 'true'){
+						
+							ajax_list();
+						
+						} else if(data.success == 'false') {
+							var response = data.responseJSON.name[0];
+							$('.FormError').html(data.responseText);
+						
+						}
+
+					},
+					error: function(data){
+						console.log('EL ERROR ES ');
+						console.log(data);
+					}
+				}); 
+
+			} // End If
+		});
 	});
 
 
 	/////////////////////////////////////////////////
     //                    EDIT                     //
     /////////////////////////////////////////////////
+
+	$(document).ready(function() {
+		$("#EditForm").on('submit', function(e){
+			e.preventDefault();
+			var form = $(this);
+
+			form.parsley().validate();
+
+			if (form.parsley().isValid()){
+				var data  = $('#EditForm').serialize();
+				var id    = $('#EditForm #EditId').val();
+
+				var route = "{{ url('ajax_update_user') }}/"+id+"";
+
+				$.ajax({
+					url: route,
+					type: 'post',
+					dataType: 'json',
+					data: data,
+					success: function(data){
+						
+						if(data.success == 'true'){
+						
+							ajax_list();
+						
+						} else if(data.success == 'false') {
+							var response = data.responseJSON.name[0];
+							$('.FormError').html(data.responseText);
+						
+						}
+						$('#Error').html(data.responseText);
+
+					},
+					error: function(data){
+						console.log('EL ERROR ES ');
+						console.log(data);
+						$('#Error').html(data.responseJSON);
+						$('#Error').html(data.responseText);
+					}
+				}); 
+
+			} // End If
+		});
+	});
+
+
+
 
 	// // ----- Category Edit - Ajax ------- //
 	// var ajax_edit_user = function(id){
@@ -266,6 +351,7 @@
 				$('#BatchDeleteBtn').addClass('Hidden');
 				ajax_list();
 				// $('#Error').html(data.responseText);
+				// console.log(data);
 			},
 			error: function(data)
 			{

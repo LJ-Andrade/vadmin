@@ -1,5 +1,6 @@
 <div class="row header-options">
-    <button type="button" class="animated fadeIn button buttonOther" data-toggle="modal" data-target="#New">Nuevo Usuario</button>
+    <button type="button" class="ShowNewBtn animated fadeIn button buttonOther">Nuevo Usuario</button>
+    <button type="button" class="ShowListBtn animated fadeIn button buttonOther Hidden">Listado</button>
     <button class="OpenFilters button buttonOther pull-right"><i class="ion-ios-search"></i></button>
     @if(isset($_GET['name']))
     <a href="{{ route('users.index') }}"><button class="button buttonOther pull-right">Todos</button></a>

@@ -1,11 +1,11 @@
 
-<div class="row main-list">
+<div class="col-md-12 animated fadeIn main-list">
 
 	@foreach($users as $user)
-	<div id="Id{{ $user->id }}" class="row Item-Row item-row Select-Row-Trigger">
+	<div id="Id{{ $user->id }}" class="row Item-Row item-row Select-Row-Trigger" data-data="{{ $user }}">
 		{{-- Column --}}
 		<div class="img">
-			@if(count($user->avatar))
+			@if($user->avatar)
 			<img class="thumb" src="{{ asset('images/users/'. $user->avatar ) }}">
 			@else
 			<img class="thumb" src="{{ asset('images/gen/user-gen.jpg') }}">
@@ -36,10 +36,10 @@
 		</div>
 		{{-- Hidden Action Buttons --}}
 		<div class="List-Actions lists-actions Hidden">
-			<a href="" class="btnSmall buttonOk">
+			<a class="ShowEditBtn btnSmall buttonOk" data-id="{{ $user->id }}">
 				<i class="ion-ios-compose-outline"></i>
 			</a>
-			<a href="" target="_blank" class="btnSmall buttonOther">
+			<a target="_blank" class="btnSmall buttonOther">
 				<i class="ion-ios-search"></i>
 			</a>
 			<button class="Delete btnSmall buttonCancel" data-id="{!! $user->id !!}">
@@ -50,6 +50,7 @@
 			</a>
 		</div>
 	</div>
+
 	@endforeach
 
 

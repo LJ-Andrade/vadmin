@@ -39,14 +39,12 @@
 								<button type="submit" class="button buttonOk">
 									Ingresar
 								</button>
-								<a href="{{ url('/register') }}">
-									<button class="button buttonOther">
-										Registrarse
-									</button>
+								<a href="{{ url('/register') }}"  class="button buttonOther">
+									Registrarse							
 								</a>
-								{{-- <a class="btn btn-link" href="{{ url('/password/reset') }}">
+								<a class="btn btn-link" href="{{ url('/password/reset') }}">
 									Olvidó su contraseña?
-								</a> --}}
+								</a>
 							</div>
 						</div>
 					</form>

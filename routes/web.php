@@ -46,10 +46,13 @@ Route::group(['prefix' => 'vadmin', 'middleware' => ['auth','admin']], function(
 Route::group(['middleware' => ['auth', 'admin']], function()
 {
 	// ---------------- USERS ---------------------//
+	Route::resource('users', 'UsersController');
 	Route::get('ajax_list_users/{page?}', 'UsersController@ajax_list');
 	Route::post('ajax_delete_user/{id}', 'UsersController@destroy');
 	Route::post('ajax_batch_delete_users/{id}', 'UsersController@ajax_batch_delete');
-
+	Route::post('ajax_update_user/{id}', 'UsersController@update');
+	
+	Route::resource('vadmin/clients', 'Client\\ClientsController');	
 
 });
 
@@ -72,6 +75,4 @@ Route::get('catalogo', [
 ]);
 
 
-Route::resource('vadmin/clients', 'Client\\ClientsController');
-Route::resource('vadmin/clients', 'Client\\ClientsController');
-Route::resource('vadmin/clients', 'Client\\ClientsController');
+

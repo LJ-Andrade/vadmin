@@ -23,7 +23,7 @@ $factory->define(User::class, function (Generator $faker) {
         'name'        => $faker->name,
         'email'       => $faker->email,
         'password'    => '12121212',
-        'avatar'       => 'user-gen.jpg'
+        'avatar'       => ''
     ];
     return $array;
 });

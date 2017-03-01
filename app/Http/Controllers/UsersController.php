@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Contracts\Hashing\Hasher;
 use App\User; 
 use Auth;
 use Image;
@@ -24,7 +25,7 @@ class UsersController extends Controller
     // ----------- List --------------- //
     public function ajax_list(Request $request)
     {
-            $users = User::orderBy('id', 'ASC')->paginate(12);
+            $users = User::orderBy('id', 'DESC')->paginate(12);
             return view('vadmin/users/list')->with('users', $users);
         
     }
@@ -66,7 +67,30 @@ class UsersController extends Controller
         }
         
     }
+
+    /////////////////////////////////////////////////
+    //                   UPDATE                    //
+    /////////////////////////////////////////////////
     
+    public function update(Request $request, $id)
+    {
+        // $this->validate($request,[
+        //     'name'     => 'max:120|required|unique:categories'
+        // ],[
+        //     'name.unique'         => 'La categoría ya existe'
+        // ]);
+
+        $user = User::find($id);
+        $user->fill($request->all());
+        
+        $result = $user->save();
+        if ($result) {
+            return response()->json(['success'=>'true']);
+        } else {
+            return response()->json(['success'=>'false']);
+        }
+    }
+
     /////////////////////////////////////////////////
     //             PROFILE                         //
     /////////////////////////////////////////////////
