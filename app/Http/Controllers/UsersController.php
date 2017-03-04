@@ -14,23 +14,88 @@ class UsersController extends Controller
 
     public function index()
     {
-
         $users = User::orderBy('id', 'ASC')->paginate(10);
-
         return view('vadmin.users.index')->with('users', $users);
-
     } 
+    
 
-
-    // ----------- List --------------- //
+    /////////////////////////////////////////////////
+    //                   LIST                      //
+    /////////////////////////////////////////////////
+    
     public function ajax_list(Request $request)
     {
-            $users = User::orderBy('id', 'DESC')->paginate(12);
-            return view('vadmin/users/list')->with('users', $users);
-        
+        $users = User::orderBy('id', 'DESC')->paginate(12);
+        return view('vadmin/users/list')->with('users', $users);   
     }
 
-    // ---------- Store --------------- //
+
+    public function ajax_list_search(Request $request)
+    {   
+       
+        if ($request->ajax())
+        {
+
+
+            if (isset($_GET['query'])){ 
+                $query = $_GET['query'];
+            }
+
+            if (isset($_GET['role'])){
+                $role = $_GET['role'];
+            } 
+
+            if ($role != '' and $query != ''){
+                // Search User AND Role
+               $users = User::where('type', '=', $role)->where('name', 'LIKE', '%'.$query.'%')->paginate(20);
+            } else if($role != '') {
+                // Search by Role
+                $users = User::where('type', '=', $role )->paginate(50);
+           
+            } else if ($query!='') {
+                // Search by Name or Email
+                $users = User::where('name', 'LIKE', '%'.$query.'%' )->orWhere('email', 'LIKE', '%'.$query.'%' )->paginate(20);
+            } else {
+                // Seatch All
+                $users = User::orderBy('id', 'DESC')->paginate(12);
+            }
+
+
+            // if ($role && $query) {
+            //     // $users = User::where('name', 'LIKE', '%'.$query.'%' )->orWhere('email', 'LIKE', '%'.$query.'%')->andWhere('type', '=', $role)->paginate(10);    
+            //     $users = User::select( User::raw("SELECT * FROM users") );
+            // } else {
+            //     if ($query == '') {
+            //     $users = User::orderBy('id', 'DESC')->paginate(12);        
+            //     } else {
+            //         $users = User::where('name', 'LIKE', '%'.$query.'%' )->orWhere('email', 'LIKE', '%'.$query.'%')->paginate(10);    
+            //     }
+            // }
+
+
+            // if ($query == '') {
+            //     $users = User::orderBy('id', 'DESC')->paginate(12);        
+            // } else {
+            //     $users = User::where('name', 'LIKE', '%'.$query.'%' )->orWhere('email', 'LIKE', '%'.$query.'%')->paginate(10);    
+            // }
+            
+
+
+        
+        return view('vadmin/users/list')->with('users', $users);  
+        }
+
+        
+        // $users = User::where('name', '=', $name )->paginate(10);    
+
+
+    }
+
+
+    /////////////////////////////////////////////////
+    //                   CREATE                    //
+    /////////////////////////////////////////////////
+
     public function store(Request $request)
     {
         

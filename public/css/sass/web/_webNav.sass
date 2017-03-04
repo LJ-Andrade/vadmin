@@ -1,150 +1,116 @@
-///////////////////// NAVBAR ///////////////////
-
-
-.navbar
-  height: 80px
-  margin-bottom: 0px
-
-.logo
-  width: 170px
-
-.navbar-brand
-  padding: 8px 15px
-
-.navbar-right
-  margin-top: 15px
-
-@media (max-width: 765px)
-  .navbar-right
-    margin-top: 10px
-
-
-.navbar-collapse, .navbar-default .navbar-form
-  border-color: transparent
-  box-shadow: none
-  margin-top: 0px
-
-.navbar-default
-  background-color: $navbackcolor
-  border-color: transparent
-  .navbar-brand
-    color: #777
-  &:hover,&:focus
-    color: #5E5E5E
-  a
-    font-family: $font1
-    font-style: italic
-    font-size: 1.4rem
-
-.navbar-default .navbar-nav > li > a
-  color: $navtxt
-  background-color: $redloco
-  &:hover, &:focus
-    color: #fff
-    background-color: $red2
-  .active > a,
-  .active > a:hover,
-  .active > a:focus
-    color: #555
-    background-color: #E7E7E7
-  .open > a,
-  .open > a:hover,
-  .open > a:focus
-    color: #555
-    background-color: $navactive
-
-@media (max-width: 765px)
-  .navbar-nav > li > a
-    padding: 10px 5px
-
-/* Mobile version */
-// Btn OpenNav
-.navbar-toggle
-  margin-top: 25px
-  margin-right: 25px
-  border: 0
-
-.navbar-default .navbar-collapse, .navbar-default .navbar-form
-  border-color: transparent
-
-
-// Btn Submenues
-@media (max-width: 767px)
-  .navbar-nav.sm-collapsible .caret, .navbar-nav.sm-collapsible ul .caret
-    border: 0
-
-  .navbar-nav
-    .dropdown > a .caret
-      border-top-color: #777
-      border-bottom-color: #777
-    .dropdown > a:hover .caret,
-    .dropdown > a:focus .caret
-      border-top-color: #333
-      border-bottom-color: #333
-    .open > a .caret,
-    .open > a:hover .caret,
-    .open > a:focus .caret
-      border-top-color: #555
-      border-bottom-color: #555
-
+$nav-back: rgba(57, 57, 68,.8)
 .navbar-default .navbar-toggle
-  border-color: #DDD
-  &:hover, &:focus
-    background-color: $menubtnback
-  .icon-bar
-    background-color: #000
+    border: 0
+    max-width: 100%
+@media (min-width: 765px)
+    .navbar
+        background-color: $nav-back
+        border-bottom: 0
+        height: 60px
+        @include transition(0.5s)
+        .navbar-right
+            margin-right: 15px
+            @include transition(0.5s)
+            li 
+                margin-right: 5px
+                a 
+                    font-family: $font2
+                    font-weight: $f2w1
+                    i
+                        font-family: $font1
+                        margin-right: 5px
+        .navbar-nav > li
+            @include flex-center
+            height: 60px
+            a
+                color: #fff
+                font-size: 1.2rem
+                @include transition(0.5s)
+            &:active,&:focus
+                color: #000
+            &:hover
+                background-color: rgba(255,255,255,.5)
+                cursor: pointer
+                a
+                    color: #000
+        .navbar-brand
+            padding: 12px 12px
+            @include transition(0.5s)
+            img
+                @include transition(0.5s)
+                width: 150px
 
-@media (max-width: 767px)
-  .navbar-default
-    .navbar-nav
-      .dropdown > a .caret
-        border-top-color: #777
-        border-bottom-color: #777
-      .dropdown > a:hover .caret,
-      .dropdown > a:focus .caret
-        border-top-color: #333
-        border-bottom-color: #333
-      .open > a .caret,
-      .open > a:hover .caret,
-      .open > a:focus .caret
-        border-top-color: #555
-        border-bottom-color: #555
+    .navbar.home-nav
+        background-color: transparent
+        .navbar-nav > li
+            a
+                color: #fff
+            &:hover
+                background-color: rgba(255,255,255,.5)
+                a
+                    color: #000
 
-  .navbar-default .navbar-nav .open .dropdown-menu
-    li
-      a
+    .navbar.change-nav
+        background-color: $nav-back
+        height: 60px
+        @include transition(0.5s)
+        // @include box-shadow-down
+        .navbar-right
+            border-bottom: 0
+        .navbar-nav > li
+            @include flex-center
+            height: 60px
+            a
+                color: #fff
+                font-size: 1.3rem
+            &:active,&:focus
+                color: #fff
+            &:hover
+                background-color: rgba(255,255,255,.5)
+                cursor: pointer
+                a
+                    color: #000
+        .navbar-brand
+            @include transition(0.5s)
+            img
+                @include transition(0.5s)
+                width: 150px
+        
+@media (max-width: 765px)
+    .navbar
+        background-color: $nav-back
+        border: 0
+        .navbar-brand
+            img
+                width: 100px
+        // Mobile Sandwich button
+        .navbar-toggle
+            border-radius: 0
+        .navbar-default .navbar-toggle
+            border-color: #fff
+        .navbar-toggle
+            .icon-bar
+                background-color: #fff
+
+@media (max-width: 786px)
+    body
+        padding-top: 0
+    // Text Color
+    .navbar-default .navbar-nav > li > a
         color: #fff
-        &:hover, &:focus
-          background-color: $red1
-          color: #383838
-    .dropdown-menu
-      li
-        a
-          color: #fff
-          background-color: $red3
-        a:hover,a:focus
-          background-color: $red2
-          color: #fff
-
-  .navbar-nav .open .dropdown-menu
-    ul
-      padding-top: 0
-
-  .dropdown-menu
-    border-radius: 0
-
-@media (max-width: 767px)
-  .navbar-nav .open .dropdown-menu
-    background-color: $redhover
-    color: #fff
-
-@media (min-width: 768px)
-  #main-nav
-    line-height: 0
-    text-align: right
-  #main-menu
-    display: inline-block
-
-@media (max-width: 1010px)
-  .navContainer
-    width: 100% !important
+        font-family: $font2
+        font-weight: $f2w1
+        &:hover
+            color: #fff
+    // UL Border
+    .navbar-default .navbar-collapse, .navbar-default .navbar-form
+        border: 0
+    // Sandwich focus
+    .navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover
+        background-color: #000
+    .navbar
+        background-color: rgba(0,0,0,.8)
+        border: 0
+        .navbar-brand
+            img
+                width: 100px

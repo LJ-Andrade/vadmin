@@ -1,3 +1,22 @@
+@import url('https://fonts.googleapis.com/css?family=Kadwa:400,700|Roboto:300,400,700')
+$font1: 'Kadwa', serif
+$f1w1: 400
+$f1w2: 700
+$font2: 'Roboto', sans-serif
+$f2w1: 300
+$f2w2: 400
+$f2w3: 700
+
+
+$main-red: #D77777
+$main-color: #F3F3F3
+$color3: #393944
+$color3Hover: #58586A
+
+
+$red1: rgb(235, 87, 87)
+
+
 .productwrap
 	width: 78%
 	float: right
@@ -131,6 +150,35 @@
 		color: black
 	
 
+//////////////////////////////////////
+//                                  //
+//              LISTS               //
+//                                  //
+//////////////////////////////////////
+///// Vertical List ///
+.vertical-list
+	ul
+		padding-left: 0
+		padding: 0
+		margin: 0
+		list-style: none
+		li
+			list-style: none
+			display: block
+			// float: left
+			// width: 100px
+			// line-height: 80px
+			// vertical-align: middle
+
+//// Grid View /////
+.horizontal-list
+	ul
+		padding-left: 0
+		padding: 0
+		margin: 0
+		li
+			display: inline-block
+			list-style: none
 
 
 ////////////////// Containers ///////////////////////
@@ -255,7 +303,7 @@
 	text-align: center
 
 .checkbox-custom:checked + .checkbox-custom-label:before
-	background: $redloco
+	background: $red1
 	box-shadow: inset 0px 0px 0px 4px #fff
 
 .radio-custom + .radio-custom-label:before

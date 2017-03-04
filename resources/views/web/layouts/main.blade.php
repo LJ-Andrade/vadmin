@@ -1,49 +1,64 @@
 <!DOCTYPE html>
 <html lang="es">
 	<head>
+		<!-- Google Tag Manager -->
+		<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+		new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+		j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+		'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+		})(window,document,'script','dataLayer','GTM-TM4GWS3');</script>
+		<!-- End Google Tag Manager -->
+
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<title>@yield('title')</title>
 
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="description" content="Fabricación de lencería y ropa de cama" />
-		<meta name="keywords" content="Lenceria, ropa de cama, pijamas, indumentaria, ropa de mujer, ropa de niños" />
+		<meta name="description" content="Somos un equipo de trabajo dedicado a desarrollar contenido visual e interactivo" />
+		<meta name="keywords" content="Diseño Web, diseño grafico, web, sitio web, paginas web, programacion, sistemas, administracion, gestores, contenido, publicidad, internet, redes sociales" />
 		<meta name="author" content="Studio Vimana" />
 
 		<!-- Favicon -->
-		<link rel="shortcut icon" href="{{ asset('web/images/logos/favicon.png') }}">
+		<link rel="shortcut icon" href="{{ asset('webimages/logos/favicon.png') }}">
 
-		<meta property="og:url"         content="http://fascination.com.ar" />
+		<meta property="og:url"         content="http://studiovimana.com.ar" />
 		<meta property="og:type"        content="article" />
-		<meta property="og:title"       content="Fascination Lingerie" />
-		<meta property="og:description" content="Fabricación de lencería y ropa de cama" />
+		<meta property="og:title"       content="Diseño Web y Diseño Gráfico" />
+		<meta property="og:description" content="Somos un equipo de trabajo dedicado a desarrollar contenido visual e interactivo" />
 		<meta property="og:image"       content="{{ asset('webimages/logos/main-logo.png') }}" />
-		<meta name="twitter:title"      content="Fascination Lingerie" />
+		<meta name="twitter:title"      content="Studio Vimana" />
 		<meta name="twitter:image"      content="{{ asset('webimages/logos/main-logo.png') }}" />
-		<meta name="twitter:url"        content="http://fascination.com.ar" />
+		<meta name="twitter:url"        content="http://studiovimana.com.ar" />
 		{{-- <meta name="twitter:card"       content="" /> --}}
 
 		<link rel="stylesheet" async  type="text/css" href="{{ asset('plugins/bootstrap/css/bootstrap.min.css') }}">
 		<link rel="stylesheet" async  type="text/css" href="{{ asset('plugins/animate/animate.css') }}">
 		<link rel="stylesheet" async  type="text/css" href="{{ asset('plugins/ionicons/ionicons.min.css') }}">
-		<link rel="stylesheet" async  type="text/css" href="{{ asset('plugins/flexslider/flexslider.css') }}">
-		<link rel="stylesheet" async  type="text/css" href="{{ asset('plugins/smartmenu/smartmenu.css') }}">
-
 		@yield('styles')
 		<link rel="stylesheet" type="text/css" href="{{ asset('css/web.css') }}">
 
 	</head>
 	<body>
-		<div id="wrapper">
-			<header>
-				@include('web.layouts.partials.nav')
-			</header>
+		<!-- Google Tag Manager (noscript) -->
+		<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TM4GWS3"
+		height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+		<!-- End Google Tag Manager (noscript) -->
+		<header>
+			@include('web.layouts.partials.nav')
+		</header>
+		
+	    {{-- Loader --}}
+	{{--     <div class="Loader loader">
+	        <img src="{{ asset('webimages/gral/loaders/loader.svg') }} ">
+	        <span><i class="ion-ios-gear-outline"></i> Cargando...</span>
+	    </div> --}}
 
-			
-			@yield('content')
-		</div>
+	    {{-- /Loader --}}
+		
+		@yield('content')
+
 		@include('web.layouts.partials.scripts')
-		{{-- @yield('web.layouts.partials.js') --}}
+		@yield('web.layouts.partials.js')
 		@yield('scripts')
 		@yield('custom_js')
 	</body>

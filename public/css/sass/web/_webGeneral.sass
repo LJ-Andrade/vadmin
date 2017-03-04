@@ -1,263 +1,73 @@
-@import url('https://fonts.googleapis.com/css?family=Trirong:300,400,400i,500i,600i,700i,800')
-
-
-//////////////////////////////////////
-//            COLORS                //
-//////////////////////////////////////
-
-
-$red1: #ea5149
-$red2: #cb433c
-$red3: #c8524b
-$red4: #e36d66
-
-$redloco: #ea5149
-$redhover: #e0655f
-$redmorehover: #ea7771
-$bodycolor: #fff9f9
-
-// Nav
-$navbackcolor: $redloco
-$navtxt: #fff
-$navactive: $bodycolor
-// Menu Btn Small Devicens
-$menubtnback: $redhover
-$color3: #393944
-
-//////////////////////////////////////
-//            FONTS                //
-//////////////////////////////////////
-$font1: 'Trirong', serif
-$f1w1: 300
-$f1w2: 400
-$f1w3: 500
-$f1w4: 600
-$f1w5: 700
-$f1w6: 800
-
-
 html
-	height: 100%
-	position: relative
-	overflow-x: hidden
-	font-size: 100%
+  min-height: 100%
+  position: relative
+  font-size: 80%
 
 body
-	height: 100%
-	padding: 0
-	margin: 0
-	font-size: 18px
-	font-family: $font1
-
-#wrapper
-	min-height: 100%
-	position: relative
-
+  height: 100%
+  overflow-x: hidden
+  font-size: 18px
+  background-color: $main-color
+  color: #383838
+  font-family: $font1
+  line-height: 25px
 a
-	text-decoration: none
-	color: #000
-	outline: 0
-	transition: 0.5s all
-	-webkit-transition: 0.5s all
-	-moz-transition: 0.5s all
-	-o-transition: 0.5s all
-	-ms-transition: 0.5s all
-	&:hover, &:focus, &:active
-		text-decoration: none
-		color: #000
-		outline: 0
-
-input
-	&[type="button"], &[type="submit"]
-		transition: 0.5s all
-		-webkit-transition: 0.5s all
-		-moz-transition: 0.5s all
-		-o-transition: 0.5s all
-		-ms-transition: 0.5s all
-		outline: 0
-		&:hover, &:active, &:focus
-			outline: 0
-
-h1, h2, h3, h4, h5, h6
-	margin: 0
-	font-family: 'Playfair Display', serif
+  text-decoration: none
+  color: rgb(187, 183, 242)
+  &:hover
+    text-decoration: none
 
 p
-	margin: 0
+  font-size: 1.2rem
+  font-family: $font2
+  font-weight: $f2w1
 
-ul
-	margin: 0
-	padding: 0
+h1,h2,h3,h4
+  font-family: $font1
+h1
+  font-size: 2.5rem
+  font-weight: 700
+h2
+  font-size: 1.8rem
+  font-weight: 700
+h3
+  font-size: 1.6rem
+  font-weight: 400
+  color: #BDD9EB
+h4
+  font-size: 1.3rem
+  font-weight: 400
 
-label
-	margin: 0
-	font-weight: 400
 
-////////// General Styles /////////////////////////////
+
 .brd
-	border: 1px solid red
-
-.centerimg
-	margin: 0 auto
-
-.pad0
-	padding: 0
-.marg0
-	margin: 0
-.padmarg0
-	padding: 0
-	margin: 0
-
+  border: 1px solid red
 .txL
-	text-align: left
-.txC
-	text-align: center
+  text-align: left
 .txR
-	text-align: right
+  text-align: right
+.txC
+  text-align: center
+.pad0
+  padding: 0
+.mar0
+  margin: 0
+.margTop0
+  margin-top: 0 !important
+.padTop0
+  padding-top: 0 !important
 
-.horizontal-list ul li
-	display: inline-block
-	list-style: none
+@media (max-width: 900px)
+  .hideMobile900
+    display: none !important
+.Hidden
+  display: none !important
+.floatRight
+  float: right
+.floatLeft
+  float: left
 
-
-
-////////////////////////////////////////////
-//                                        //
-//               CATALOGUE                //
-//                                        //
-////////////////////////////////////////////
-
-.catalogueMain
-	background-color: rgba(224, 224, 224, 0.8)
-	padding: 15px
-	display: -webkit-box
-	display: -ms-flexbox
-	display: flex
-	display: -webkit-flex
-	-webkit-box-align: center
-	-ms-flex-align: center
-	-ms-grid-row-align: center
-	align-items: center
-	flex-wrap: wrap
-	padding-top: 35px
-
-.catalogueItem
-	padding-bottom: 25px
-	max-width: 350px
-
-@media (max-width: 765px)
-	.catalogueMain
-		flex-direction: column
-
-	/////// OVERLAY HOVER EFFECT ////////////////////
-.hovereffect
-	width: 100%
-	height: 100%
-	float: left
-	overflow: hidden
-	position: relative
-	text-align: center
-	cursor: default
-	background: #212121
-
-.hovereffect .overlay
-	width: 100%
-	height: 100%
-	position: absolute
-	overflow: hidden
-	top: 0
-	left: 0
-	padding: 50px 20px
-
-.hovereffect img
-	display: block
-	position: relative
-	max-width: none
-	width: calc(100% + 20px)
-	-webkit-transition: opacity 0.35s, -webkit-transform 0.35s
-	transition: opacity 0.35s, transform 0.35s
-	-webkit-transform: translate3d(-10px,0,0)
-	transform: translate3d(-10px,0,0)
-	-webkit-backface-visibility: hidden
-	backface-visibility: hidden
-
-.hovereffect:hover img
-	opacity: 0.4
-	filter: alpha(opacity=40)
-	-webkit-transform: translate3d(0,0,0)
-	transform: translate3d(0,0,0)
-	cursor: pointer
-
-.hovereffect h1
-	text-transform: uppercase
-	color: #fff
-	text-align: center
-	position: relative
-	font-size: 35px
-	overflow: hidden
-	padding: 0.5em 0
-	background-color: transparent
-
-.hovereffect h1:after
-	position: absolute
-	bottom: 0
-	left: 0
-	width: 100%
-	height: 2px
-	background: #fff
-	content: ''
-	-webkit-transition: -webkit-transform 0.35s
-	transition: transform 0.35s
-	-webkit-transform: translate3d(-100%,0,0)
-	transform: translate3d(-100%,0,0)
-
-.hovereffect:hover h1:after
-	-webkit-transform: translate3d(0,0,0)
-	transform: translate3d(0,0,0)
-
-.hovereffect a, .hovereffect p, .hovereffect h2
-	color: #FFF
-	opacity: 0
-	filter: alpha(opacity=0)
-	-webkit-transition: opacity 0.35s, -webkit-transform 0.35s
-	transition: opacity 0.35s, transform 0.35s
-	-webkit-transform: translate3d(100%,0,0)
-	transform: translate3d(100%,0,0)
-	@include transition(0.2s)
-
-.hovereffect:hover a, .hovereffect:hover p, .hovereffect:hover h2
-	opacity: 1
-	filter: alpha(opacity=100)
-	-webkit-transform: translate3d(0,0,0)
-	transform: translate3d(0,0,0)
-
-.hovereffect hr
-	background-color: #fff
-	opacity: 0
-	filter: alpha(opacity=0)
-	-webkit-transition: opacity 0.35s, -webkit-transform 0.35s
-	transition: opacity 0.35s, transform 0.35s
-	-webkit-transform: translate3d(100%,0,0)
-	transform: translate3d(-100%,0,0)
-
-.hovereffect:hover hr
-	opacity: 1
-	filter: alpha(opacity=100)
-	-webkit-transform: translate3d(0,0,0)
-	transform: translate3d(0,0,0)
-
-footer
-	background-color: $red2
-	padding-left: 0 !important
-	padding-right: 0 !important
-	padding: 10px 5px
-	position: absolute
-	bottom: 0
-	width: 100%
-	font-size: 0.8rem
-	text-align: center
-	color: #fff	
-	a
-		color: #fff
-
+// Resets
+ul
+  padding-left: 0
 

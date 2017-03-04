@@ -1,46 +1,65 @@
-  <!-- Home Contact Data -->
-    <div class="container contactDiv">
-      <div class="row indexContact">
-        <h3>No dude en contactarse con nosotros</h3>
-        <hr>
-        <div class="col-md-5 col-xs-12 formcontacto center-block">
-          <form action="enviar.php" method="post" enctype="multipart/form-data">
-            <div class="form-group1">
-            <!--       Name         -->
-            <input name="name" class="form-control placeholderblack" required="required" placeholder="Nombre / Empresa">
-            <p class="help-block text-danger"></p>
-            </div>
-            <!--       EMail         -->
-            <div class="form-group1"><input name="email" class="form-control placeholderblack" required="required" type="email" required="required" placeholder="E-mail">
-            <p class="help-block text-danger"></p>
-            </div>
-            <!--       Phone         -->
-            <div class="form-group1"><input name="tel" class="form-control placeholderblack" type="tel" required="tel" placeholder="Tel&eacute;fono"><p class="help-block text-danger"></p>
-            </div>
-            <!--       Text-area         -->
-            <div class="form-group1"><textarea name="message" class="form-control placeholderblack textarea1" cols="15" rows="0" required="required" placeholder="Mensaje"></textarea>
-            <p class="help-block text-danger"></p>
-            </div>
-            <div class="clearfix"></div>
-            <!--       Send Button        -->
-            <div class="col-lg-12 txC">
-                <input id="submit" class="btn btn-xl btncontacto" name="submit" type="submit" value="Enviar">
-            </div>
-          </form>
-        </div>
-        <div class="col-md-7 col-xs-12 contactData">
-          <img src="{{ asset('webimages/home/logo3.png') }}" alt="Fascination Logo" class="img-responsive" />
-          <div class="contactSubtit">
-            <p>Su consulta <strong>no molesta</strong></p>
-          </div>
-          <div class="row contactDataTels">
-            <span><i class="fa fa-phone"></i> (011) 4671-1721</span> <span><i class="fa fa-phone"></i> (011) 4642-0769</span> <span><i class="fa fa-mobile"></i> 11-5147-9196</span>
-          </div>
-          <div class="row contactDataDirs">
-              <strong> Aranguren 4507 </strong>- C.A.B.A <br><br>
-              <a href="mailto:walteravak@hotmail.com">walteravak@hotmail.com</a> <br>
-          </div>
-          <!-- Contact Logo -->
-        </div>
-      </div>
-    </div>
+<div id="contact" class="container-fluid contact-section">
+	<div class="container wow animated fadeIn">
+		<div class="row inner">
+		{{-- <h1>CONTACTANOS !</h1> --}}
+		<img src="{{asset('webimages/logos/main-logo.png')}}" class="wow animated zoomIn" data-wow-delay="1.5s" data-wow-duration="3s">
+			{{-- {!! Form::open(['url' => 'sendmail', 'method' => 'POST']) !!}
+			
+				<div class="col-md-6">
+					<div class="form-group">
+						{!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Ingresá tu nombre/empresa']) !!}
+					</div>
+					<div class="form-group">
+						{!! Form::text('tel', null, ['class' => 'form-control', 'placeholder' => 'Ingresá tu teléfono']) !!}
+					</div>
+					<div class="form-group">
+						{!! Form::email('mail', null, ['class' => 'form-control', 'placeholder' => 'Ingresá tu E-Mail']) !!}
+					</div>
+						
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						{!! Form::textarea('content', null, ['size' => '30x5', 'class' => 'form-control', 'placeholder' => 'Dejanos tu pedido o consulta. Te responderemos cuanto antes']) !!}
+					</div>
+				</div>
+					{{ csrf_field() }}
+					{!! Form::submit('Enviar', ['class' => 'contactBtn']) !!}
+					
+			{!! Form::close() !!} --}}
+
+
+
+
+		</div>
+
+		<div class="horizontal-list social-icons">
+			<div class="title">
+				<span>Seguí nuestro proceso creativo en las redes</span>
+			</div>
+			<ul>
+				<a href="https://www.facebook.com/studiograficovimana" target="_blank">
+					<li class="wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.2s"><img src=" {{asset('webimages/gral/social/social1.png')}} "></li>
+				</a>
+				<a href="https://twitter.com/StudioVimana" target="_blank">
+					<li class="wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.3s"><img src=" {{asset('webimages/gral/social/social2.png')}} "></li>
+				</a>
+				<a href="https://www.youtube.com/channel/UCFT-sFx3Pv-r3ozgEqqnWfA" target="_blank">
+					<li class="wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.4s"><img src=" {{asset('webimages/gral/social/social3.png')}} "></li>
+				</a>
+				<a href="https://es.pinterest.com/admstudiovimana/" target="_blank">
+					<li class="wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.5s"><img src=" {{asset('webimages/gral/social/social4.png')}} "></li>
+				</a>
+				<a href="https://www.behance.net/studiovimana" target="_blank">
+					<li class="wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.6s"><img src=" {{asset('webimages/gral/social/social5.png')}} "></li>
+				</a>
+				<a href="https://plus.google.com/u/0/+StudioVimana" target="_blank">
+					<li class="wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.7s"><img src=" {{asset('webimages/gral/social/social6.png')}} "></li>
+				</a>
+				<a href="https://github.com/StudioVimana" target="_blank">
+					<li class="wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.8s"><img src=" {{asset('webimages/gral/social/social7.png')}} "></li>
+				</a>
+			</ul>
+		</div>
+
+	</div>
+</div>

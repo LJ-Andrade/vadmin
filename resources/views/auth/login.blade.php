@@ -8,7 +8,7 @@
 		<div class="container">
 			<div class="row form-container login-container">
 				<div class="inner-wrapper inner">
-					<div class="login-header"><img src="{{ asset('webimages/logos/logo3.png') }}"></div>
+					<div class="login-header"><img src="{{ asset('images/logos/logodark.png') }}"></div>
 					<form role="form" method="POST" action="{{ url('/login') }}">
 						{{ csrf_field() }}
 						<div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">

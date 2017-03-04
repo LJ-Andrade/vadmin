@@ -9,7 +9,6 @@
 @endsection
 
 @section('content')
-
 	<div class="container">
 		@include('vadmin.users.headoptions')
 	</div>
@@ -42,63 +41,6 @@
 	<script type="text/javascript">
 
 	/////////////////////////////////////////////////
-    //                 FORM SKIN                   // 
-    /////////////////////////////////////////////////
-
-	$('.ShowNewBtn').click(function(){
-		// $('#List').addClass('Hidden');
-		$('.ShowNewBtn').addClass('Hidden');
-		$('#NewFormContainer').removeClass('Hidden');
-		$('.ShowListBtn').removeClass('Hidden');
-		$('#EditFormContainer').addClass('Hidden');
-	});
-
-	$('.ShowListBtn').click(function(){
-		$('#List').removeClass('Hidden');
-		$('.ShowNewBtn').removeClass('Hidden');
-		$('#NewFormContainer').addClass('Hidden');
-		$('#EditFormContainer').addClass('Hidden');
-		$('.ShowListBtn').addClass('Hidden');
-	});
-
-	$('.CloseFormBtn').click(function(e){
-		e.preventDefault();
-		$('#NewFormContainer').addClass('Hidden');
-		$('#EditFormContainer').addClass('Hidden');
-		$('.ShowNewBtn').removeClass('Hidden');
-		$('.ShowListBtn').addClass('Hidden');
-		$('.ShowPassInputBtn').show();
-		$('.PasswordSlot').html('');
-	});
-
-
-
-	$(document).on("click", ".ShowEditBtn", function(e){
-		$('#NewFormContainer').addClass('Hidden');
-		var id = $(this).data('id');
-		$('#EditFormContainer').removeClass('Hidden');
-		var data = $('#Id'+id).data('data');
-
-		$('#EditId').val(id);
-		$('#EditTitle').html(data.name);
-		$('#EditName').val(data.name);
-		$('#EditEmail').val(data.email);
-		$('#EditPassword').val(data.password);
-		$('#EditRole').val(data.type).change();
-
-
-	});
-
-	$('.ShowPassInputBtn').click(function(e){
-		e.preventDefault();
-		var input = "<input id='EditPassword' class='form-control' name='password' type='password'>";
-
-		$(this).hide();
-		$('.PasswordSlot').append(input);
-
-	});
-
-	/////////////////////////////////////////////////
     //                 LIST                        // 
     /////////////////////////////////////////////////
 
@@ -111,7 +53,7 @@
 
 		$.ajax({
 			type: 'get',
-			url: '{{ url('ajax_list_users') }}',
+			url: '{{ url('vadmin/ajax_list_users') }}',
 			success: function(data){
 				$('#List').empty().html(data);
 			},
@@ -126,7 +68,9 @@
 	$(document).on("click", ".pagination li a", function(e){
 		e.preventDefault();
 
-		var url = $(this).attr('href');
+		var url     = $(this).attr('href');
+		// var page_num = href.split('=').pop();
+		// var url      = "{{ url('vadmin/users/ajax_list_user') }}?page="+page_num+"";
 
 		$.ajax({
 			type: 'get',
@@ -140,6 +84,59 @@
 		});
 	});
 
+	// Search
+	
+	// By Name or Email
+	$(document).on("keyup", "#SearchForm", function(e){
+		e.preventDefault();
+		var query = $('#SearchInput').val();
+		var role = $(this).find('option:selected').val();
+		
+		if( query.length == 0 ){
+			ajax_list();
+		} else {
+			var url = "{{ url('vadmin/ajax_list_search') }}/search?query="+query+"&role="+role+"";
+			console.log(url);
+			$.ajax({
+				type: 'get',
+				url: url,
+				success: function(data){
+					$('#List').empty().html(data);
+				},
+				error: function(data){
+					// console.log(data)
+					// $('#Error').html(data.responseText);
+				}
+			});
+		}		
+	});
+
+	// By User Role
+
+	$('#SearchRole').change(function(){
+
+		var role = $(this).find('option:selected').val();
+		var query = $('#SearchInput').val();
+		
+		if(role=='*'){
+			ajax_list();
+		} else {
+			var url = "{{ url('vadmin/ajax_list_search') }}/search?query="+query+"&role="+role+"";
+			console.log(url);
+				$.ajax({
+					type: 'get',
+					url: url,
+					success: function(data){
+						$('#List').empty().html(data);
+					},
+					error: function(data){
+						console.log(data)
+						$('#Error').html(data.responseText);
+					}
+			});
+		}
+	});
+	
 	/////////////////////////////////////////////////
     //                 CREATION                    //
     /////////////////////////////////////////////////
@@ -154,8 +151,6 @@
 			if (form.parsley().isValid()){
 				var data       = $('#NewForm').serialize();
 				var route      = "{{ route('users.store') }}";
-				console.log(data);
-
 
 				$.ajax({
 					url: route,
@@ -163,21 +158,16 @@
 					dataType: 'json',
 					data: data,
 					success: function(data){
-						console.log('SUCCESS pa '+data);
-
 						if(data.success == 'true'){
-						
 							ajax_list();
-						
 						} else if(data.success == 'false') {
 							var response = data.responseJSON.name[0];
 							$('.FormError').html(data.responseText);
-						
 						}
-
 					},
 					error: function(data){
-						console.log('EL ERROR ES ');
+						$('#Error').html(data.responseText);
+						console.log('ERROR ');
 						console.log(data);
 					}
 				}); 
@@ -191,6 +181,22 @@
     //                    EDIT                     //
     /////////////////////////////////////////////////
 
+	// Fill Edit Form
+		// Edit
+	$(document).on("click", ".ShowEditBtn", function(e){
+		$('#NewFormContainer').addClass('Hidden');
+		var id = $(this).data('id');
+		$('#EditFormContainer').removeClass('Hidden');
+		var data = $('#Id'+id).data('data');
+		$('#EditId').val(id);
+		$('#EditTitle').html(data.name);
+		$('#EditName').val(data.name);
+		$('#EditEmail').val(data.email);
+		$('#EditPassword').val(data.password);
+		$('#EditRole').val(data.type).change();
+	});
+
+
 	$(document).ready(function() {
 		$("#EditForm").on('submit', function(e){
 			e.preventDefault();
@@ -202,7 +208,7 @@
 				var data  = $('#EditForm').serialize();
 				var id    = $('#EditForm #EditId').val();
 
-				var route = "{{ url('ajax_update_user') }}/"+id+"";
+				var route = "{{ url('vadmin/ajax_update_user') }}/"+id+"";
 
 				$.ajax({
 					url: route,
@@ -238,46 +244,6 @@
 
 
 
-	// // ----- Category Edit - Ajax ------- //
-	// var ajax_edit_user = function(id){
-	// 	var route = "{{ url('user') }}/"+id+"/ajax_edit_user";
-		
-	// 	$.get(route, function(data){
-	// 		console.log(data);
-	// 		$('#ModalIdInput').val(data.id);
-	// 		$('#ModalNameInput').val(data.name);
-	// 	});
-	// }
-
-	// $('.UpdateBtn').click(function(){
-
-	// 	var data  = $("#EditForm").serialize();
-	// 	var route = "{{ url('vadmin/categories') }}/"+id+"";
-	// 	var token = $('#update_moda_token').val();
-
-	// 	console.log(route);
-
-	// 	$.ajax({
-	// 		url: route,
-	// 		headers: {'X-CSRF-TOKEN': token},
-	// 		type: 'PUT',
-	// 		dataType: 'json',
-	// 		data: {name: name},
-	// 		success: function(data) {
-	// 			if(data.success == 'true' ){
-	// 				ajax_list();
-	// 				$('.CloseModal').click();
-	// 				alert_ok('Ok','Categoría editada')
-	// 			}
-	// 		},
-	// 		error: function(data) {
-	// 			var response = data.responseJSON.name[0];
-	// 			$('.EditModalError').html(response);
-	// 			console.log(data);
-	// 		}
-	// 	});
-	// });
-
 
 	/////////////////////////////////////////////////
     //                     DELETE                  //
@@ -294,7 +260,7 @@
 
 	function delete_item(id, route) {	
 
-		var route = "{{ url('ajax_delete_user') }}/"+id+"";
+		var route = "{{ url('vadmin/ajax_delete_user') }}/"+id+"";
 
 		$.ajax({
 			url: route,
@@ -337,7 +303,7 @@
 	// ---- Delete ---- //
 	function batch_delete_item(id) {
 
-		var route = "{{ url('ajax_batch_delete_users') }}/"+id+"";
+		var route = "{{ url('vadmin/ajax_batch_delete_users') }}/"+id+"";
 
 		$.ajax({
 			url: route,

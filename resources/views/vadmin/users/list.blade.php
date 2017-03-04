@@ -20,7 +20,7 @@
 			</div>
 			{{-- Column --}}
 			<div class="col-xs-6 col-sm-3 col-md-4 mobile-hide inner-tags">
-				{{ $user->type}}
+				<span class="badge">{{ $user->type}}</span>
 			</div>
 			{{-- Action Button --}}
 			<div class="col-xs-2 col-sm-2 col-md-3 lists-actions-trigger">
@@ -59,7 +59,7 @@
 
 	{{-- If there is no articles published shows this --}}
 	@if(! count($users))
-	<div class="empty-row">
+	<div class="Item-Row item-row empty-row">
 		No se han encontrado usuarios
 	</div>
 	@endif

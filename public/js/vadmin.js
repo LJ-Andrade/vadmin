@@ -10,6 +10,39 @@ $.ajaxSetup({
 //                          //
 //////////////////////////////
 
+//--------------------- NEW AND EDIT AJAX FORMS ------------------------- //
+
+
+	$(document).on("click", ".ShowNewBtn", function(e){
+	// $('.ShowNewBtn').click(function(){
+		// $('#List').addClass('Hidden');
+		$('.ShowNewBtn').addClass('Hidden');
+		$('#NewFormContainer').removeClass('Hidden');
+		$('.ShowListBtn').removeClass('Hidden');
+		$('#EditFormContainer').addClass('Hidden');
+		resetForm('NewForm');		
+	
+	});
+
+	$('.ShowListBtn').click(function(){
+		$('#List').removeClass('Hidden');
+		$('.ShowNewBtn').removeClass('Hidden');
+		$('#NewFormContainer').addClass('Hidden');
+		$('#EditFormContainer').addClass('Hidden');
+		$('.ShowListBtn').addClass('Hidden');
+	});
+
+	$('.CloseFormBtn').click(function(e){
+		e.preventDefault();
+		$('#NewFormContainer').addClass('Hidden');
+		$('#EditFormContainer').addClass('Hidden');
+		$('.ShowNewBtn').removeClass('Hidden');
+		$('.ShowListBtn').addClass('Hidden');
+		$('.ShowPassInputBtn').show();
+		$('.PasswordSlot').html('');
+	});
+
+
 
 
 //--------------------- LISTS ------------------------- //
@@ -90,7 +123,7 @@ function confirm_delete(id, bigtext, smalltext) {
 }
 
 
-function confirm_batch_delete(id,bigtext,smalltext) {
+function confirm_batch_delete(id, bigtext, smalltext) {
 	swal({
 		title: bigtext,
 		text: smalltext,
@@ -108,7 +141,9 @@ function confirm_batch_delete(id,bigtext,smalltext) {
 	});
 }
 
-
+function resetForm(id) {
+    document.getElementById(id).reset();
+}
 
 
 //////////////////////////////
@@ -156,14 +191,7 @@ $('.btnClose').click(function(){
 
 
 $('.OpenFilters').click(function(){
-
-	if(screen.width > 768){
-		$('.filter-desk').fadeIn(200);
-		$('.filter-desk').css('display','block');
-	} else {
-		$('.filter-full').fadeIn(200);
-	}
-
+	$('.Search-Filters').fadeIn(200);
 });
 
 //////////////////////////////

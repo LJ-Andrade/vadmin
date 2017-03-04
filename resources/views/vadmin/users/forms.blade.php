@@ -48,9 +48,6 @@
                 <div class="col-md-6">
                     {!! Form::label('type', 'Rol:') !!}
                     {!! Form::select('type', ['user' => 'Usuario','admin' => 'Admin', 'superadmin' => 'SuperAdmin'], null, ['id' => 'EditRole', 'class' => 'form-control', 'placeholder' => 'Seleccione una opcion', 'required' => '']) !!}
-                    {!! Form::label('password', 'Contraseña:') !!} <br>
-                    <button class="ShowPassInputBtn btnSmall buttonEdit">Cambiar Contraseña</button>
-                    <div class="PasswordSlot"></div>
                 </div>
             </div>
             <div class="FormError"></div>
