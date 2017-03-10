@@ -229,17 +229,4 @@ class UsersController extends Controller
         echo 1;
     }
 
-    /////////////////////////////////////////////////
-    //                   SEARCH                    //
-    /////////////////////////////////////////////////
-
-    public function search($name)
-    {
-        // $user   = User::SearchUser($name)->first();
-
-        // return view('users.index')->with('articles', $articles);
-        dd($name);
-    }
-
-
 } // End

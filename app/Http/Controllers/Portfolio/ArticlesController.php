@@ -85,7 +85,7 @@ class ArticlesController extends Controller
             'title'       => 'required|min:4|max:250|unique:articles',
             'category_id' => 'required',
             'slug'        => 'required|alpha_dash|min:5|max:255|unique:articles,slug',
-            'content'     => 'required|min:60',
+            'content'     => 'required|min:1',
             'image'       => 'image',
 
         ],[
@@ -143,6 +143,10 @@ class ArticlesController extends Controller
         return redirect()->route('portfolio.index')->with('message','Artículo creado');
 
     }
+
+    /////////////////////////////////////////////////
+    //                   UPDATE                    //
+    /////////////////////////////////////////////////
 
     // /**
     //  * Display the specified resource.
@@ -243,26 +247,22 @@ class ArticlesController extends Controller
 
     }
 
+    /////////////////////////////////////////////////
+    //                   DELETE                    //
+    /////////////////////////////////////////////////
+
+
     public function deleteArticleImg(Request $request, $id)
     {
-
         $image  = Image::find($id);
         $path   = 'webimages/portfolio/';
-
         File::Delete(public_path($path . $image->name));
         $image->delete();
-
         echo 1;
-
     }
 
+    // ---------- Ajax Bach Delete -------------- //
 
-    // /**
-    //  * Remove the specified resource from storage.
-    //  *
-    //  * @param  int  $id
-    //  * @return \Illuminate\Http\Response
-    //  */
     public function ajax_delete(Request $request, $id)
     {
         $article  = Article::find($id);

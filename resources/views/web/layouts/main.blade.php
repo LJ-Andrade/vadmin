@@ -30,10 +30,10 @@
 		<meta name="twitter:image"      content="{{ asset('webimages/logos/main-logo.png') }}" />
 		<meta name="twitter:url"        content="http://studiovimana.com.ar" />
 		{{-- <meta name="twitter:card"       content="" /> --}}
-
-		<link rel="stylesheet" async  type="text/css" href="{{ asset('plugins/bootstrap/css/bootstrap.min.css') }}">
+		{{--<link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">--}}
+		{{--<link rel="stylesheet" async  type="text/css" href="{{ asset('plugins/bootstrap/css/bootstrap.min.css') }}"> --}}
 		<link rel="stylesheet" async  type="text/css" href="{{ asset('plugins/animate/animate.css') }}">
-		<link rel="stylesheet" async  type="text/css" href="{{ asset('plugins/ionicons/ionicons.min.css') }}">
+		<link rel="stylesheet" async  type="text/css" href="{{ asset('plugins/ionicons/ionicons.min.css') }}"> 
 		@yield('styles')
 		<link rel="stylesheet" type="text/css" href="{{ asset('css/web.css') }}">
 
@@ -56,9 +56,7 @@
 	    {{-- /Loader --}}
 		
 		@yield('content')
-
 		@include('web.layouts.partials.scripts')
-		@yield('web.layouts.partials.js')
 		@yield('scripts')
 		@yield('custom_js')
 	</body>

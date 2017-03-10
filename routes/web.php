@@ -14,8 +14,6 @@ Route::get('guest', function () {
     return view('vadmin.guest');
 });
 
-
-
 /////////////////////////////////////////////////
 //                   USERS                     //
 /////////////////////////////////////////////////
@@ -35,23 +33,17 @@ Route::group(['prefix' => 'vadmin', 'middleware' => ['auth','admin']], function(
 	// Searcher
 	Route::get('ajax_list_search/{search?}', 'UsersController@ajax_list_search');
 	Route::get('ajax_list_search/{role?}', 'UsersController@ajax_list_search');
-	
-	// Route::get('ajax_list_search/{name?}', function () {
-	// 	echo 'oj';
-	// });
 
 });
 
+// --------------------------------------------//
+// --------------------------------------------//
+
 /////////////////////////////////////////////////
-//                   CRUDS                     //
+//											   //
+//              PROJECT ROUTES                 //
+//											   //
 /////////////////////////////////////////////////
-
-Route::group(['prefix' => 'vadmin', 'middleware' => ['auth','admin']], function(){
-
-
-	
-
-});
 
 
 /////////////////////////////////////////////////
@@ -64,15 +56,6 @@ Route::get('/', [
 	'uses' => 'WebController@home',
 ]);
 
-
-// --------------------------------------------//
-// --------------------------------------------//
-
-/////////////////////////////////////////////////
-//											   //
-//              PROJECT ROUTES                 //
-//											   //
-/////////////////////////////////////////////////
 
 /////////////////////////////////////////////////
 //               PORTFOLIO                     //
@@ -103,11 +86,21 @@ Route::get('tag/{name}', [
 
 Route::group(['prefix' => 'vadmin', 'middleware' => ['auth','admin']], function(){
 
-	// Route::resource('categories', 'Portfolio\CategoriesController');
-	// Route::get('categories/{id}/destroy', [
-	// 	'uses' => 'CategoriesController@destroy',
-	// 	'as'   => 'categories.destroy'
-	// ]);
+	Route::resource('categories', 'Portfolio\CategoriesController');
+	Route::get('categories/{id}/destroy', [
+		'uses' => 'CategoriesController@destroy',
+		'as'   => 'categories.destroy'
+	]);
+
+	Route::post('ajax_delete_category/{id}', 'Portfolio\CategoriesController@destroy');
+	Route::post('ajax_batch_delete_categories/{id}', 'Portfolio\CategoriesController@ajax_batch_delete');
+	Route::post('ajax_update_category/{id}', 'Portfolio\CategoriesController@update');
+	
+	Route::get('ajax_list_categories/{page?}', 'Portfolio\CategoriesController@ajax_list');
+	// Searcher
+	// Route::get('ajax_list_search/{search?}', 'UsersController@ajax_list_search');
+	// Route::get('ajax_list_search/{role?}', 'UsersController@ajax_list_search');
+
 
 	// Route::resource('tags', 'Portfolio\TagsController');
 	// Route::get('tags/{id}/destroy', [

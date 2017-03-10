@@ -18,7 +18,7 @@
 
 	<div class="container">
 	    <div class="row">
-	        {!! Form::open(['route' => ['articles.update', $article], 'method' => 'PUT', 'files' => true]) !!}
+	        {!! Form::open(['route' => ['portfolio.update', $article], 'method' => 'PUT', 'files' => true]) !!}
 	        	<div class="row">
 					{{-- Title --}}
 					<div class="col-md-6">

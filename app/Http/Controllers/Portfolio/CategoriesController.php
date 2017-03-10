@@ -17,8 +17,9 @@ class CategoriesController extends Controller
     {
         $categories = Category::orderBy('id', 'ASC')->paginate(12);
 
-        return view('vadmin.categories.index')->with('categories', $categories);
+        return view('vadmin.portfolio.categories.index')->with('categories', $categories);
     }
+
 
 
 
@@ -93,8 +94,8 @@ class CategoriesController extends Controller
     {
         $category = Category::find($id);
         $category->delete();
-
-        return redirect()->route('categories.index')->with('message', 'La categoría '. $category->name.' ha sido eliminada');
+        echo 1;
+        // return redirect()->route('categories.index')->with('message', 'La categoría '. $category->name.' ha sido eliminada');
     }
 
     
@@ -108,7 +109,7 @@ class CategoriesController extends Controller
     public function ajax_list()
     {
         $categories = Category::orderBy('id', 'DESC')->paginate(12);
-        return view('vadmin/categories/list')->with('categories', $categories);
+        return view('vadmin/portfolio/categories/list')->with('categories', $categories);
     }
 
 
@@ -175,6 +176,17 @@ class CategoriesController extends Controller
     {
         $category  = Category::find($id);
         $category->delete();
+        echo 1;
+    }
+
+    // ---------- Ajax Bach Delete -------------- //
+    public function ajax_batch_delete(Request $request, $id)
+    {
+        foreach ($request->id as $id) {
+        
+            $categories  = Category::find($id);
+            Category::destroy($id);
+        }
         echo 1;
     }
 

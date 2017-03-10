@@ -10,10 +10,10 @@
 			Atendemos a todo el país y al exterior</span>
 		</div>
 		<div class="col-md-4 tags">
-			<h2>Categorías</h2><hr>
-		{{--	@foreach($categories as $category)
+			<h2>Portfolio</h2><hr>
+			@foreach($categories as $category)
 			<a href="{{ route('web.search.category', $category->name ) }}"><span class="tag red-tag wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.3s">{{ $category->name }}</span></a>
-			@endforeach--}}
+			@endforeach
 			{{-- <span class="tag red-tag wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.2s">Diseño Web</span>
 			<span class="tag red-tag wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.3s">Diseño Gráfico</span>
 			<span class="tag red-tag wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.4s">Gestores de Contenido</span>
@@ -32,7 +32,6 @@
 			    		<span>Twitter</span>
 			    	</li> --}}
 					<li>
-						
 						<a href="https://twitter.com/StudioVimana" class="twitter-follow-button" data-show-count="false" data-size="large">Follow @StudioVimana</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 					</li>
 					{{-- <li>
@@ -46,6 +45,6 @@
 		</div>
 	</div>
 	<div class="copyright">
-		Desarrollado por Studio Vimana - Todos los derechos reservados - 2016
+		Desarrollado por Studio Vimana - Todos los derechos reservados - 2017
 	</div>
 </footer>

@@ -9,6 +9,7 @@
         "filp/whoops": "^2.1",
         "intervention/image": "^2.3",
         "laravel/framework": "5.4.*",
+        "laravel/tinker": "^1.0",
         "laravelcollective/html": "^5.2.0",
         "nesbot/carbon": "^1.22",
         "thedevsaddam/laravel-schema": "^2.0"

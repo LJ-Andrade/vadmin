@@ -1,8 +1,5 @@
 <?php
 
-use Faker\Generator;
-use App\User;
-
 /*
 |--------------------------------------------------------------------------
 | Model Factories
@@ -15,16 +12,13 @@ use App\User;
 */
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-
-$factory->define(User::class, function (Generator $faker) {
-    // static $password;
+$factory->define(App\User::class, function (Faker\Generator $faker) {
+    static $password;
 
     return [
-        'name'        => $faker->name,
-        'email'       => $faker->email,
-        'password'    => '12121212',
-        'avatar'      => '',
-        'type'        => 'admin'
+        'name' => $faker->name,
+        'email' => $faker->unique()->safeEmail,
+        'password' => $password ?: $password = bcrypt('secret'),
+        'remember_token' => str_random(10),
     ];
-    return $array;
 });

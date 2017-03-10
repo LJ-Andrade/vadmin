@@ -1,24 +1,130 @@
-@extends('web.layouts.main')
-@section('title', 'StudioVimana | Home')
-
-@section('fast_css')
-
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/fast_css.css') }}">
-    
-@endsection
-
+@extends('web.layouts.mainlight')
+@section('title', 'StudioVimana | Inicio')
 
 @section('styles')
-    
-    <link rel="stylesheet" type="text/css" href="{{ asset('plugins/owl/owl.carousel.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('plugins/owl/owl.theme.default.css') }}">
+<style>
 
+
+    @media (min-width: 765px) {
+        .home-intro {
+            background-color: #3d4450;
+            background-image: url("../public/webimages/home/back1.jpg");
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: 50% 100%;
+            overflow: hidden;
+            padding-top: 80px;
+            position: relative;
+            }
+
+    
+        .home-intro .main-logo {
+            width: 100%;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            -ms-grid-row-align: center;
+            align-items: center;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            margin-bottom: 100px;
+            z-index: 5;
+            margin-top: 60px;
+        }
+        .home-intro .main-logo h2 {
+            display: none;
+        }
+    }
+
+   /* Mobile Home */
+    @media (max-width: 765px) {
+        .home-intro {
+            text-align: center;
+            background: url('../public/webimages/home/back-mobile.jpg') no-repeat center center;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+            padding: 120px 0 90px;
+            margin: 0 auto;
+            margin-bottom: 50px;
+        }
+        .home-intro img {
+                max-width: 100%;
+                margin-bottom: 50px;
+            }
+        .home-intro h1 {
+                color: #fff;
+                font-size: 1.5rem;
+                font-family: 'Roboto', sans-serif
+            }
+        .home-intro .simple-slider {
+                display: none;
+            }
+            
+        .home-intro .main-logo h2 {
+                font-family: 'Roboto', sans-serif;
+                font-weight: 300;
+                display: block;
+            }
+
+    }
+    @media (max-width: 300px) {
+        .home-intro {
+            padding-top: 100px;
+        }
+    }
+
+    .home-section-2 {
+	padding: 60px 5px 20px;
+	text-align: center;
+	color: #505050;
+	}
+	.home-section-2 span.text-logo-small {
+		font-size: 2rem;
+		font-weight: 300;
+		padding-bottom: 15px;
+	}
+	.home-section-2 span.text-logo-bold {
+		font-size: 3rem;
+		font-weight: 700;
+	}
+	.home-section-2 h3 {
+		color: #a7b3dd
+	}
+	.home-section-2 p {
+		font-size: 1.2rem;
+		color: #595959;
+		font-weight: 300;
+	}
+	.home-section-2 .icons {
+		margin-top: 30px
+	}
+
+    @media (max-width: 765px) {
+        .home-section-2 .power-icons img {
+            width: 75px
+        }
+    }
+
+    @media (max-width: 405px) {
+        .home-section-2 .power-icons img {
+            width: 45px 
+        }
+    }
+
+
+</style>
 @endsection
 
-
 @section('content')
-    
-
     {{-- Facebook Plugin --}}
     <div id="fb-root"></div>
     <script>(function(d, s, id) {
@@ -27,45 +133,35 @@
       js = d.createElement(s); js.id = id;
       js.src = "//connect.facebook.net/es_ES/sdk.js#xfbml=1&version=v2.8&appId=240698342801213";
       fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));</script>
+    }(document, 'script', 'facebook-jssdk'));</script> 
     {{-- /Facebook Plugin --}}
 
+    <div id="actual_section" data-section="home"></div>
     {{-- Home Section Desktop --}}
-    <div class="Home-Parallax">      
-        <div id="home" class="home-parallax"> 
-        <div id="bgdim"></div>
-            <div class="main-logo wow animated zoomIn" data-wow-delay="0s" data-wow-duration="3s">
-                <img src="{{ asset('webimages/logos/main-logo.png') }}">
-            </div>
-            <div class="container home-slider-items">
-                <div class="row owl-valores">
-                    <div class="owl-carousel owl-theme owl-loaded">
-                        <div class="owl-item">
-                            <span class="icon"><i class="ion-coffee"></i></span>
-                            <span>Estás buscando</span>
-                            <span><b>especialístas en Diseño?</b>
-                            </span>
-                            <a href="{{ url("/#contact") }}" class="btn btnHollow">Contactanos !</a>
-                        </div>
-                        <div class="owl-item">
-                            <span class="icon"><i class="ion-ios-briefcase-outline"></i></span>
-                            <span>Querés ver como <b>trabajamos?</b></span><br>
-                            <a href="{{ route("web.portfolio") }}" class="btn btnRed">Ver el Portfolio!</a>
-                        </div>
-                        <div class="owl-item">
-                            <span class="icon"><i class="ion-ios-flask-outline"></i></span>
-                            <span>Desarrollamos <b>sistemas a medida</b></span> <br>
-                            <a href="{{ url("/#contact") }}" class="btn btnHollow">Presentanos tu proyecto!</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="home-intro">      
+        <div class="main-logo wow animated zoomIn" data-wow-delay="0s" data-wow-duration="3s">
+            <img src="{{ asset('webimages/logos/main-logo.png') }}">
+            <h2>Soluciones Visuales e Interactivas</h2>
         </div>
-    </div>
-    {{-- Home Section Mobile --}}
-    <div class="home-intro">
-        <img src="{{ asset('webimages/logos/main-logo.png') }}">
-        <h1>Diseño Gráfico y Diseño Web</h1>
+        <div id="Simple-Slider" class="simple-slider">
+            <ul>
+                <li>
+                    <span class="icon"><i class="ion-coffee"></i></span>
+                    <span class="text">Estás buscando <b>especialístas en Diseño?</b></span>
+                    <a href="{{ url("/#contact") }}" class="btn btnHollow">Contactanos !</a>
+                </li>
+                <li>
+                    <span class="icon"><i class="ion-ios-briefcase-outline"></i></span>
+                    <span class="text">Querés ver como <b>trabajamos?</b></span>
+                    <a href="{{ route("web.portfolio") }}" class="btn btnRed">Mirá nuestro Portfolio !</a>
+                </li>
+                <li>
+                    <span class="icon"><i class="ion-ios-flask-outline"></i></span> 
+                    <span class="text">Desarrollamos <b>sistemas a medida</b></span> 
+                    <a href="{{ url("/#contact") }}" class="btn btnHollow">Presentanos tu proyecto !</a>
+                </li>
+            </ul>  
+        </div>
     </div>
     {{-- First Info --}}
     <div class="container-fluid section-container home-section-2">
@@ -95,9 +191,9 @@
                         <img src=" {{asset('webimages/gral/home/icons/icon5.png')}} "></li>
                     </ul>
                 </div><br><br>
-                <div class="wow fadeInUp" data-wow-duration="1s" data-wow-delay="1s">
+       {{--         <div class="wow fadeInUp" data-wow-duration="1s" data-wow-delay="1s">
                     <img src="{{ asset('webimages/gral/loaders/loader.svg') }} ">
-                </div><br>
+                </div><br>--}}
             </article>
         <hr class="grey-hr">
         </div>
@@ -111,7 +207,9 @@
                     <img src="{{ asset('webimages/gral/home/img2.png') }}">
                 </div>
                 <article class="col-md-6 col-sm-12 col-xs-12 inner wow animated fadeInRight">
-                    <div class="left-divider-small"></div>
+                    <div class="text-big">
+                        <h1>Desarrollo Web</h1> 
+                    </div>
                     <span class="title"><i class="ion-ios-flask"></i> SOLUCIONES INTERACTIVAS </span>
                     <p>
                         Desarrollamos sitios personalizados. Creados desde cero y con las últimas tecnologías web.
@@ -123,15 +221,11 @@
                         - <b>Relacionado con Redes Sociales</b> | Aumenta el posicionamiento<br>
                         - <b>Exposición</b> | GoogleAdwords | Facebook | Buscadores | *Opcional<br>
                     </p>
-                    <div class="text-big">
-                        <h1>Desarrollo Web</h1> 
-                    </div>
                     <div class="action">
                         <a href="{{ route('web.portfolio') }}">
-                            <span class="btnHollow">Ver portfolio <i class="ion-ios-arrow-thin-right"></i></span>
+                            <span class="btnBig btnHollowPortfolio">Ver portfolio <i class="ion-android-arrow-dropright"></i> </span> 
                         </a>
                     </div>
-
                 </article>
             </div>
         </div>
@@ -139,6 +233,9 @@
             <div class="container wow animated fadeIn">
                 <div class="row row-flex row-flex-wrap service-item">
                     <article class="col-md-6 inner white-back wow animated fadeInLeft">
+                        <div class="text-big">
+                            <h1 class="right">Diseño Gráfico</h1> 
+                        </div>
                         <span class="title">SOLUCIONES VISUALES CREATIVAS <i class="ion-ios-rose-outline"></i></span>
                         <p>
                             Desarrollamos piezas personalizadas.  <br>
@@ -151,12 +248,9 @@
                             - <b>Editorial</b> | Libros | Catálogos | Manuales | Folletos <br>
                             - <b>Packagin</b> | Etiquetas | Bolsas | Cajas <br>
                         </p>
-                        <div class="text-big">
-                            <h1 class="right">Diseño Gráfico</h1> 
-                        </div>
                         <div class="action wow animated fadeIn" data-wow-delay="0.3s">
 							<a href="{{ route('web.portfolio') }}">
-								<span class="btnHollow">Ver portfolio <i class="ion-ios-arrow-thin-right"></i></span>
+								<span class="btnBig btnHollowPortfolio">Ver portfolio <i class="ion-android-arrow-dropright"></i> </span> 
 							</a>
 						</div>
                     </article>
@@ -174,27 +268,24 @@
                 </div>
                 <article class="col-md-8 col-sm-12 col-xs-12 inner wow animated fadeInRight">
                     <div class="left-divider-small"></div>
+                      <div class="text-big">
+                        <h1>Progamación y Desarrollo de Apps</h1> 
+                    </div>
                     <span class="title">SISTEMAS A MEDIDA</span>
                     <p>
                         Creamos sistemas hechos a medida según las necesidades presentadas.<br>
-                        Desarrollamos blogs, administradores de contenido, sistemas de gesión interna, etc.<br><br>
+                        Desarrollamos sistemas de gesión interna, gestores de contenido, blogs, etc.<br><br>
                         
-                        - <b>Gestores de Contenido</b> | Actualizá tu contenido vos mismo<br>
-                        - <b>Sitios de Gestión empresarial</b> | Organizá tu empresa desde tu web<br>
-                        - <b>Sistemas a medida</b> | Desarrollamos el sistema según lo que nos propongan<br> <br>
-
-
+                        - <b>Gestores de Contenido</b> | Generá el contenido de tu web vos mismo<br>
+                        - <b>Sitios de Gestión empresarial</b> | Organizá tu empresa desde cualquier lugar<br>
+                        
                         Características: <br>
                         - <b>Siempre Online</b> | Alojados en la web pueden ser accesibles desde cualquier lugar o dispositivo <br>
-                        - <b>Modulares y escalables</b> | Luego de creados se pueden agregar secciones o funcionalidades extra<br>
-                        - <b>Aplicaciones Offline</b> | Aplicaciones instalables que no dependen de conexión <br>
+                        - <b>Modulares y escalables</b> | Luego de desarrollados se pueden agregar secciones o funcionalidades extra<br>
                     </p>
-                    <div class="text-big">
-                        <h1>Progamación y Desarrollo de Apps</h1> 
-                    </div>
                      <div class="action">
 						<a href="{{ route('web.portfolio') }}">
-							<span class="btnHollow">Ver portfolio <i class="ion-ios-arrow-thin-right"></i></span>
+							<span class="btnBig btnHollowPortfolio">Ver portfolio <i class="ion-android-arrow-dropright"></i> </span> 
 						</a>
 					</div>
                 </article>
@@ -233,39 +324,47 @@
 
 @section('scripts')
 
-    <script src="{{asset('plugins/owl/owl.carousel.min.js')}}"></script>
 
 @endsection
 
 @section('custom_js')
-    <script type="text/javascript">
+<script>    
+
+    // SIMPLE SLIDER
+    $(document).ready(function ($) {
+
+        setInterval(function () {
+            moveRight();
+        }, 5000);
+
+        var slideCount = $('#Simple-Slider ul li').length;
+        var slideWidth = $('#Simple-Slider ul li').width();
+        var slideHeight = $('#Simple-Slider ul li').height();
+        var sliderUlWidth = slideCount * slideWidth;
         
-    $(document).ready(function () {
+        $('#Simple-Slider').css({ width: slideWidth, height: slideHeight });
+        $('#Simple-Slider ul').css({ width: sliderUlWidth, marginLeft: - slideWidth });
+        $('#Simple-Slider ul li:last-child').prependTo('#Simple-Slider ul');
 
-        if (screen.width > 765) {
-            // Owl
-            var owl = $('.owl-carousel');
-            owl.owlCarousel({
-                items:1,
-                loop:true,
-                margin:10,
-                navigation:false,
-                dots:false,
-                autoplay:true,
-                autoplayTimeout:5000,
-                autoplayHoverPause:false,
-
+        function moveLeft() {
+            $('#Simple-Slider ul').animate({
+                left: + slideWidth
+            }, 200, function () {
+                $('#Simple-Slider ul li:last-child').prependTo('#Simple-Slider ul');
+                $('#Simple-Slider ul').css('left', '');
             });
-            $('.play').on('click',function(){
-                owl.trigger('play.owl.autoplay',[1000])
-            })
-            $('.stop').on('click',function(){
-                owl.trigger('stop.owl.autoplay')
+        };
+
+        function moveRight() {
+            $('#Simple-Slider ul').animate({
+                left: - slideWidth
+            }, 200, function () {
+                $('#Simple-Slider ul li:first-child').appendTo('#Simple-Slider ul');
+                $('#Simple-Slider ul').css('left', '');
             });
+        };
+    });    
 
-        }
-        
-    });
 
-    </script>
+</script>
 @endsection

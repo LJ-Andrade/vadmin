@@ -58,8 +58,8 @@
 						  <ul class="dropdown-menu">
 							{{--	<li><a href="{{ route('portfolio.create') }}"><i class="ion-plus-round"></i> Nuevo Item</a></li>--}}
 							 	<li><a href="{{ route('portfolio.index') }}"><i class="ion-ios-paper-outline"></i> Listado</a></li>
-							{{--	<li><a href="{{ route('categories.index') }}"><i class="ion-ios-shuffle-strong"></i> Categorías</a></li>
-								<li><a href="{{ route('tags.index') }}"><i class="ion-ios-pricetag"></i> Talles</a></li> --}}
+							    <li><a href="{{ route('categories.index') }}"><i class="ion-ios-shuffle-strong"></i> Categorías</a></li>
+							{{--<li><a href="{{ route('tags.index') }}"><i class="ion-ios-pricetag"></i> Talles</a></li> --}}
 						  </ul>
 					 </li>
 				</ul>

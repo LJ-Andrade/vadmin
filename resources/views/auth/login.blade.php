@@ -1,6 +1,6 @@
 @extends('login.layouts.auth')
 
-@section('title','Fascination | Conectarse')
+@section('title','VADmin | Conectarse')
 
 @section('content')
 

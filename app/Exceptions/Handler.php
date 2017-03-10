@@ -60,10 +60,10 @@ class Handler extends ExceptionHandler
             return response()->json(['error' => 'Unauthenticated.'], 401);
         }
 
-        return redirect()->guest('login');
+        return redirect()->guest(route('login'));
     }
 
-    /**
+        /**
      * Create a Symfony response for the given exception.
      *
      * @param  \Exception  $e
@@ -84,6 +84,5 @@ class Handler extends ExceptionHandler
 
         return parent::convertExceptionToResponse($e);
     }
-
-
+    
 }
