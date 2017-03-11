@@ -63,7 +63,7 @@
 
 	{{-- If there is no articles published shows this --}}
 	@if(! count($articles))
-	<div class="empty-row">
+	<div class="item-row empty-row">
 		No se han encontrado artículos
 	</div>
 	@endif

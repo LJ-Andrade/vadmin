@@ -9,8 +9,6 @@
 	{!! Html::style('plugins/texteditor/trumbowyg.min.css') !!}
 	{!! Html::style('plugins/jqueryfiler/themes/jquery.filer-dragdropbox-theme.css') !!}
 	{!! Html::style('plugins/jqueryfiler/jquery.filer.css') !!}
-	{!! Html::style('plugins/chosen/chosen.min.css') !!}
-	{!! Html::style('plugins/validation/parsley.css') !!}
 	{!! Html::style('plugins/colorpicker/spectrum.css') !!}
 @endsection
 
@@ -18,7 +16,7 @@
 
 	<div class="container">
 	    <div class="row">
-	        {!! Form::open(['route' => ['portfolio.update', $article], 'method' => 'PUT', 'files' => true]) !!}
+	        {!! Form::open(['route' => ['portfolio.update', $article], 'class' => 'big-form', 'method' => 'PUT', 'files' => true]) !!}
 	        	<div class="row">
 					{{-- Title --}}
 					<div class="col-md-6">
@@ -102,10 +100,7 @@
 	<script type="text/javascript" src="{{ asset('plugins/jqueryfiler/jquery.filer.min.js')}} "></script>
 	<script type="text/javascript" src="{{ asset('plugins/colorpicker/spectrum.js')}} "></script>
 	<script type="text/javascript" src="{{ asset('plugins/colorpicker/jquery.spectrum-es.js')}} "></script>
-	<script type="text/javascript" src="{{ asset('plugins/validation/parsley.min.js') }}" ></script>
-	<script type="text/javascript" src="{{ asset('plugins/validation/es/parsley-es.min.js') }}" ></script>
-	<script type="text/javascript" src="{{ asset('plugins/chosen/chosen.jquery.min.js') }}" ></script>
-	<script type="text/javascript" src="{{ asset('js/articles.js')}} "></script>
+	<script type="text/javascript" src="{{ asset('js/jslocal/forms.js') }}" ></script>
 @endsection
 
 @section('custom_js')

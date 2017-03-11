@@ -1,9 +1,4 @@
 {
-  "/js/web.js": "/js/web.js",
-  "/css/web.css": "/css/web.css",
-  "/css/vadmin.css": "/css/vadmin.css",
-  "/js/vadmin.js": "/js/vadmin.js",
-  "/js/articles.js": "/js/articles.js",
-  "/css/web-vendors.css": "/css/web-vendors.css",
-  "/js/web-vendors.js": "/js/web-vendors.js"
+  "/mix.js": "/mix.js",
+  "/css/vadmin.css": "/css/vadmin.css"
 }

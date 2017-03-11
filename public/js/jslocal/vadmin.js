@@ -4,6 +4,9 @@ $.ajaxSetup({
     }
 });
 
+
+
+
 //////////////////////////////
 // 							//
 //           SKIN           //
@@ -44,6 +47,14 @@ $.ajaxSetup({
 
 
 
+
+	$('.CloseSmallForm').on('click', function(){
+
+		$(this).parents().eq(3).addClass('Hidden');
+		$('.ShowNewBtn').removeClass('Hidden');
+		$('.ShowListBtn').addClass('Hidden');
+
+	});
 
 //--------------------- LISTS ------------------------- //
 

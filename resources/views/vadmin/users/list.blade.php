@@ -22,12 +22,13 @@
 			<div class="col-xs-6 col-sm-3 col-md-4 mobile-hide inner-tags">
 				<span class="badge">{{ $user->type}}</span>
 			</div>
-			{{-- Action Button --}}
-			<div class="col-xs-2 col-sm-2 col-md-3 lists-actions-trigger">
-				<button type="button" class="Lists-Actions-Trigger action-btn" data-toggle="modal" data-target="#Article-Actions{{ $user->id }}">
-					<i class="ion-ios-gear-outline"></i>
-				</button>
-			</div>
+		
+		</div>
+		{{-- Action Button --}}
+		<div class="lists-actions-trigger">
+			<button type="button" class="Lists-Actions-Trigger action-btn" data-toggle="modal" data-target="#Article-Actions{{ $user->id }}">
+				<i class="ion-ios-gear-outline"></i>
+			</button>
 		</div>
 		{{-- Right Slot --}}
 		<div class="Status-Icon Status{{ $user->id }} status-icon">

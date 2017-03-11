@@ -1,7 +1,17 @@
 @extends('vadmin.layouts.main')
 
 @section('title', 'Vadmin | Portfolio')
-@section('header_title', 'Listado de Artículos') 
+
+@section('header')
+	@section('header_title', 'Listado de Artículos') 
+	@section('header_subtitle', ' ')
+	@section('options')
+		<div class="actions">
+		 <a href="{{ route('portfolio.create') }}"><button type="button" class=" animated fadeIn btnSm buttonOther">Nuevo Artículo</button></a>
+		</div>	
+	@endsection
+@endsection
+
 
 @section('styles')
 	{!! Html::style('plugins/chosen/chosen.min.css') !!}
@@ -15,7 +25,6 @@
 	</div>
     <div class="container">
 		<div class="row">	
-			<hr>
 			@include('vadmin.portfolio.forms')
 			<div id="List"></div>
 			<br>
@@ -28,74 +37,11 @@
 @endsection
 
 
-@section('scripts')
-
-	{!! Html::script('plugins/jqueryfiler/jquery.filer.min.js') !!}
-	{!! Html::script('plugins/chosen/chosen.jquery.min.js') !!}
-	
-@endsection
-
 {{-- CUSTOM JS SCRIPTS--}}
 @section('custom_js')
 
 	<script type="text/javascript">
 
-	/////////////////////////////////////////////////
-    //                 FORM SKIN                   // 
-    /////////////////////////////////////////////////
-
-	// $('.ShowNewBtn').click(function(){
-	// 	// $('#List').addClass('Hidden');
-	// 	$('.ShowNewBtn').addClass('Hidden');
-	// 	$('#NewFormContainer').removeClass('Hidden');
-	// 	$('.ShowListBtn').removeClass('Hidden');
-	// 	$('#EditFormContainer').addClass('Hidden');
-	// });
-
-	// $('.ShowListBtn').click(function(){
-	// 	$('#List').removeClass('Hidden');
-	// 	$('.ShowNewBtn').removeClass('Hidden');
-	// 	$('#NewFormContainer').addClass('Hidden');
-	// 	$('#EditFormContainer').addClass('Hidden');
-	// 	$('.ShowListBtn').addClass('Hidden');
-	// });
-
-	// $('.CloseFormBtn').click(function(e){
-	// 	e.preventDefault();
-	// 	$('#NewFormContainer').addClass('Hidden');
-	// 	$('#EditFormContainer').addClass('Hidden');
-	// 	$('.ShowNewBtn').removeClass('Hidden');
-	// 	$('.ShowListBtn').addClass('Hidden');
-	// 	$('.ShowPassInputBtn').show();
-	// 	$('.PasswordSlot').html('');
-	// });
-
-
-
-	// $(document).on("click", ".ShowEditBtn", function(e){
-	// 	$('#NewFormContainer').addClass('Hidden');
-	// 	var id = $(this).data('id');
-	// 	$('#EditFormContainer').removeClass('Hidden');
-	// 	var data = $('#Id'+id).data('data');
-
-	// 	$('#EditId').val(id);
-	// 	$('#EditTitle').html(data.name);
-	// 	$('#EditName').val(data.name);
-	// 	$('#EditEmail').val(data.email);
-	// 	$('#EditPassword').val(data.password);
-	// 	$('#EditRole').val(data.type).change();
-
-
-	// });
-
-	// $('.ShowPassInputBtn').click(function(e){
-	// 	e.preventDefault();
-	// 	var input = "<input id='EditPassword' class='form-control' name='password' type='password'>";
-
-	// 	$(this).hide();
-	// 	$('.PasswordSlot').append(input);
-
-	// });
 
 	/////////////////////////////////////////////////
     //                 LIST                        // 

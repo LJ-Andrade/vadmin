@@ -1,38 +1,47 @@
 @extends('vadmin.layouts.main')
 
+{{-- PAGE TITLE --}}
 @section('title', 'Vadmin | Usuarios')
-@section('header_title', 'Listado de Usuarios') 
 
+{{-- STYLE INCLUDES --}}
 @section('styles')
 	{!! Html::style('plugins/chosen/chosen.min.css') !!}
 	{!! Html::style('plugins/validation/parsley.css') !!}
 @endsection
 
+{{-- HEADER --}}
+@section('header')
+	@section('header_title', 'Listado de Usuarios') 
+	@section('options')
+		<div class="actions">
+			<button type="button" class="ShowNewBtn animated fadeIn btnSm buttonOther">Nuevo Usuario</button>
+			<button type="button" class="ShowListBtn animated fadeIn btnSm buttonOther Hidden">Listado</button>
+			<button class="OpenFilters btnSm buttonOther pull-right"><i class="ion-ios-search"></i></button>
+		</div>	
+	@endsection
+
+@endsection
+
+{{-- CONTENT --}}
 @section('content')
-	<div class="container">
-		@include('vadmin.users.headoptions')
-	</div>
     <div class="container">
 		<div class="row">		
-			<hr>
 			@include('vadmin.users.forms')
 			<div id="List"></div>
 			<br>
 		</div>
 		<button id="BatchDeleteBtn" class="button buttonCancel batchDeleteBtn Hidden"><i class="ion-ios-trash-outline"></i> Eliminar seleccionados</button>
 	</div>  
-	<div id="Error"></div>
-
-	
+	<div id="Error"></div>	
 @endsection
 
+{{-- MODALS --}}
 @include('vadmin.users.modals')
 
+{{-- SCRIPT INCLUDES --}}
 @section('scripts')
-
 	{!! Html::script('plugins/jqueryfiler/jquery.filer.min.js') !!}
 	{!! Html::script('plugins/chosen/chosen.jquery.min.js') !!}
-	
 @endsection
 
 {{-- CUSTOM JS SCRIPTS--}}

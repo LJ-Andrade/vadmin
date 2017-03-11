@@ -1,6 +1,5 @@
 <div class="row header-options">
-    <a href="{{ route('portfolio.create') }}"><button type="button" class=" animated fadeIn button buttonOther">Nuevo Artículo</button></a>
-    <button type="button" class="ShowListBtn animated fadeIn button buttonOther Hidden">Listado</button>
+
   {{--   <button class="OpenFilters button buttonOther pull-right"><i class="ion-ios-search"></i></button>
     @if(isset($_GET['name']))
     <a href="{{ route('portfolio.index') }}"><button class="button buttonOther pull-right">Todos</button></a>

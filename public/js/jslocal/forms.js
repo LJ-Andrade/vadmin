@@ -1,65 +1,73 @@
-		// ------------ Tags ------------ //
-		$('.Select-Tags').chosen({
-			placeholder_text_multiple: 'Seleccione los talles',
-			// max_selected_options: 3,
-			search_contains: true,
-			no_results_text: 'No se ha encontrado el talle'
-		});
 
-		$('.Select-Category').chosen({
-			placeholder_text_single: 'Seleccione una categoría',
-		});
+	// ------------ Tags ------------ //
+	$('.Select-Tags').chosen({
+		placeholder_text_multiple: 'Seleccione los talles',
+		// max_selected_options: 3,
+		search_contains: true,
+		no_results_text: 'No se ha encontrado el talle'
+	});
+
+	$('.Select-Category').chosen({
+		placeholder_text_single: 'Seleccione una categoría',
+	});
 
 
-		// --------- Slug sanitizer -------- //
-		$(".SlugInput").keyup(function(){
-	        var Text     = $(this).val();
-	        Text         = Text.toLowerCase();
-	        var regExp   = /\s+/g;
-	        Text         = Text.replace(/[&\/\\#,¡!´#+()$~%.'":*?<>{}]/g,'');
-	        Text         = Text.replace(regExp,'-');
-	        Text         = Text.replace('ñ', 'n') ;
-	        Text         = Text.replace('á', 'a') ;
-	        Text         = Text.replace('é', 'e') ;
-	        Text         = Text.replace('í', 'i') ;
-	        Text         = Text.replace('ó', 'o') ;
-	        Text         = Text.replace('ú', 'u') ;
-	        
-	        $(".SlugInput").val(Text);   
+	// --------- Slug sanitizer -------- //
+	$(".SlugInput").keyup(function(){
+		var Text     = $(this).val();
+		Text         = Text.toLowerCase();
+		var regExp   = /\s+/g;
+		Text         = Text.replace(/[&\/\\#,¡!´#+()$~%.'":*?<>{}]/g,'');
+		Text         = Text.replace(regExp,'-');
+		Text         = Text.replace('ñ', 'n') ;
+		Text         = Text.replace('á', 'a') ;
+		Text         = Text.replace('é', 'e') ;
+		Text         = Text.replace('í', 'i') ;
+		Text         = Text.replace('ó', 'o') ;
+		Text         = Text.replace('ú', 'u') ;
+		
+		$(".SlugInput").val(Text);   
 
-		});
+	});
 
-		// --------- Slug AutoFillnput from title --------- //
-		$("#TitleInput").keyup(function(event) {
+	// --------- Slug AutoFillnput from title --------- //
+	$("#TitleInput").keyup(function(event) {
 
-			var stt = $(this).val();
+		var stt = $(this).val();
 
-			var Text     = $(this).val();
-			Text         = Text.toLowerCase();
-			var regExp   = /\s+/g;
-			Text         = Text.replace(/[&\/\\#,¡!´#+()$~%.'":*?<>{}]/g,'');
-			Text         = Text.replace(regExp,'-');
-			Text         = Text.replace('ñ', 'n') ;
-			Text         = Text.replace('á', 'a') ;
-			Text         = Text.replace('é', 'e') ;
-			Text         = Text.replace('í', 'i') ;
-			Text         = Text.replace('ó', 'o') ;
-			Text         = Text.replace('ú', 'u') ;
-			
-			$(".SlugInput").val(Text);   
+		var Text     = $(this).val();
+		Text         = Text.toLowerCase();
+		var regExp   = /\s+/g;
+		Text         = Text.replace(/[&\/\\#,¡!´#+()$~%.'":*?<>{}]/g,'');
+		Text         = Text.replace(regExp,'-');
+		Text         = Text.replace('ñ', 'n') ;
+		Text         = Text.replace('á', 'a') ;
+		Text         = Text.replace('é', 'e') ;
+		Text         = Text.replace('í', 'i') ;
+		Text         = Text.replace('ó', 'o') ;
+		Text         = Text.replace('ú', 'u') ;
+		
+		$(".SlugInput").val(Text);   
 
-		});
+	});
 
-		// $(document).ready(function() {
-		// 	$('#Multi_Images').filer({
-		// 		// limit: 3,
-		// 		maxSize: 3,
-		// 		extensions: ['jpg', 'jpeg', 'png', 'gif'],
-		// 		changeInput: true,
-		// 		showThumbs: true,
-		// 		addMore: true
-		// 	});
-		// });
+	// $(document).ready(function() {
+	// 	$('#Multi_Images').filer({
+	// 		// limit: 3,
+	// 		maxSize: 3,
+	// 		extensions: ['jpg', 'jpeg', 'png', 'gif'],
+	// 		changeInput: true,
+	// 		showThumbs: true,
+	// 		addMore: true
+	// 	});
+	// });
+
+	
+	//////////////////////////////
+	// 							//
+	//   EDITORS AND FIELSD     //
+	//                          //
+	//////////////////////////////
 
 
 	$(document).ready(function() {

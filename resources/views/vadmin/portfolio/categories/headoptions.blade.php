@@ -1,6 +1,5 @@
 <div class="row header-options">
-    <button type="button" class="ShowNewBtn animated fadeIn button buttonOther">Nueva Categoría</button>
-    <button type="button" class="ShowListBtn animated fadeIn button buttonOther Hidden">Listado</button>
+
    {{-- <button class="OpenFilters btnSquare buttonOther pull-right"><i class="ion-ios-search"></i></button>
     <div class="Search-Filters search-filters">
 

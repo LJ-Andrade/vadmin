@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use App\User;
+use App\Article;
 
 class VadminController extends Controller
 {
@@ -27,9 +28,19 @@ class VadminController extends Controller
     {
 
         $users    = User::orderBy('id', 'ASC')->where('type','member')->get();
-        $users    = count($users);
         
-        return view('vadmin')->with('users', $users);
+        $articles = Article::search($request->title)->limit(6)->orderBy('id', 'DESCC')->get();
+        $articles->each(function($articles){
+            $articles->category;
+            $articles->user;
+            $articles->images;
+        });
+      
+    
+        return view('vadmin')
+            ->with('articles', $articles)
+            ->with('users', $users);
+
     }
 
 

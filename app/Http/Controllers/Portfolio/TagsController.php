@@ -18,7 +18,7 @@ class TagsController extends Controller
 
         $tags = Tag::search($request->name)->orderBy('id', 'ASC')->paginate(12);
 
-        return view('vadmin.tags.index')->with('tags', $tags);
+        return view('vadmin.portfolio.tags.index')->with('tags', $tags);
     }
 
     /**

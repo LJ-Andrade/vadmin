@@ -1,14 +1,23 @@
 @extends('vadmin.layouts.main')
 @section('title', 'VADmin | Nuevo Artículo')
-@section('header_title', 'Nuevo') 
-@section('header_subtitle', 'Artículo')
+
+
+@section('header')
+	@section('header_title', 'Nuevo Artículo') 
+	@section('header_subtitle', ' ')
+	@section('options')
+		<div class="actions">
+			<a href="{{ route('portfolio.index') }}"><button type="button" class="animated fadeIn btnSm buttonOther">Volver</button></a>
+		</div>	
+	@endsection
+@endsection
+
+
 
 @section('styles')
 	{!! Html::style('plugins/texteditor/trumbowyg.min.css') !!}
 	{!! Html::style('plugins/jqueryfiler/themes/jquery.filer-dragdropbox-theme.css') !!}
 	{!! Html::style('plugins/jqueryfiler/jquery.filer.css') !!}
-	{!! Html::style('plugins/chosen/chosen.min.css') !!}
-	{!! Html::style('plugins/validation/parsley.css') !!}
 	{!! Html::style('plugins/colorpicker/spectrum.css') !!}
 @endsection
 
@@ -16,7 +25,7 @@
 
 	<div class="container">
 	    <div class="row">
-	        {!! Form::open(['route' => 'portfolio.store', 'method' => 'POST', 'files' => true, 'id' => 'NewItemForm', 'data-parsley-validate' => '']) !!}	
+	        {!! Form::open(['route' => 'portfolio.store', 'method' => 'POST', 'files' => true, 'id' => 'NewItemForm', 'class' => 'big-form', 'data-parsley-validate' => '']) !!}	
 				<div class="row">
 					{{-- Title --}}
 					<div class="col-md-6">
@@ -91,10 +100,7 @@
 	<script type="text/javascript" src="{{ asset('plugins/jqueryfiler/jquery.filer.min.js')}} "></script>
 	<script type="text/javascript" src="{{ asset('plugins/colorpicker/spectrum.js')}} "></script>
 	<script type="text/javascript" src="{{ asset('plugins/colorpicker/jquery.spectrum-es.js')}} "></script>
-	<script type="text/javascript" src="{{ asset('plugins/validation/parsley.min.js') }}" ></script>
-	<script type="text/javascript" src="{{ asset('plugins/validation/es/parsley-es.min.js') }}" ></script>
-	<script type="text/javascript" src="{{ asset('plugins/chosen/chosen.jquery.min.js') }}" ></script>
-	<script type="text/javascript" src="{{ asset('js/articles.js')}} "></script>
+	<script type="text/javascript" src="{{ asset('js/jslocal/forms.js') }}" ></script>
 @endsection
 
 @section('custom_js')
@@ -106,7 +112,6 @@
 		$.trumbowyg.svgPath = '{{ asset('plugins/texteditor/icons.svg') }}';
 		// Init
 		$('.Textarea-Editor').trumbowyg();
-
 
 		// ----------------------- Color Picker --------------------------------//
 		// Add Color Selector
@@ -121,11 +126,6 @@
 				console.log(hex);
 			}
 		});
-
-		
-
-		// Validations
-		// $('#NewItemForm').parsley();
 
 	</script>
 

@@ -1,7 +1,15 @@
 @extends('vadmin.layouts.main')
 
-@section('title', 'Vadmin | Categorías')
-@section('header_title', 'Listado de Categorías') 
+@section('header')
+	@section('title', 'Vadmin | Categorías')
+	@section('header_title', 'Listado de Categorías') 
+	@section('options')
+		<div class="actions">
+			<button type="button" class="ShowNewBtn animated fadeIn btnSm buttonOther">Nueva Categoría</button>
+			<button type="button" class="ShowListBtn animated fadeIn btnSm buttonOther Hidden">Listado</button>
+		</div>	
+	@endsection
+@endsection
 
 @section('styles')
 	
@@ -13,7 +21,6 @@
 	</div>
     <div class="container">
 		<div class="row">		
-			<hr>
 			@include('vadmin.portfolio.categories.forms')
 			<div id="List"></div>
 			<br>
@@ -157,18 +164,20 @@
 						if(data.success == 'true'){
 							ajax_list();
 							alert_ok('Ok!','Categoría creada');
+							$('.FormNewError').addClass('Hidden');
+							resetForm("NewForm");
 						} else if(data.success == 'false') {
-							// var response = data.responseJSON.name[0];
-							// $('.FormError').html(data.responseText);
+							var response = data.responseJSON.name[0];
+							$('.FormNewError').html(data.responseText).removeClass('Hidden');
 							console.log(data);
-							alert_error('Ups!','No se ha podido crear la categoría');
+							// alert_error('Ups!','No se ha podido crear la categoría');
 						}
 					},
 					error: function(data){
 						// $('#Error').html(data.responseText);
-						// console.log('ERROR ');
-						console.log(data);
-						alert_error('Ups!','No se ha podido crear la categoría');
+						var response = data.responseJSON.name[0];
+						$('.FormNewError').html(response).removeClass('Hidden');
+						console.log(response);
 					}
 				}); 
 			} // End If
@@ -214,20 +223,21 @@
 						if(data.success == 'true'){
 							ajax_list();
 							alert_ok('Ok!','Categoría editada');
+							$('.FormEditError').addClass('Hidden');
 						} else if(data.success == 'false') {
 							console.log(data);
 							alert_error('Ups!','No se ha podido crear la categoría');
 							// var response = data.responseJSON.name[0];
-							// $('.FormError').html(data.responseText);
+							
+							$('.FormEditError').html(data.responseText).removeClass('Hidden');
 						
 						}
 						$('#Error').html(data.responseText);
 					},
 					error: function(data){
-						console.log(data);
-						alert_error('Ups!','No se ha podido crear la categoría');
-						// $('#Error').html(data.responseJSON);
-						// $('#Error').html(data.responseText);
+						var response = data.responseJSON.name[0];
+						$('.FormEditError').html(response).removeClass('Hidden');
+						console.log(response);
 					}
 				}); 
 

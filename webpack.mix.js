@@ -12,17 +12,17 @@ const { mix } = require('laravel-mix');
  */
 
 // Web
-mix.js('resources/assets/js/web/web.js', 'public/js')
-    .sass('resources/assets/sass/web.scss', 'public/css')
-    .options({
-      processCssUrls: false
-   });
+// mix.js('resources/assets/js/web/web.js', 'public/js')
+//     .sass('resources/assets/sass/web.scss', 'public/css')
+//     .options({
+//       processCssUrls: false
+//    });
 
-// // Web Css Vendors
-mix.combine([
-    'public/plugins/animate/animate.css',
-    'public/plugins/ionicons/ionicons.min.css'
-], 'public/css/web-vendors.css');
+// // // Web Css Vendors
+// mix.combine([
+//     'public/plugins/animate/animate.css',
+//     'public/plugins/ionicons/ionicons.min.css'
+// ], 'public/css/web-vendors.css');
 
 // // Web JS Vendors
 // mix.combine([
@@ -32,10 +32,9 @@ mix.combine([
 // ], 'public/js/web-vendors.js');
   
 
-// mix.js('resources/assets/js/vadmin/vadmin.js', 'public/js')
-//     .js('resources/assets/js/vadmin/articles.js', 'public/js')
-//     .sass('resources/assets/sass/vadmin/vadmin.sass', 'public/css')
-//     .options({
-//       processCssUrls: false
-//    });
+mix.sass('resources/assets/sass/vadmin/vadmin.sass', 'public/css')
+    .options({
+      processCssUrls: false
+   });
 
+// .js('resources/assets/js/vadmin/vadmin.js', 'public/js')

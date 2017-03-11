@@ -13,11 +13,13 @@
 	<!-- Favicon -->
 	<link rel="shortcut icon" href="{{ asset('webimages/logos/favicon.png') }}">
 
+	<!-- Styles -->
 	<link rel="stylesheet" type="text/css" href="{{ asset('plugins/bootstrap/css/bootstrap.min.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('plugins/animate/animate.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('plugins/ionicons/ionicons.min.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('plugins/validation/parsley.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('plugins/sweetalert/sweetalert2.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ asset('plugins/chosen/chosen.min.css') }}">
 	@yield('styles')
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/vadmin.css') }}">
 </head>
@@ -30,6 +32,7 @@
 		{{-- @yield('modal') --}}
 		<section class="main-section">
 			<div class="container">
+				@include('vadmin.users.searcher')
 				@include('vadmin.layouts.partials.errors')
 				@include('vadmin.layouts.partials.messages')
 			</div>
@@ -37,9 +40,15 @@
 			@yield('content')
 			{{-- /Content --}}
 		</section>
-		@include('vadmin.layouts.partials.scripts')
+
+		<script type="text/javascript" src="{{ asset('plugins/jquery/jquery-3.3.1.min.js') }}" ></script>
+		<script type="text/javascript" src="{{ asset('plugins/bootstrap/js/bootstrap.min.js') }}" ></script>
+		<script type="text/javascript" src="{{ asset('plugins/sweetalert/sweetalert2.min.js') }}" ></script>
+		<script type="text/javascript" src="{{ asset('plugins/validation/parsley.min.js') }}" ></script>
+		<script type="text/javascript" src="{{ asset('plugins/validation/es/parsley-es.min.js') }}" ></script>
+		<script type="text/javascript" src="{{ asset('plugins/chosen/chosen.jquery.min.js') }}" ></script>
 		@yield('scripts')
+		<script type="text/javascript" src="{{ asset('js/jslocal/vadmin.js') }}" ></script>
 		@yield('custom_js')
-{{-- 		@include('vadmin.layouts.partials.modal') --}}
 	</body>
 </html>

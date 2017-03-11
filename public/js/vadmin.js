@@ -63,11 +63,352 @@
 /******/ 	__webpack_require__.p = "./";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 7);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function($) {$.ajaxSetup({
+	headers: {
+		'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	}
+});
+
+//////////////////////////////
+// 							//
+//           SKIN           //
+//                          //
+//////////////////////////////
+
+//--------------------- NEW AND EDIT AJAX FORMS ------------------------- //
+
+
+$(document).on("click", ".ShowNewBtn", function (e) {
+	// $('.ShowNewBtn').click(function(){
+	// $('#List').addClass('Hidden');
+	$('.ShowNewBtn').addClass('Hidden');
+	$('#NewFormContainer').removeClass('Hidden');
+	$('.ShowListBtn').removeClass('Hidden');
+	$('#EditFormContainer').addClass('Hidden');
+	resetForm('NewForm');
+});
+
+$('.ShowListBtn').click(function () {
+	$('#List').removeClass('Hidden');
+	$('.ShowNewBtn').removeClass('Hidden');
+	$('#NewFormContainer').addClass('Hidden');
+	$('#EditFormContainer').addClass('Hidden');
+	$('.ShowListBtn').addClass('Hidden');
+});
+
+$('.CloseFormBtn').click(function (e) {
+	e.preventDefault();
+	$('#NewFormContainer').addClass('Hidden');
+	$('#EditFormContainer').addClass('Hidden');
+	$('.ShowNewBtn').removeClass('Hidden');
+	$('.ShowListBtn').addClass('Hidden');
+	$('.ShowPassInputBtn').show();
+	$('.PasswordSlot').html('');
+});
+
+//--------------------- LISTS ------------------------- //
+
+// ----------------- List Actions---------------------- //
+
+$(document).ready(function () {
+
+	// $('.List-Actions').hide();
+
+	// Show Actions
+	$(document).on("click", ".Lists-Actions-Trigger", function (e) {
+		e.preventDefault();
+		e.stopPropagation();
+		$(this).parent().siblings('.List-Actions').removeClass('Hidden');
+	});
+
+	// Close Actions
+	$(document).on("click", ".Close-Actions-Btn", function (e) {
+		e.preventDefault();
+		e.stopPropagation();
+		$(this).parent().addClass('Hidden');
+	});
+});
+
+// ----------------- Batch Delete --------------------- //
+
+$(document).on("click", ".BatchDelete", function (e) {
+
+	batch_select(this);
+
+	var checkbox = $(this).prop('checked');
+	if (checkbox) {
+		$(this).parent().addClass('row-selected');
+	} else {
+		$(this).parent().removeClass('row-selected');
+	}
+});
+
+function batch_select(trigger) {
+
+	var countSelected = $('input:checkbox:checked').length;
+
+	if (countSelected >= 2) {
+		$('#BatchDeleteBtn').removeClass('Hidden');
+	} else {
+		$('#BatchDeleteBtn').addClass('Hidden');
+	}
+}
+
+//////////////////////////////
+// 							//
+//        FUNCTIONS         //
+//                          //
+//////////////////////////////
+
+
+function confirm_delete(id, bigtext, smalltext) {
+	swal({
+		title: bigtext,
+		text: smalltext,
+		type: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: 'ELIMINAR',
+		cancelButtonText: 'Cancelar',
+		confirmButtonClass: 'button buttonOk',
+		cancelButtonClass: 'button buttonCancel',
+		buttonsStyling: false
+	}).then(function () {
+		delete_item(id);
+	});
+}
+
+function confirm_batch_delete(id, bigtext, smalltext) {
+	swal({
+		title: bigtext,
+		text: smalltext,
+		type: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: 'ELIMINAR',
+		cancelButtonText: 'Cancelar',
+		confirmButtonClass: 'button buttonOk',
+		cancelButtonClass: 'button buttonCancel',
+		buttonsStyling: false
+	}).then(function () {
+		batch_delete_item(id);
+	});
+}
+
+function resetForm(id) {
+	document.getElementById(id).reset();
+}
+
+//////////////////////////////
+// 							//
+//          ALERTS          //
+//                          //
+//////////////////////////////
+
+function alert_ok(bigtext, smalltext) {
+
+	swal(bigtext, smalltext, 'success');
+}
+
+function alert_error(bigtext, smalltext) {
+
+	swal(bigtext, smalltext, 'error');
+}
+
+//////////////////////////////
+// 							//
+//        ACTIONS           //
+//                          //
+//////////////////////////////
+
+$('.btnClose').click(function () {
+	$(this).parent().fadeOut(200);
+});
+
+//////////////////////////////
+// 							//
+//        FILTERS           //
+//                          //
+//////////////////////////////
+
+
+$('.OpenFilters').click(function () {
+	$('.Search-Filters').fadeIn(200);
+});
+
+//////////////////////////////
+// 							//
+//        LOADER            //
+//                          //
+//////////////////////////////
+
+// $(document).ajaxStart(function(){
+//     // $(".loader").removeClass("Hidden");
+//     // $('html').css({ 'overflow': 'hidden', 'height': '100%' });
+//     toggleLoader();
+// });
+
+// $(document).ajaxComplete(function(){
+//     // $(".loader").addClass("Hidden");
+//     // $('html').css({ 'overflow-Y': 'scroll', 'height': '100%' });
+//     toggleLoader();
+// });
+
+// function toggleLoader()
+// {
+//   $('.loader').toggleClass('Hidden');
+//     if (!$('.loader').hasClass('Hidden')) {
+//       // This prevents scroll on loader
+//       $('html').css({ 'overflow': 'hidden', 'height': '100%' });
+//     } else {
+//       $('html').css({ 'overflow-Y': 'scroll', 'height': '100%' });
+//     }
+// }
+
+
+// ------------ Tags ------------ //
+$('.Select-Tags').chosen({
+	placeholder_text_multiple: 'Seleccione los talles',
+	// max_selected_options: 3,
+	search_contains: true,
+	no_results_text: 'No se ha encontrado el talle'
+});
+
+$('.Select-Category').chosen({
+	placeholder_text_single: 'Seleccione una categoría'
+});
+
+// --------- Slug sanitizer -------- //
+$(".SlugInput").keyup(function () {
+	var Text = $(this).val();
+	Text = Text.toLowerCase();
+	var regExp = /\s+/g;
+	Text = Text.replace(/[&\/\\#,¡!´#+()$~%.'":*?<>{}]/g, '');
+	Text = Text.replace(regExp, '-');
+	Text = Text.replace('ñ', 'n');
+	Text = Text.replace('á', 'a');
+	Text = Text.replace('é', 'e');
+	Text = Text.replace('í', 'i');
+	Text = Text.replace('ó', 'o');
+	Text = Text.replace('ú', 'u');
+
+	$(".SlugInput").val(Text);
+});
+
+// --------- Slug AutoFillnput from title --------- //
+$("#TitleInput").keyup(function (event) {
+
+	var stt = $(this).val();
+
+	var Text = $(this).val();
+	Text = Text.toLowerCase();
+	var regExp = /\s+/g;
+	Text = Text.replace(/[&\/\\#,¡!´#+()$~%.'":*?<>{}]/g, '');
+	Text = Text.replace(regExp, '-');
+	Text = Text.replace('ñ', 'n');
+	Text = Text.replace('á', 'a');
+	Text = Text.replace('é', 'e');
+	Text = Text.replace('í', 'i');
+	Text = Text.replace('ó', 'o');
+	Text = Text.replace('ú', 'u');
+
+	$(".SlugInput").val(Text);
+});
+
+// $(document).ready(function() {
+// 	$('#Multi_Images').filer({
+// 		// limit: 3,
+// 		maxSize: 3,
+// 		extensions: ['jpg', 'jpeg', 'png', 'gif'],
+// 		changeInput: true,
+// 		showThumbs: true,
+// 		addMore: true
+// 	});
+// });
+
+
+//////////////////////////////
+// 							//
+//   EDITORS AND FIELSD     //
+//                          //
+//////////////////////////////
+
+
+$(document).ready(function () {
+
+	$('#Multi_Images').filer({
+		limit: null,
+		maxSize: null,
+		extensions: null,
+		changeInput: true,
+		showThumbs: true,
+		appendTo: null,
+		theme: "default",
+		templates: {
+			box: '<ul class="jFiler-items-list jFiler-items-default"></ul>',
+			item: '<li class="jFiler-item"><div class="jFiler-item-container"><div class="jFiler-item-inner"><div class="jFiler-item-icon pull-left">{{fi-icon}}</div><div class="jFiler-item-info pull-left"><div class="jFiler-item-title" title="{{fi-name}}">{{fi-name | limitTo:30}}</div><div class="jFiler-item-others"><span>size: {{fi-size2}}</span><span>type: {{fi-extension}}</span><span class="jFiler-item-status">{{fi-progressBar}}</span></div><div class="jFiler-item-assets"><ul class="list-inline"><li><a class="ion-trash-b jFiler-item-trash-action"></a></li></ul></div></div></div></div></li>',
+			itemAppend: '<li class="jFiler-item"><div class="jFiler-item-container"><div class="jFiler-item-inner"><div class="jFiler-item-icon pull-left">{{fi-icon}}</div><div class="jFiler-item-info pull-left"><div class="jFiler-item-title">{{fi-name | limitTo:35}}</div><div class="jFiler-item-others"><span>size: {{fi-size2}}</span><span>type: {{fi-extension}}</span><span class="jFiler-item-status"></span></div><div class="jFiler-item-assets"><ul class="list-inline"><li><a class="icon-jfi-trash jFiler-item-trash-action"></a></li></ul></div></div></div></div></li>',
+			progressBar: '<div class="bar"></div>',
+			itemAppendToEnd: false,
+			removeConfirmation: false,
+			canvasImage: true,
+			_selectors: {
+				list: '.jFiler-items-list',
+				item: '.jFiler-item',
+				progressBar: '.bar',
+				remove: '.jFiler-item-trash-action'
+			}
+		},
+
+		dragDrop: {
+			dragEnter: null,
+			dragLeave: null,
+			drop: null
+		},
+		addMore: true,
+		clipBoardPaste: true,
+		excludeName: null,
+		beforeShow: function beforeShow() {
+			return true;
+		},
+		onSelect: function onSelect() {},
+		afterShow: function afterShow() {},
+		onRemove: function onRemove() {},
+		onEmpty: function onEmpty() {},
+		captions: {
+			button: "Seleccionar...",
+			feedback: "Seleccione los archivos a subir",
+			feedback2: "seleccionados",
+			drop: "Arrastre aquí el archivo a subir",
+			removeConfirmation: "Desea eliminar el archivo?",
+			errors: {
+				filesLimit: "Solo {{fi-limit}} archivos pueden ser incluídos.",
+				filesType: "Solo se pueden subir imágenes.",
+				filesSize: "{{fi-name}} es muy pesada! Solo se pueden subir archivos de {{fi-maxSize}} MB.",
+				filesSizeAll: "Los archivos son muy pesados! Solo se pueden subir hasta {{fi-maxSize}} MB."
+			}
+		}
+	});
+});
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -10294,224 +10635,11 @@ return jQuery;
 
 
 /***/ }),
-/* 1 */,
-/* 2 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function($) {$.ajaxSetup({
-	headers: {
-		'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-	}
-});
-
-//////////////////////////////
-// 							//
-//           SKIN           //
-//                          //
-//////////////////////////////
-
-//--------------------- NEW AND EDIT AJAX FORMS ------------------------- //
-
-
-$(document).on("click", ".ShowNewBtn", function (e) {
-	// $('.ShowNewBtn').click(function(){
-	// $('#List').addClass('Hidden');
-	$('.ShowNewBtn').addClass('Hidden');
-	$('#NewFormContainer').removeClass('Hidden');
-	$('.ShowListBtn').removeClass('Hidden');
-	$('#EditFormContainer').addClass('Hidden');
-	resetForm('NewForm');
-});
-
-$('.ShowListBtn').click(function () {
-	$('#List').removeClass('Hidden');
-	$('.ShowNewBtn').removeClass('Hidden');
-	$('#NewFormContainer').addClass('Hidden');
-	$('#EditFormContainer').addClass('Hidden');
-	$('.ShowListBtn').addClass('Hidden');
-});
-
-$('.CloseFormBtn').click(function (e) {
-	e.preventDefault();
-	$('#NewFormContainer').addClass('Hidden');
-	$('#EditFormContainer').addClass('Hidden');
-	$('.ShowNewBtn').removeClass('Hidden');
-	$('.ShowListBtn').addClass('Hidden');
-	$('.ShowPassInputBtn').show();
-	$('.PasswordSlot').html('');
-});
-
-//--------------------- LISTS ------------------------- //
-
-// ----------------- List Actions---------------------- //
-
-$(document).ready(function () {
-
-	// $('.List-Actions').hide();
-
-	// Show Actions
-	$(document).on("click", ".Lists-Actions-Trigger", function (e) {
-		e.preventDefault();
-		e.stopPropagation();
-		$(this).parent().siblings('.List-Actions').removeClass('Hidden');
-	});
-
-	// Close Actions
-	$(document).on("click", ".Close-Actions-Btn", function (e) {
-		e.preventDefault();
-		e.stopPropagation();
-		$(this).parent().addClass('Hidden');
-	});
-});
-
-// ----------------- Batch Delete --------------------- //
-
-$(document).on("click", ".BatchDelete", function (e) {
-
-	batch_select(this);
-
-	var checkbox = $(this).prop('checked');
-	if (checkbox) {
-		$(this).parent().addClass('row-selected');
-	} else {
-		$(this).parent().removeClass('row-selected');
-	}
-});
-
-function batch_select(trigger) {
-
-	var countSelected = $('input:checkbox:checked').length;
-
-	if (countSelected >= 2) {
-		$('#BatchDeleteBtn').removeClass('Hidden');
-	} else {
-		$('#BatchDeleteBtn').addClass('Hidden');
-	}
-}
-
-//////////////////////////////
-// 							//
-//        FUNCTIONS         //
-//                          //
-//////////////////////////////
-
-
-function confirm_delete(id, bigtext, smalltext) {
-	swal({
-		title: bigtext,
-		text: smalltext,
-		type: 'warning',
-		showCancelButton: true,
-		confirmButtonColor: '#3085d6',
-		cancelButtonColor: '#d33',
-		confirmButtonText: 'ELIMINAR',
-		cancelButtonText: 'Cancelar',
-		confirmButtonClass: 'button buttonOk',
-		cancelButtonClass: 'button buttonCancel',
-		buttonsStyling: false
-	}).then(function () {
-		delete_item(id);
-	});
-}
-
-function confirm_batch_delete(id, bigtext, smalltext) {
-	swal({
-		title: bigtext,
-		text: smalltext,
-		type: 'warning',
-		showCancelButton: true,
-		confirmButtonColor: '#3085d6',
-		cancelButtonColor: '#d33',
-		confirmButtonText: 'ELIMINAR',
-		cancelButtonText: 'Cancelar',
-		confirmButtonClass: 'button buttonOk',
-		cancelButtonClass: 'button buttonCancel',
-		buttonsStyling: false
-	}).then(function () {
-		batch_delete_item(id);
-	});
-}
-
-function resetForm(id) {
-	document.getElementById(id).reset();
-}
-
-//////////////////////////////
-// 							//
-//          ALERTS          //
-//                          //
-//////////////////////////////
-
-function alert_ok(bigtext, smalltext) {
-
-	swal(bigtext, smalltext, 'success');
-}
-
-function alert_error(bigtext, smalltext) {
-
-	swal(bigtext, smalltext, 'error');
-}
-
-//////////////////////////////
-// 							//
-//        ACTIONS           //
-//                          //
-//////////////////////////////
-
-$('.btnClose').click(function () {
-	$(this).parent().fadeOut(200);
-});
-
-//////////////////////////////
-// 							//
-//        FILTERS           //
-//                          //
-//////////////////////////////
-
-
-$('.OpenFilters').click(function () {
-	$('.Search-Filters').fadeIn(200);
-});
-
-//////////////////////////////
-// 							//
-//        LOADER            //
-//                          //
-//////////////////////////////
-
-// $(document).ajaxStart(function(){
-//     // $(".loader").removeClass("Hidden");
-//     // $('html').css({ 'overflow': 'hidden', 'height': '100%' });
-//     toggleLoader();
-// });
-
-// $(document).ajaxComplete(function(){
-//     // $(".loader").addClass("Hidden");
-//     // $('html').css({ 'overflow-Y': 'scroll', 'height': '100%' });
-//     toggleLoader();
-// });
-
-// function toggleLoader()
-// {
-//   $('.loader').toggleClass('Hidden');
-//     if (!$('.loader').hasClass('Hidden')) {
-//       // This prevents scroll on loader
-//       $('html').css({ 'overflow': 'hidden', 'height': '100%' });
-//     } else {
-//       $('html').css({ 'overflow-Y': 'scroll', 'height': '100%' });
-//     }
-// }
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-/* 3 */,
-/* 4 */,
-/* 5 */,
-/* 6 */,
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(2);
+__webpack_require__(0);
+module.exports = __webpack_require__(1);
 
 
 /***/ })
