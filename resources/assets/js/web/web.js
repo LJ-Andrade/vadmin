@@ -1,99 +1,89 @@
 //////////////////////////////
-// 							//
-//        LOADER            //
+// 						    //
+//        PLUGINS           //
+//                          //
+//////////////////////////////
+
+new WOW().init();
+
+//////////////////////////////
+// 					        //
+//        NAVIGATION        //
 //                          //
 //////////////////////////////
 
 $(document).ready(function () {
-	// Animate loader off screen
-	// $(".Loader").fadeOut("slow");
-	$(".LoaderSolo").fadeOut("slow");
-	
-	new WOW().init();
 
-
-	//////////////////////////////
-	// 							//
-	//        NAVIGATION        //
-	//                          //
-	//////////////////////////////
-
-
-	var section       = $('#actual_section').data('section');
+	var section       = $('#ActualSection').data('section');
 	var logo          = $('.navbar .navbar-brand');
 	var navbar        = $('.navbar-default');
 
+	function nav_logic() {
 
-    function nav_logic() {
+		switch(section) {
 
-	    switch(section) {
+			//////// HOME /////////
+			case "home":
+				// $('body').css('padding-top','0');
+				logo.css('opacity','0');
+				// $('.navbar .navbar-right').css('border-bottom', '1px solid white');
+				navbar.addClass('home-nav');
 
-	    	//////// HOME /////////
-	    	case "home":
-	    		// $('body').css('padding-top','0');
-	    		logo.css('opacity','0');
-	    		$('.navbar .navbar-right').css('border-bottom', '1px solid white');
-	    		navbar.addClass('home-nav');
+				$(window).scroll(function() {
+					var scrollPos = $(window).scrollTop();
 
-	    		$(window).scroll(function() {
-				    var scrollPos = $(window).scrollTop();
+					if (scrollPos > 250) {
+						navbar.addClass('change-nav');
+						logo.css('opacity','100');
+					} else {
+						navbar.removeClass('change-nav');
+						logo.css('opacity','0');
+					}
+				});
 
-				    
-				    if (scrollPos > 250) {
-				      navbar.addClass('change-nav');
-				      logo.css('opacity','100');
-				    } else {
-				      navbar.removeClass('change-nav');
-				      logo.css('opacity','0');
-				    }
-			    });
+			break;
 
-	    	break;
+			//////// PORTFOLIO /////////
+			case "portfolio":
 
-	    	//////// PORTFOLIO /////////
-	    	case "portfolio":
+				navbar = $('.navbar-default');		
+				navbar.addClass('nav-portfolio');
+				$('body').css('background-color','#f9f9f9');
+				$(window).scroll(function() {
+					var scrollPos = $(window).scrollTop();
 
-	    		$(window).scroll(function() {
+					if (scrollPos > 250) {
+						navbar.addClass('change-nav');
+					} else {
+						navbar.removeClass('change-nav');
+					}
+				});
 
-				    navbar = $('.navbar-default');
-
-				    if (scrollPos > 250) {
-				      navbar.addClass('change-nav');
-				    } else {
-				      navbar.removeClass('change-nav');
-				    }
-			    });
-
-	    	break;
+			break;
 
 
-	    	//////// GENERIC /////////
-	    	default:
-	    		$(window).scroll(function() {
-				    
-				    var scrollPos = $(window).scrollTop(),
-				    navbar   = $('.navbar-default');
-				    
-				    if (scrollPos > 250) {
-				      navbar.addClass('change-nav');
-				    } else {
-				      navbar.removeClass('change-nav');
-				    }
-			    });
+			//////// GENERIC /////////
+			default:
+				$(window).scroll(function() {
+					
+					var scrollPos = $(window).scrollTop(),
+					navbar   = $('.navbar-default');
+					
+					if (scrollPos > 250) {
+						navbar.addClass('change-nav');
+					} else {
+						navbar.removeClass('change-nav');
+					}
+				});
 	    }
 
     }
-
-
     // ----------- End Navigation Script ------------ //
 
     //Activate nav effects in desktop
 	if (screen.width > 775) {
         nav_logic();
-    }
-    else {}
-
-
+ 	} 
 
 
 }); // Document Ready

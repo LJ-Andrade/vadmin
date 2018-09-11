@@ -1,8 +1,8 @@
 # Laravel 5 CRUD Generator
 
+[![Build Status](https://travis-ci.org/appzcoder/crud-generator.svg)](https://travis-ci.org/appzcoder/crud-generator.svg)
 [![Total Downloads](https://poser.pugx.org/appzcoder/crud-generator/d/total.svg)](https://packagist.org/packages/appzcoder/crud-generator)
 [![Latest Stable Version](https://poser.pugx.org/appzcoder/crud-generator/v/stable.svg)](https://packagist.org/packages/appzcoder/crud-generator)
-[![Latest Unstable Version](https://poser.pugx.org/appzcoder/crud-generator/v/unstable.svg)](https://packagist.org/packages/appzcoder/crud-generator)
 [![License](https://poser.pugx.org/appzcoder/crud-generator/license.svg)](https://packagist.org/packages/appzcoder/crud-generator)
 
 ### Requirements
@@ -10,21 +10,40 @@
     PHP >= 5.5.9
 
 ## Installation
+Open your terminal(CLI), go to the root directory of your Laravel project, then follow the following procedure.
+
+For Laravel >= 5.5 you need to follow these steps
+---
 
 1. Run
     ```
-    composer require appzcoder/crud-generator
+    composer require appzcoder/crud-generator --dev
+    composer require laravelcollective/html
     ```
 
-2. Add the service provider to **config/app.php**.
+2. Publish vendor files of this package.
+    ```
+    php artisan vendor:publish --provider="Appzcoder\CrudGenerator\CrudGeneratorServiceProvider"
+    ```
+
+For Laravel < 5.5 you need to follow these steps
+---
+
+1. Run
+    ```
+    composer require appzcoder/crud-generator --dev
+    ```
+2. Since the package is only use in local developmnet, add the provider in app/Providers/AppServiceProvider.php.
     ```php
-    'providers' => [
-        ...
 
-        Appzcoder\CrudGenerator\CrudGeneratorServiceProvider::class,
-    ],
+    public function register()
+    {
+        if ($this->app->environment() == 'local') {
+            $this->app->register('Appzcoder\CrudGenerator\CrudGeneratorServiceProvider');
+        }
+    }
     ```
-3. Install **laravelcollective/html** helper package.
+3. Install **laravelcollective/html** helper package if you haven't installed it already.
     * Run
 
     ```
@@ -46,6 +65,7 @@
         'HTML' => Collective\Html\HtmlFacade::class,
     ],
     ```
+
 4. Run ```composer dump-autoload```
 
 5. Publish vendor files of this package.
@@ -62,13 +82,17 @@ Note: You should have configured database for this operation.
 
 ```
 php artisan crud:generate Posts --fields="title#string; content#text; category#select#options=technology,tips,health" --view-path=admin --controller-namespace=Admin --route-group=admin
+
+php artisan crud:generate Atribute1 --fields="name#string;" --view-path=vadmin --controller-namespace=Atribute1  --route-group
+=Catalog
+
 ```
 
 #### Crud fields from a JSON file:
 
 ```json
 {
-   "fields": [
+    "fields": [
         {
             "name": "title",
             "type": "string"
@@ -81,8 +105,33 @@ php artisan crud:generate Posts --fields="title#string; content#text; category#s
             "name": "category",
             "type": "select",
             "options": ["technology", "tips", "health"]
+        },
+        {
+            "name": "user_id",
+            "type": "integer#unsigned"
         }
-   ]
+    ],
+    "foreign_keys": [
+        {
+            "column": "user_id",
+            "references": "id",
+            "on": "users",
+            "onDelete": "cascade"
+        }
+    ],
+    "relationships": [
+        {
+            "name": "user",
+            "type": "belongsTo",
+            "class": "App\\User"
+        }
+    ],
+    "validations": [
+        {
+            "field": "title",
+            "rules": "required|max:10"
+        }
+    ]
 }
 ```
 
@@ -103,9 +152,9 @@ Options:
 | `--model-namespace` | The namespace that the model will be placed in - directories will be created |
 | `--route-group` | Prefix of the route group |
 | `--pagination` | The amount of models per page for index pages |
-| `--indexes` | The fields to add an index to. append "#unique" to a field name to add a unique index. Create composite fields by separating fieldnames with a pipe (```--indexes="title,field1|field2#unique"``` will create normal index on title, and unique composite on fld1 and fld2) |
+| `--indexes` | The fields to add an index to. append "#unique" to a field name to add a unique index. Create composite fields by separating fieldnames with a pipe (``` --indexes="title,field1|field2#unique" ``` will create normal index on title, and unique composite on fld1 and fld2) |
 | `--foreign-keys` | Any foreign keys for the table. e.g. ```--foreign-keys="user_id#id#users#cascade"``` where user_id is the column name, id is the name of the field on the foreign table, users is the name of the foreign table, and cascade is the operation 'ON DELETE' together with 'ON UPDATE' |
-| `--validations` | Validation rules for the form "col_name#rules_set" e.g. ```"title#min:10|max:30|required"``` - See https://laravel.com/docs/master/validation#available-validation-rules |
+| `--validations` | Validation rules for the form "col_name#rules_set" e.g. ``` "title#min:10|max:30|required" ``` - See https://laravel.com/docs/master/validation#available-validation-rules |
 | `--relationships` | The relationships for the model. e.g. ```--relationships="comments#hasMany#App\Comment"``` in the format |
 | `--localize` | Allow to localize. e.g. localize=yes  |
 | `--locales`  | Locales language type. e.g. locals=en |
@@ -120,6 +169,20 @@ For controller:
 ```
 php artisan crud:controller PostsController --crud-name=posts --model-name=Post --view-path="directory" --route-group=admin
 ```
+Controller's Options:
+
+| Option    | Description |
+| ---       | ---     |
+| `--crud-name` | The name of the crud. e.g. ```--crud-name="post"``` |
+| `--model-name` | The name of the model. e.g. ```--model-name="Post"``` |
+| `--model-namespace` | The namespace of the model. e.g. ```--model-namespace="Custom\Namespace\Post"``` |
+| `--controller-namespace` | The namespace of the controller. e.g. ```--controller-namespace="Http\Controllers\Client"``` |
+| `--view-path` | The name of the view path |
+| `--fields` | Fields name for the form & migration. e.g. ```--fields="title#string; content#text; category#select#options=technology,tips,health; user_id#integer#unsigned"``` |
+| `--validations` | Validation rules for the form "col_name#rules_set" e.g. ``` "title#min:10|max:30|required" ``` - See https://laravel.com/docs/master/validation#available-validation-rules |
+| `--route-group` | Prefix of the route group |
+| `--pagination` | The amount of models per page for index pages |
+| `--force` | Overwrite already existing controller. |
 
 For model:
 
@@ -210,8 +273,15 @@ You can customize the generator's stub files/templates to achieve your need.
     ```
 3. From the directory **resources/crud-generator/** you can modify or customize the stub files.
 
+
+4. On **config/crudgenerator.php** you can add new stubs and choose which values are passed
+
+### Screencast
+
+[![Screencast](http://img.youtube.com/vi/831-PFBsYfw/0.jpg)](http://www.youtube.com/watch?v=831-PFBsYfw)
+
 #### If you're still looking for easier one then try this [Admin Panel](https://github.com/appzcoder/laravel-admin)
 
 ## Author
 
-[Sohel Amin](http://www.sohelamin.com)
+[Sohel Amin](http://www.sohelamin.com) :email: [Hire Me](mailto:sohelamincse@gmail.com)

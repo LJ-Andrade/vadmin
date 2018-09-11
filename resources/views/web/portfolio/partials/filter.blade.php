@@ -15,7 +15,7 @@
 		<div class="collapse navbar-collapse" id="portfolio-navbar">
 			<ul class="nav navbar-nav portfolio-filter-left">
 				<li class="title">Portfolio de Trabajos</li>
-				<li class="dropdown">
+				<li class="dropdown filter-parent-link">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
 					<i class="ion-ios-folder-outline icons-menu"></i> Categorías 
 					<span class="caret"></span></a>
@@ -23,7 +23,7 @@
 						@foreach($categories as $category)
 						<li>
 							<a href="{{ route('web.search.category', $category->name ) }}"> 
-								<span class="badge"> {{ $category->article->count() }}</span>
+								<div class="badge"> {{ $category->article->count() }}</div>
 								{{ $category->name }}
 							</a>
 						</li>
@@ -31,7 +31,7 @@
 					</ul>
 				</li>
 
-				<li class="dropdown">
+				<li class="dropdown filter-parent-link">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
 					<i class="ion-ios-pricetag-outline icons-menu"> Tags </i>
 					<span class="caret"></span></a>
@@ -39,7 +39,6 @@
 						@foreach($tags as $tag)
 						<li>
 							<a href="{{ route('web.search.tag', $tag->name )}}"> {{ $tag->name }}
-								{{-- <span class="badge"> {{ $tag->name->count() }}</span> --}}
 							</a>
 						</li>
 						@endforeach
@@ -51,7 +50,7 @@
 			<ul class="nav navbar-nav navbar-right portfolio-filter-right">
 				{{-- Search --}}
 				{!! Form::open(['route' => 'web.portfolio', 'method' => 'GET', 'class' => 'navbar-form navbar-left']) !!}
-					<div class="form-group">
+					<div class="form-group search-bar">
 						{!! Form::text('title', null, ['class' => 'form-control', 'placeholder' => 'Buscar por título', 'aria-describedby' => 'search']) !!}
 						<button type="submit" class="btn search-btn"><i class="ion-ios-search"></i></button>
 					</div>
@@ -75,7 +74,7 @@
 		<h2>Buscador</h2>
 		<div class="search-input">
 			{!! Form::open(['route' => 'web.portfolio', 'method' => 'GET', 'class' => '']) !!}
-				<div class="form-group form-inline">
+				<div class="form-group search-bar">
 					{!! Form::text('title', null, ['class' => 'form-control', 'placeholder' => 'Buscar por título', 'aria-describedby' => 'search']) !!}
 					<button type="submit" class="btn search-btn"><i class="ion-ios-search"></i></button>
 				</div>

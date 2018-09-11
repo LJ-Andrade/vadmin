@@ -8,186 +8,109 @@ use App\Category;
 
 class CategoriesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $categories = Category::orderBy('id', 'ASC')->paginate(12);
+    /*
+    |--------------------------------------------------------------------------
+    | VIEW
+    |--------------------------------------------------------------------------
+    */
+    
+    public function index(Request $request)
+    {   
+        $name = $request->get('name');
+
+        if(isset($name)){
+            $categories = Category::searchname($name)->orderBy('id', 'ASC')->paginate(15); 
+        } else {
+            $categories = Category::orderBy('id','ASC')->paginate(15);
+        }
 
         return view('vadmin.portfolio.categories.index')->with('categories', $categories);
     }
 
-
-
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('vadmin.categories.create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-
-    public function ajax_create(Request $request)
-    {
-
-        // if ($request->ajax())
-        // {
-        //     $result = Category::create($request->all());
-
-        //     if ($result)
-        //     {
-        //         return response()->json(['success'=>'true']);
-        //     } else {
-        //         return response()->json(['success'=>'false']);
-        //     }
-
-        // }
-
-    }
-
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $category = Category::find($id);
-        return view('vadmin.categories.edit')->with('category', $category);
+    /*
+    |--------------------------------------------------------------------------
+    | CREATE
+    |--------------------------------------------------------------------------
+    */
 
+    public function create()
+    {
+        return view('vadmin.portfolio.categories.create');
     }
 
-   
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $category = Category::find($id);
-        $category->delete();
-        echo 1;
-        // return redirect()->route('categories.index')->with('message', 'La categoría '. $category->name.' ha sido eliminada');
-    }
-
-    
-////////////////////////////////////////
-//                                    //
-//               AJAX                 //
-//                                    //
-////////////////////////////////////////
-
-    // ---------- List -------------- //
-    public function ajax_list()
-    {
-        $categories = Category::orderBy('id', 'DESC')->paginate(12);
-        return view('vadmin/portfolio/categories/list')->with('categories', $categories);
-    }
-
-
-
-    // ---------- Store --------------- //
     public function store(Request $request)
     {
         $this->validate($request,[
-            'name' => 'max:120|required|unique:categories'
+            'name' => 'required|min:4|max:250|unique:categories',
         ],[
-            'name.unique'         => 'La categoría ya existe'
+            'name.required' => 'Debe ingresar un nombre a la categoría',
+            'name.unique'   => 'La categoría ya existe',
         ]);
 
-        if ($request->ajax())
-        {            
-            $result = Category::create($request->all());
-            if ($result)
-            {
-                return response()->json(['success'=>'true', 'message'=>'Categoria creada']);
-            } else {
-                return response()->json(['success'=>'false', 'error'=>'Error']);        
-            }
-        }
+        $category = new Category($request->all());
+        $category->save();
+
+        return redirect()->route('categories.index')->with('message','Categoría creada');
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | UPDATE
+    |--------------------------------------------------------------------------
+    */
 
-
-    // ---------- Edit --------------- //
-    public function ajax_edit($id)
+    public function edit($id)
     {
         $category = Category::find($id);
-        return response()->json($category);
+        return view('vadmin.portfolio.categories.edit')->with('category', $category);
+
     }
 
-
-
-    // ---------- Update -------------- //
     public function update(Request $request, $id)
     {
+        $category = Category::find($id);
+
         $this->validate($request,[
-            'name'     => 'max:120|required|unique:categories'
+            'name' => 'required|min:4|max:250|unique:categories,name,'.$category->id,
         ],[
-            'name.unique'         => 'La categoría ya existe'
+            'name.required' => 'Debe ingresar un nombre a la categoría',
+            'name.unique'   => 'La categoría ya existe'
         ]);
         
-        $category = Category::find($id);
         $category->fill($request->all());
+        $category->save();
 
-        // // O se puede hacer individualmente
-        // // $user->name  = $request->name;
-        // // $user->email = $request->email;
-        // // $user->type  = $request->type;
-        
-        $result = $category->save();
-        if ($result) {
-            return response()->json(['success'=>'true']);
-        } else {
-            return response()->json(['success'=>'false']);
-        }
+        return redirect()->route('categories.index')->with('message','Categoría editada');
+    } 
+
+    /*
+    |--------------------------------------------------------------------------
+    | DESTROY
+    |--------------------------------------------------------------------------
+    */
+
+    public function destroy(Request $request)
+    {   
+        $ids = json_decode('['.str_replace("'",'"',$request->id).']', true);
+    
+        try {
+            foreach ($ids as $id) {
+                $item = Category::find($id);
+                $item->delete();
+            }
+            return response()->json([
+                'success'   => true,
+            ]); 
+        }  catch (\Exception $e) {
+            return response()->json([
+                'success'   => false,
+                'error'    => 'Error: '.$e
+            ]);    
+        } 
     }
-
-    // ---------- Delete -------------- //
-    public function deleteCategory(Request $request, $id)
-    {
-        $category  = Category::find($id);
-        $category->delete();
-        echo 1;
-    }
-
-    // ---------- Ajax Bach Delete -------------- //
-    public function ajax_batch_delete(Request $request, $id)
-    {
-        foreach ($request->id as $id) {
-        
-            $categories  = Category::find($id);
-            Category::destroy($id);
-        }
-        echo 1;
-    }
-
 } // End

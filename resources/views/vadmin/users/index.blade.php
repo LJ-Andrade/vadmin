@@ -1,342 +1,125 @@
-@extends('vadmin.layouts.main')
-
-{{-- PAGE TITLE --}}
+@extends('vadmin.partials.main')
 @section('title', 'Vadmin | Usuarios')
 
-{{-- STYLE INCLUDES --}}
-@section('styles')
-	{!! Html::style('plugins/chosen/chosen.min.css') !!}
-	{!! Html::style('plugins/validation/parsley.css') !!}
-@endsection
-
-{{-- HEADER --}}
-@section('header')
-	@section('header_title', 'Listado de Usuarios') 
-	@section('options')
-		<div class="actions">
-			<button type="button" class="ShowNewBtn animated fadeIn btnSm buttonOther">Nuevo Usuario</button>
-			<button type="button" class="ShowListBtn animated fadeIn btnSm buttonOther Hidden">Listado</button>
-			<button class="OpenFilters btnSm buttonOther pull-right"><i class="ion-ios-search"></i></button>
-		</div>	
-	@endsection
-
-@endsection
-
 {{-- CONTENT --}}
-@section('content')
-    <div class="container">
-		<div class="row">		
-			@include('vadmin.users.forms')
-			<div id="List"></div>
-			<br>
-		</div>
-		<button id="BatchDeleteBtn" class="button buttonCancel batchDeleteBtn Hidden"><i class="ion-ios-trash-outline"></i> Eliminar seleccionados</button>
-	</div>  
-	<div id="Error"></div>	
+@section('header')
+	@component('vadmin.components.header-list')
+		@slot('breadcrums')
+		    <li class="breadcrumb-item"><a href="{{ url('vadmin')}}">Inicio</a></li>
+            <li class="breadcrumb-item active">Listado de Usuarios</li>
+		@endslot
+		@slot('actions')
+			{{-- Actions --}}
+			<div class="list-actions">
+				<a href="{{ route('users.create') }}" class="btn btnBlue"><i class="icon-plus-round"></i>  Nuevo Usuario</a>
+				<button id="SearchFiltersBtn" class="btn btnGreen"><i class="icon-ios-search-strong"></i></button>
+				@if(Auth::guard('user')->user()->role <= 2)
+				{{-- Edit --}}
+				<button class="EditBtn btn btnGreen Hidden"><i class="icon-pencil2"></i> Editar</button>
+				<input id="EditId" type="hidden">
+				{{-- Delete --}}
+				{{--  THIS VALUE MUST BE THE NAME OF THE SECTION CONTROLLER  --}}
+				<input id="ModelName" type="hidden" value="users">
+				<button class="DeleteBtn btn btnRed Hidden"><i class="icon-bin2"></i> Eliminar</button>
+				<input id="RowsToDeletion" type="hidden" name="rowstodeletion[]" value="">
+				@endif
+				{{-- If Search --}}
+				@if(isset($_GET['name']) || isset($_GET['group']) || isset($_GET['role']))
+					<a href="{{ url('vadmin/users') }}"><button type="button" class="btn btnGrey">Mostrar Todos</button></a>
+					{{--  <div class="results">{{ $items->total() }} resultados de búsqueda: </div>  --}}
+				@endif
+			</div>
+		@endslot
+		@slot('searcher')
+			@include('vadmin.users.searcher')
+		@endslot
+	@endcomponent
 @endsection
 
-{{-- MODALS --}}
-@include('vadmin.users.modals')
+@section('content')
+	<div class="list-wrapper">
+		{{-- Test --}}
+		<div id="TestBox" class="col-xs-12 test-box Hidden">
+		</div>
+		<div class="row">
+			@component('vadmin.components.list')
+				@slot('actions')
+					@if(isset($_GET['name']) || isset($_GET['role']) || isset($_GET['group']))
+						<a href="{{ route('vadmin.exportUsersListPdf', ['params' => http_build_query($_GET)]) }}" data-toggle="tooltip" title="Exportar a PDF"><i class="icon-file-pdf"></i></a>
+						<a href="{{ route('vadmin.exportUsersListXls', ['params' => http_build_query($_GET)]) }}" data-toggle="tooltip" title="Exportar a XLS"><i class="icon-file-excel"></i></a>
+					@else
+						<a href="{{ route('vadmin.exportUsersListPdf', ['params' => 'all']) }}" data-toggle="tooltip" title="Exportar a PDF"><i class="icon-file-pdf"></i></a>
+						<a href="{{ route('vadmin.exportUsersListXls', ['params' => 'all']) }}" data-toggle="tooltip" title="Exportar a XLS"><i class="icon-file-excel"></i></a>
+					@endif
+				@endslot	
+				@slot('title', 'Usuarios del Sistema')
+				@slot('tableTitles')
+					@if(!$items->isEmpty())
+						@if(Auth::guard('user')->user()->role <= 2)
+						<th></th>
+						@endif
+						<th>Usuario</th>
+						<th>Nombre</th>
+						<th>Email</th>
+						<th>Rol</th>
+						<th>Grupo</th>
+						<td>Estado</td>
+					@else
+						<th></th>
+					@endif
+				@endslot
+
+				@slot('tableContent')
+					@if(!$items->isEmpty())
+						@foreach($items as $item)
+							<tr> 
+								@if(Auth::guard('user')->user()->role <= 2)
+									<td>
+										<label class="custom-control custom-checkbox list-checkbox">
+											<input type="checkbox" class="List-Checkbox custom-control-input row-checkbox" data-id="{{ $item->id }}">
+											<span class="custom-control-indicator"></span>
+											<span class="custom-control-description"></span>
+										</label>
+									</td>
+								@endif
+								<td class="show-link"><a href="{{ url('vadmin/users/'.$item->id) }}">{{ $item->username }}</a></td>
+								<td>{{ $item->name }}</td>
+								<td>{{ $item->email }}</td>
+								<td>{{ roleTrd($item->role) }}</td>
+								<td>{{ groupTrd($item->group) }}</td>
+								<td class="w-50 pad0 centered">
+									@if($item->role != '1')
+									<label class="switch">
+										<input class="UpdateStatus switch-checkbox" type="checkbox" 
+										data-model="User" data-id="{{ $item->id }}"
+										@if($item->status == '1') checked @endif>
+										<span class="slider round"></span>
+									</label>
+									@endif
+								</td>
+							</tr>
+						@endforeach
+					@else
+						<tr>
+							<td>No se han encontrado resultados</td>
+						</tr>
+					@endif
+				@endslot
+			@endcomponent
+			
+			@if(isset($_GET['name']))
+				{!! $items->appends(['name' => $name])->render(); !!}
+			@elseif(isset($_GET['role']) || isset($_GET['group']))
+				{!! $items->appends(['group' => $group])->appends(['role' => $role])->render(); !!}
+			@else
+				{!! $items->render(); !!}
+			@endif
+		</div>
+		<div id="Error"></div>	
+	</div>
+@endsection
 
 {{-- SCRIPT INCLUDES --}}
 @section('scripts')
-	{!! Html::script('plugins/jqueryfiler/jquery.filer.min.js') !!}
-	{!! Html::script('plugins/chosen/chosen.jquery.min.js') !!}
-@endsection
-
-{{-- CUSTOM JS SCRIPTS--}}
-@section('custom_js')
-
-	<script type="text/javascript">
-
-	/////////////////////////////////////////////////
-    //                 LIST                        // 
-    /////////////////////////////////////////////////
-
-
-	$(document).ready(function(){
-		ajax_list();
-	});
-
-	var ajax_list = function(){
-
-		$.ajax({
-			type: 'get',
-			url: '{{ url('vadmin/ajax_list_users') }}',
-			success: function(data){
-				$('#List').empty().html(data);
-			},
-			error: function(data){
-				console.log(data)
-				$('#Error').html(data.responseText);
-			}
-		});
-	}
-
-	// Pagination
-	$(document).on("click", ".pagination li a", function(e){
-		e.preventDefault();
-
-		var url     = $(this).attr('href');
-		// var page_num = href.split('=').pop();
-		// var url      = "{{ url('vadmin/users/ajax_list_user') }}?page="+page_num+"";
-
-		$.ajax({
-			type: 'get',
-			url: url,
-			success: function(data){
-				$('#List').empty().html(data);
-			},
-			error: function(data){
-				console.log(data)
-			}
-		});
-	});
-
-	// Search
-	
-	// By Name or Email
-	$(document).on("keyup", "#SearchForm", function(e){
-		e.preventDefault();
-		var query = $('#SearchInput').val();
-		var role = $(this).find('option:selected').val();
-		
-		if( query.length == 0 ){
-			ajax_list();
-		} else {
-			var url = "{{ url('vadmin/ajax_list_search') }}/search?query="+query+"&role="+role+"";
-			console.log(url);
-			$.ajax({
-				type: 'get',
-				url: url,
-				success: function(data){
-					$('#List').empty().html(data);
-				},
-				error: function(data){
-					// console.log(data)
-					// $('#Error').html(data.responseText);
-				}
-			});
-		}		
-	});
-
-	// By User Role
-
-	$('#SearchRole').change(function(){
-
-		var role = $(this).find('option:selected').val();
-		var query = $('#SearchInput').val();
-		
-		if(role=='*'){
-			ajax_list();
-		} else {
-			var url = "{{ url('vadmin/ajax_list_search') }}/search?query="+query+"&role="+role+"";
-			console.log(url);
-				$.ajax({
-					type: 'get',
-					url: url,
-					success: function(data){
-						$('#List').empty().html(data);
-					},
-					error: function(data){
-						console.log(data)
-						$('#Error').html(data.responseText);
-					}
-			});
-		}
-	});
-	
-	/////////////////////////////////////////////////
-    //                 CREATION                    //
-    /////////////////////////////////////////////////
-
-	$(document).ready(function() {
-		$("#NewForm").on('submit', function(e){
-			e.preventDefault();
-			var form = $(this);
-
-			form.parsley().validate();
-
-			if (form.parsley().isValid()){
-				var data       = $('#NewForm').serialize();
-				var route      = "{{ route('users.store') }}";
-
-				$.ajax({
-					url: route,
-					type: 'post',
-					dataType: 'json',
-					data: data,
-					success: function(data){
-						if(data.success == 'true'){
-							ajax_list();
-						} else if(data.success == 'false') {
-							var response = data.responseJSON.name[0];
-							$('.FormError').html(data.responseText);
-						}
-					},
-					error: function(data){
-						$('#Error').html(data.responseText);
-						console.log('ERROR ');
-						console.log(data);
-					}
-				}); 
-
-			} // End If
-		});
-	});
-
-
-	/////////////////////////////////////////////////
-    //                    EDIT                     //
-    /////////////////////////////////////////////////
-
-	// Fill Edit Form
-		// Edit
-	$(document).on("click", ".ShowEditBtn", function(e){
-		$('#NewFormContainer').addClass('Hidden');
-		var id = $(this).data('id');
-		$('#EditFormContainer').removeClass('Hidden');
-		var data = $('#Id'+id).data('data');
-		$('#EditId').val(id);
-		$('#EditTitle').html(data.name);
-		$('#EditName').val(data.name);
-		$('#EditEmail').val(data.email);
-		$('#EditPassword').val(data.password);
-		$('#EditRole').val(data.type).change();
-	});
-
-
-	$(document).ready(function() {
-		$("#EditForm").on('submit', function(e){
-			e.preventDefault();
-			var form = $(this);
-
-			form.parsley().validate();
-
-			if (form.parsley().isValid()){
-				var data  = $('#EditForm').serialize();
-				var id    = $('#EditForm #EditId').val();
-
-				var route = "{{ url('vadmin/ajax_update_user') }}/"+id+"";
-
-				$.ajax({
-					url: route,
-					type: 'post',
-					dataType: 'json',
-					data: data,
-					success: function(data){
-						
-						if(data.success == 'true'){
-						
-							ajax_list();
-						
-						} else if(data.success == 'false') {
-							var response = data.responseJSON.name[0];
-							$('.FormError').html(data.responseText);
-						
-						}
-						$('#Error').html(data.responseText);
-
-					},
-					error: function(data){
-						console.log('EL ERROR ES ');
-						console.log(data);
-						$('#Error').html(data.responseJSON);
-						$('#Error').html(data.responseText);
-					}
-				}); 
-
-			} // End If
-		});
-	});
-
-
-
-
-
-	/////////////////////////////////////////////////
-    //                     DELETE                  //
-    /////////////////////////////////////////////////
-
-
-	// -------------- Single Delete -------------- //
-	// --------------------------------------------//
-	$(document).on('click', '.Delete', function(e){
-		e.preventDefault();
-		var id = $(this).data('id');
-		confirm_delete(id, 'Cuidado!','Está seguro?');
-	});
-
-	function delete_item(id, route) {	
-
-		var route = "{{ url('vadmin/ajax_delete_user') }}/"+id+"";
-
-		$.ajax({
-			url: route,
-			method: 'post',             
-			dataType: "json",
-			data: {id: id},
-			success: function(data){
-				console.log(data);
-				if (data == 1) {
-					$('#Id'+id).hide(200);
-					alert_ok('Ok!','Eliminación completa');
-				} else {
-					alert_error('Ups!','Ha ocurrido un error');
-				}
-			},
-			error: function(data)
-			{
-				$('#Error').html(data.responseText);
-				console.log(data);	
-			},
-		});
-	}
-
-	// -------------- Batch Deletex -------------- //
-	// --------------------------------------------//
-
-	// ---- Batch Confirm Deletion ---- //
-	$(document).on('click', '#BatchDeleteBtn', function(e) { 
-
-		var rowsToDelete = [];  
-		$(".BatchDelete:checked").each(function() {  
-			rowsToDelete.push($(this).attr('data-id'));
-		});
-
-		var id = rowsToDelete;
-		confirm_batch_delete(id,'Cuidado!','Está seguro que desea eliminar los usuarios?');
-		
-	});
-
-	// ---- Delete ---- //
-	function batch_delete_item(id) {
-
-		var route = "{{ url('vadmin/ajax_batch_delete_users') }}/"+id+"";
-
-		$.ajax({
-			url: route,
-			method: 'post',             
-			dataType: "json",
-			data: {id: id},
-			success: function(data){
-				for(i=0; i < id.length ; i++){
-					$('#Id'+id[i]).hide(200);
-				}
-				$('#BatchDeleteBtn').addClass('Hidden');
-				ajax_list();
-				// $('#Error').html(data.responseText);
-				// console.log(data);
-			},
-			error: function(data)
-			{
-				console.log(data);
-				$('#Error').html(data.responseText);
-			},
-		});
-
-	}
-
-	</script>
-
+	@include('vadmin.components.bladejs')
 @endsection

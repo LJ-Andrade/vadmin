@@ -1,0 +1,775 @@
+//////////////////////////////////////
+//                                  //
+//       CONTAINERS / ITEMS         //
+//                                  //
+//////////////////////////////////////
+
+.white-container
+	background-color: #fff
+	padding: 20px
+	
+.grid-item
+	.product-card
+		padding: 0
+		a
+			text-decoration: none
+		.product-thumb
+			.inner
+				position: relative
+				img
+					min-width: 100%
+				.data
+					position: absolute
+					text-align: center
+					opacity: 0
+					width: 100%
+					height: 100%
+					background-color: rgba(241, 230, 226, 0.7)
+					@include transition(0.2s)
+					color: #383838
+					.text
+						font-size: 1rem
+						padding: 10px
+						padding-top: 25px
+						width: 100%	
+						hr
+							display: block
+							position: relative
+							padding: 0
+							margin: 2px auto
+							height: 0
+							width: 100%
+							max-height: 0
+							line-height: 0
+							clear: both
+							border: none
+							border-bottom: 1px solid #ffffff
+							max-width: 90px
+						span.item
+							font-size: 1.1rem
+							font-weight: 300
+				&:hover
+					.data
+						opacity: 1
+		.footer
+			height: 54px
+			position: relative
+			.product-buttons
+				position: absolute
+				bottom: 0
+				right: 6px
+				text-align: right
+				white-space: nowrap
+				@include flex-center()
+				.fav-btn
+					margin-right: 10px
+					font-size: 1.5rem
+			.price
+				position: absolute
+				bottom: 0
+				left: 0
+				width: 40%
+				padding-top: 6px
+				height: 100%
+				@include flex-center()
+				.inner
+
+
+.widget
+	.inline
+		ul
+			padding-left: 0
+			padding: 0
+			margin: 0
+			li
+				min-width: 60px
+				display: inline-block
+				list-style: none
+
+.site-logo
+	width: 190px
+
+.index-header
+	margin-bottom: 25px
+
+.login-box
+	background: #fff
+	margin-top: 20px
+	position: relative
+	padding-bottom: 50px
+	.bottom-text
+		position: absolute
+		width: 100%
+		text-align: center
+		bottom: 10px
+		left: 0
+
+@media (max-width: 481px)
+	.navbar
+		.site-branding
+			position: relative
+			@include flex-center
+			.site-logo
+				img
+					width: 150px
+		.toolbar
+			position: relative
+			@include flex-center
+			margin: 0
+			height: auto
+			left: auto
+			right: auto
+
+@media (max-width: 265px)
+	// .navbar .toolbar .tools
+	// 	@include flex-column
+
+.user-info-wrapper .user-info .user-avatar>img
+	width: 150px
+	height: 120px
+
+.checkout-accordion
+	.card
+		border-radius: 0
+	.card-header
+		border-radius: 0
+		padding: 0.2rem 1rem
+
+.checkout-table
+	margin-bottom: 0
+	
+.full-loader
+	position: fixed
+	top: 0
+	left: 0
+	width: 100%
+	height: 100%
+	z-index: 9999
+	@include flex-column
+	.inner
+		width: 80px
+		height: 80px
+		border-radius: 4px
+		@include flex-column
+		@include box-shadow()
+		background-color: #ededed
+		img
+			width: 60px
+			
+//////////////////////////////////////
+//                                  //
+//             ELEMENTS             //
+//                                  //
+//////////////////////////////////////
+
+.custom-badge
+	display: inline-block
+	min-width: 10px
+	padding: 3px 7px
+	font-size: 12px
+	font-weight: 700
+	line-height: 1
+	text-align: center
+	white-space: nowrap
+	vertical-align: middle
+	border-radius: 10px
+	margin-bottom: 5px
+
+.hollow-white
+	border: 1px solid #fff
+	background-color: transparent
+	color: #383838
+	font-size: 1rem
+	border-radius: 50px
+	font-weight: 300
+	margin-top: 5px
+
+.btn:hover
+	filter: brightness(1.5)
+
+.btn-sm-round
+	height: 30px
+	padding: 0 7px
+	border-radius: 18px
+	font-size: 12px
+	line-height: 34px
+	width: 37px
+
+.btm-sm
+	padding: 0px 10px
+	height: 30px
+	line-height: 30px
+	font-size: 0.8rem
+
+.btn-main
+	background-color: $main-color
+	color: #fff
+	&:hover
+		color: #fff
+	
+.btn-green
+	background-color: $green
+	color: #000
+
+.btn-blue
+	background-color: $blue
+	color: #fff
+	&:hover
+		opacity: .9
+		color: #f9f9f9
+
+.button-and-loader
+	@include flex-center-left()
+
+.btn-wishlist
+	height: 36px
+
+.btnIcon
+	// background-color: $lblue
+	border: 1px solid #ccc
+	padding: 4px 14px 9px
+	margin-bottom: 2px
+	color: #383838
+	@include transition(0.2s)
+	i
+		font-size: 0.9rem
+		line-height: 1px
+	&:hover
+		opacity: .6
+
+.icon-only-btn
+	border: 0
+	background: 0
+	font-size: 1.2rem
+	@include transition(0.2s)
+	&:hover
+		filter: brightness(2)
+		font-size: 1.1rem
+		cursor: pointer
+
+.sq-badge
+	border: 1px solid $grey
+	color: $grey
+	padding: 4px 10px
+	margin: 2px
+	white-space: 
+	min-width: 40px
+	text-align: center
+	font-size: 0.8rem
+	@include transition(0.2s)
+	&:hover
+		background: $main-color
+		border: 1px solid $main-color
+		span
+			color: #fff
+	
+.short-divisor
+	@include flex-center
+	.inner
+		width: 250px
+		border-bottom: 1px solid #ccc
+		text-align: center
+		margin-bottom: 10px
+		margin-top: 15px
+
+.main-btn
+	background-color: $main-color
+	color: #ffffff
+	@include transition(0.2s)
+	&:hover
+		filter: brightness(1.2)
+
+
+//////////////////////////////////////
+//                                  //
+//             FORMS                //
+//                                  //
+//////////////////////////////////////
+
+.centered-form
+	@include flex-column
+	.inner
+		max-width: 500px
+
+.form-group
+	margin-bottom: 10px
+
+// .form-control:not(textarea)
+// 	height: 30px
+
+// select.form-control:not([size]):not([multiple])
+// 	height: 30px
+
+.bordered-box
+	border: 1px solid #cccccc
+	padding: 5px
+
+
+.input-with-btn
+	display: flex
+	.input-field
+		flex: 1
+		border-radius: 5px 0px 0px 5px
+	.short-input
+		width: 100px
+	.input-btn
+		white-space: nowrap
+		border-left: 0
+		border-radius: 0px 5px 5px 0px
+		margin: 0
+		&:hover
+			background-color: $main-color
+			color: #fff
+
+
+//////////////////////////////////////
+//                                  //
+//           PAGINATION             //
+//                                  //
+//////////////////////////////////////
+
+ul.pagination
+	// border-color: #0da9ef
+	// background-color: #0da9ef
+	display: block
+	margin: 0
+	padding: 0
+	margin-top: 5px
+	list-style: none
+	border-top: 0
+
+	li
+		padding: 6px 12px
+		display: inline-block
+		text-align: center
+		border-radius: 5px
+		font-size: 1rem
+		font-weight: bold
+		line-height: 24px
+		border: 1px solid $main-color
+		background-color: transparent
+		color: $main-color
+		&:hover
+			a
+				color: #000
+		a
+			text-decoration: none
+			margin-left: 2px
+			color: $main-color
+			font-weight: 600
+	li.disabled,li.active
+		font-weight: 300
+		color: #6b6161
+		&:hover
+			cursor: not-allowed
+
+//////////////////////////////////////
+//                                  //
+//       CART AND CATALOGUE         //
+//                                  //
+//////////////////////////////////////
+
+.articles-container
+	padding: 0
+	.article
+		padding: 10px
+		.inner
+			background: #fff
+			position: relative
+			.image
+				position: relative
+				.fa-icon
+					position: absolute
+					left: 0
+					top: 6px
+					margin-left: 15px
+					margin-right: 15px
+					font-size: 1.5rem
+			.content
+				padding: 5px
+				height: 140px
+				text-align: center
+				width: 100%
+				padding-bottom: 50px
+				.title-info
+					font-family: $font2
+					width: 100%
+					height: 80px
+					@include flex-column()
+					h3
+						font-size: 1.1rem
+						margin-bottom: 6px
+				.footer
+					width: 100%
+					display: flex
+					margin-top: 10px
+					position: absolute
+					bottom: 4px
+					left: 0
+					.col-price
+						@include flex-column()
+						.price
+							font-size: 1.2rem
+							font-weight: 700
+							white-space: nowrap
+							text-align: center
+							color: $main-color
+						del
+							white-space: nowrap
+							color: #585656
+							margin-right: 5px
+							font-size: 1rem
+							font-weight: 300
+					.col
+						.del
+							font-size: 0.9rem
+
+@media (min-width: 1199px) and (max-width: 1340px)
+	.articles-container .article .inner .content .footer
+		.fa-icon
+			margin: 0
+		.btn
+			padding: 1px 5px
+			font-size: 0.7rem
+
+.discount-badge
+	position: absolute
+	right: 0
+	top: 0
+	width: 100px
+	height: 100px
+	overflow: hidden
+	.triangle
+		position: absolute
+		right: 0
+		left: 0
+		text-align: center
+		padding: 10px
+		padding-top: 50px
+		background-color: $main-color
+		transform: rotate(45deg)
+		width: 150px
+		z-index: 50
+	.text
+		font-family: $font1
+		position: absolute
+		font-weight: 700
+		top: 8px
+		right: 10px
+		z-index: 100
+		color: #fff
+
+.product-gallery
+	padding: 0
+	border: 0
+	.product-carousel .owl-stage-outer .owl-stage .owl-item img
+		width: 100% 
+
+.product-gallery .gallery-item 
+	z-index: 50
+	position: absolute
+	top: 8px
+	right: 9px
+	margin-bottom: 0
+	background: #fff
+	border-radius: 50%
+	
+.product-show
+	.title-mobile
+		display: none
+	.products-details
+		padding: 15px
+		padding-right: 40px
+		padding-bottom: 40px
+		position: relative
+		min-height: 430px
+		.title-desktop
+		.fav-container
+			position: absolute
+			right: 13px
+			top: 7px
+			font-size: 1.5rem
+			i
+				color: $red
+		.back-btn
+			position: absolute
+			bottom: -30px
+			right: 12px
+			font-size: 1rem
+			color: #000
+
+		h2
+			padding-top: 0
+	.descriptions
+		font-size: 1.1rem
+		.item
+			white-space: nowrap
+			.title
+				float: left
+				min-width: 60px
+				font-family: $font2
+
+			.prop
+	.price-and-stock
+		position: absolute
+		bottom: 10px
+		left: 0
+		.stock
+			margin-bottom: 15px
+		.price
+			input
+				max-width: 100px
+
+@media (max-width: 575px)
+	.product-show
+		.title-mobile
+			display: block
+		.products-details
+			.title-desktop
+				display: none
+
+@media (max-width: 1190px)
+	.product-show .products-details
+		.fav-container
+			right: 20px
+
+// FAVOURITES 
+.fa-icon
+	&:before
+	font-family: $fa-icon
+	font-weight: 900
+	display: inline-block
+	font-style: normal
+	font-variant: normal
+	text-rendering: auto
+	-webkit-font-smoothing: antialiased
+	&:hover
+		cursor: pointer
+
+.fav-icon-nofav::before
+	color: #f1f1f1
+	content: "\f004"
+
+.fav-icon-isfav::before
+	color: $red
+	content: "\f004"
+
+.toolbar .cart>.toolbar-dropdown
+	top: 36px
+
+// Index List
+.product-card
+	.max-text
+		max-height: 100px
+		overflow: hidden
+		white-space: nowrap
+		text-overflow: ellipsis
+
+.review-bottom
+	background: #f9f9f97d
+	
+.back-to-store
+	margin-bottom: 10px
+	a
+		text-decoration: none
+		font-size: 1rem
+
+.checkout-container 
+	> .row	
+		background-color: #fff
+		padding-top: 30px
+		padding-left: 20px
+@media (max-width: 991px)
+	.checkout-container
+		> .row	
+			padding-left: 0px
+		aside
+			border: 1px solid #e1e7ec
+			padding: 10px
+	.back-to-store
+		display: none
+
+.shopping-cart
+	.product-item
+		.product-thumb
+			max-width: 80px
+
+.coupon-message
+	.inner
+		padding: 10px
+		border: 1px solid #ccc
+		text-align: center
+		.small
+			font-size: 1.2rem
+		.big
+			font-size: 2rem
+			color: green
+			
+
+// ------------- Show --------------- //
+
+.product-show
+	.product-gallery
+		.images-container
+
+		.product-thumbnails
+			padding-top: 0
+			margin-top: 0
+
+.gallery-item
+	a
+		padding: 8px 12px
+		@include transition(0.2s)
+		i
+			color: #797575
+			font-size: 1.3rem
+			@include transition(0.2s)
+		&:hover
+			a
+				padding: 7px 10px
+			i
+				font-size: 1.5rem
+
+
+@media (max-width: 575px)
+	.product-show
+		.product-gallery
+		.product-thumbnails
+			display: none
+
+
+// ------------- Sidebar --------------- //
+.sidebar
+	background: #fff
+	padding: 10px
+	.table td, .table th
+		padding: 5px 1px
+		vertical-align: middle
+	.total
+		font-size: 1.5rem
+	.sidebar-widget
+		margin-bottom: 15px
+		ul
+			padding: 0
+			list-style: none
+			li
+				a
+					text-decoration: none
+					color: #383838
+
+.sidebar-trigger
+	display: none
+
+@media (max-width: 768px)
+	.sidebar-trigger
+		display: block
+		.main-btn
+			margin: 0
+			margin-left: 10px
+	.sidebar
+		display: none
+		.search-input
+			display: none
+		.sidebar-widget
+			.sq-badge
+				line-height: 2rem
+			ul li
+				display: inline
+				margin-right: 5px
+
+@media (max-width: 991px)
+	.sidebar
+		max-width: 100%
+
+
+//////////////////////////////////////
+//                                  //
+//             ALERTS               //
+//                                  //
+//////////////////////////////////////
+
+.alert
+	ul 
+		li
+			list-style: outside none none
+			
+
+.alert-success
+	background-color: $green
+	color: #000
+	margin-top: 20px 
+	
+.alert-success > :not(.text-white), .alert-success > :not(.text-light), .alert-success h1:not(.text-white), .alert-success h1:not(.text-light), .alert-success h2:not(.text-white), .alert-success h2:not(.text-light), .alert-success h3:not(.text-white), .alert-success h3:not(.text-light), .alert-success h4:not(.text-white), .alert-success h4:not(.text-light), .alert-success h5:not(.text-white), .alert-success h5:not(.text-light), .alert-success h6:not(.text-white), .alert-success h6:not(.text-light), .alert-success p:not(.text-white), .alert-success p:not(.text-light), .alert-success ul:not(.text-white), .alert-success ul:not(.text-light), .alert-success ol:not(.text-white), .alert-success ol:not(.text-light), .alert-success a:not(.text-white), .alert-success a:not(.text-light)
+	color: #000
+
+.centered-notification
+	text-align: center
+	margin-top: 100px
+	font-size: 1.5rem
+	.content
+		padding: 10px
+		background: #f9f9f9
+	.bottom
+		margin-top: 50px
+
+//////////////////////////////////////
+//                                  //
+//            OTHERS                //
+//                                  //
+//////////////////////////////////////
+
+.error-page
+	@include flex-center
+	text-align: center
+	height: 100vh
+
+//////////////////////////////////////
+//                                  //
+//           HELPERS                //
+//                                  //
+//////////////////////////////////////
+
+.Hidden
+	display: none !important
+.brd
+  	border: 1px solid red
+.txtL
+  	text-align: left
+.txtR
+  	text-align: right
+.txtC
+ 	 text-align: center
+.pad0
+  	padding: 0
+.dont-break
+	white-space: nowrap
+.dont-wrap
+	display: flex
+	flex-wrap: nowrap
+	
+.marg-top-25
+	margin-top: 25px
+.pad0
+	padding: 0
+.cursor-pointer
+	&:hover
+		cursor: pointer
+.anchor
+	display: block
+	position: relative
+	top: -50px
+	visibility: hidden
+
+.horizontal-list
+	ul
+		padding-left: 0
+		padding: 0
+		margin: 0
+		li
+			display: inline-block
+			list-style: none
+
+.flex-h-100
+	display: flex
+	.flex-h-inner
+		width: 100%

@@ -10,9 +10,10 @@ return [
     | This value is the name of your application. This value is used when the
     | framework needs to place the application's name in a notification or
     | any other location as required by the application or its packages.
+    |
     */
 
-    'name' => 'Vadmin',
+    'name' => env('APP_NAME', 'Vadmin'),
 
     /*
     |--------------------------------------------------------------------------
@@ -63,8 +64,8 @@ return [
     | ahead and set this to a sensible default for you out of the box.
     |
     */
-
-    'timezone' => 'UTC',
+    'timezone' => 'America/Argentina/Buenos_Aires',
+    //'timezone' => 'UTC',
 
     /*
     |--------------------------------------------------------------------------
@@ -120,9 +121,10 @@ return [
     |
     */
 
-    'log' => env('APP_LOG', 'single'),
+    // Laravel 5.6
+    // 'log' => env('APP_LOG', 'single'),
 
-    'log_level' => env('APP_LOG_LEVEL', 'debug'),
+    // 'log_level' => env('APP_LOG_LEVEL', 'debug'),
 
     /*
     |--------------------------------------------------------------------------
@@ -162,35 +164,34 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        
+        /*
+        * Package Service Providers...
+        */
+        App\Providers\ComposerServiceProvider::class,
+        // Send activeCart
+        App\Providers\StoreServiceProvider::class,
+        // Send Categories, tags and atribute1
+        App\Providers\StoreCatalogServiceProvider::class,
+        // Send General Data to Vadmin
+        App\Providers\VadminServiceProvider::class,
 
         /*
-         * Package Service Providers...
-         */
-        Laravel\Tinker\TinkerServiceProvider::class,
-
-        /*
-         * Application Service Providers...
-         */
+        * Application Service Providers...
+        */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
-        /*
-         * User Custom Service Providers...
-         */
-        // Laravel Collective Aliases
-        Collective\Html\HtmlServiceProvider::class,
-        // To send data to views
-        App\Providers\ComposerServiceProvider::class,
-        // DataBase Schema
-        Thedevsaddam\LaravelSchema\LaravelSchemaServiceProvider::class,
-        // Image Intervention
-        Intervention\Image\ImageServiceProvider::class,
-        Laravel\Tinker\TinkerServiceProvider::class,
-
-
+        // MercadoPago Api
+        SantiGraviano\LaravelMercadoPago\Providers\MercadoPagoServiceProvider::class,
+        // Debug Bar
+        // Barryvdh\Debugbar\ServiceProvider::class,
+        // PDF Export
+        Barryvdh\DomPDF\ServiceProvider::class,
+        // Excel Export
+        Maatwebsite\Excel\ExcelServiceProvider::class,
     ],
 
     /*
@@ -239,12 +240,15 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        // Laravel Collective Aliases
-        'Form' => Collective\Html\FormFacade::class,
-        'Html' => Collective\Html\HtmlFacade::class,
-        // Image Intervention
-        'Image' => Intervention\Image\Facades\Image::class
-
+        // Custom Packages
+        // DebugBar
+        //'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        // Mercado Pago
+        'MP' => SantiGraviano\LaravelMercadoPago\Facades\MP::class,
+        // PDF Export
+        'PDF' => Barryvdh\DomPDF\Facade::class,
+        // Excel Export
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     ],
 
 ];

@@ -1,30 +1,29 @@
-@extends('web.layouts.main')
+@extends('layouts.web.main')
 
-@section('title', 'VADmin | Artículos')
+
+@section('title', 'Vimana Studio '. $article->title)
 
 @section('styles')
-	{!! Html::script('plugins/swiper.jquery.min.js') !!}
-	{!! Html::style('plugins/swiper-slider/swiper.min.css') !!}
+	<link rel="stylesheet" type="text/css" href="{{ secure_asset('plugins/swiper-slider/swiper.min.css') }}">
 @endsection	
 
 @section('content')
-
+	<div id="ActualSection" data-section="portfolio"></div> {{-- JS - This Section --}}
     <div class="container container-top single-item">
         <div class="row">	
 			<h1>{!! $article->title !!}</h1>
 
 			<div class="col-md-6">
-				<div class="title-mobile"><h1><b>{!! $article->title !!}</b></h1></div>
 			<!-- Slider main container -->
 				<div class="swiper-container">
 					<!-- Additional required wrapper -->
 					<div class="swiper-wrapper">
 						{{-- Show generic Image if img not exist --}}
 						@if(count($article->images) == 0)
-							<div class="swiper-slide"><img src="{{ asset('webimages/gen/article-gen.jpg') }}" class="slider-image"></div>
+							<div class="swiper-slide"><img src="{{ secure_asset('webimages/gen/article-gen.jpg') }}" class="slider-image"></div>
 						@else 
 							@foreach($article->images as $image)
-							<div class="swiper-slide"><img src="{{ asset('webimages/portfolio/'.$image->name ) }}" class="slider-image"></div>
+							<div class="swiper-slide"><img src="{{ secure_asset('webimages/portfolio/'.$image->name ) }}" class="slider-image"></div>
 							@endforeach
 						@endif
 					</div>
@@ -38,9 +37,6 @@
 				</div>
 			</div>
 
-
-			
-
 			<div class="col-md-6">
 				<div class="content">
 					<p>{!! $article->content !!}</p>
@@ -49,7 +45,6 @@
 			</div>
         </div>
             	
-
         <div class="row pull-right">
 			<div class="info">
 				<span class="title">Categoría: </span>
@@ -70,34 +65,28 @@
 @endsection
 
 @section('scripts')
-	{{ Html::script('plugins/swiper-slider/swiper.jquery.min.js') }}
+	<script type="text/javascript" src="{{secure_asset('plugins/swiper-slider/swiper.jquery.min.js')}}"></script>
 @endsection
 
 @section('custom_js')
     <script type="text/javascript">
-
 		$('body').addClass('portfolio-body');
 	
 		var mySwiper = new Swiper ('.swiper-container', {
-		// Optional parameters
-		direction: 'horizontal',
-		loop: true,
-		autoHeight: true,
-		
-		// If we need pagination
-		pagination: '.swiper-pagination',
-		
-		// Navigation arrows
-		nextButton: '.swiper-button-next',
-		prevButton: '.swiper-button-prev',
-		
-		// And if we need scrollbar
-		scrollbar: '.swiper-scrollbar',
-	})        
-
-
+			// Optional parameters
+			direction: 'horizontal',
+			loop: true,
+			autoHeight: true,
+			
+			// If we need pagination
+			pagination: '.swiper-pagination',
+			
+			// Navigation arrows
+			nextButton: '.swiper-button-next',
+			prevButton: '.swiper-button-prev',
+			
+			// And if we need scrollbar
+			scrollbar: '.swiper-scrollbar',
+		});    
     </script>
 @endsection
-
-
-

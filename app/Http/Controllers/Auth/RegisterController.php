@@ -27,7 +27,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/vadmin';
 
     /**
      * Create a new controller instance.
@@ -48,24 +48,43 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6|confirmed',
+            'name' => 'required|string|max:255',
+            'username' => 'required|string|max:20|unique:users',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6|confirmed',
+            ]);
+        }
+        
+        /**
+         * Create a new user instance after a valid registration.
+         *
+         * @param  array  $data
+         * @return \App\User
+         */
+    protected function create(array $data)
+    {
+        switch($data['usertype']){
+            case '99':
+                $role  = "3";
+                $group = "2";
+                break;
+            case '111':
+                $role  = "3";
+                $group = "1";
+                break;
+            default:
+                $group = "2";
+                $role  = "3";
+        }        
+        
+        return User::create([
+            'name' => $data['name'],
+            'username' => $data['username'],
+            'email' => $data['email'],
+            'password' => bcrypt($data['password']),
+            'group' => $group,
+            'role' => $role
         ]);
     }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return User
-     */
-    protected function create(array $data)
-    {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
-    }
 }

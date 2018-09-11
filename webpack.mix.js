@@ -1,40 +1,60 @@
-const { mix } = require('laravel-mix');
+let mix = require('laravel-mix');
 
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 /*
- |--------------------------------------------------------------------------
- | Mix Asset Management
- |--------------------------------------------------------------------------
- |
- | Mix provides a clean, fluent API for defining some Webpack build steps
- | for your Laravel application. By default, we are compiling the Sass
- | file for the application as well as bundling up all the JS files.
- |
- */
+|--------------------------------------------------------------------------
+| Mix Asset Management
+|--------------------------------------------------------------------------
+|
+| Mix provides a clean, fluent API for defining some Webpack build steps
+| for your Laravel application. By default, we are compiling the Sass
+| file for the application as well as bundling up all the JS files.
+|
+*/
 
-// Web
-// mix.js('resources/assets/js/web/web.js', 'public/js')
-//     .sass('resources/assets/sass/web.scss', 'public/css')
-//     .options({
-//       processCssUrls: false
-//    });
-
-// // // Web Css Vendors
-// mix.combine([
-//     'public/plugins/animate/animate.css',
-//     'public/plugins/ionicons/ionicons.min.css'
-// ], 'public/css/web-vendors.css');
-
-// // Web JS Vendors
-// mix.combine([
-//     'public/plugins/wow/script.wow.js',
-//     'public/plugins/jquery/jquery-3.3.1.min.js',
-//     'public/plugins/bootstrap/js/bootstrap.min.js'
-// ], 'public/js/web-vendors.js');
-  
-
-mix.sass('resources/assets/sass/vadmin/vadmin.sass', 'public/css')
+mix.js('resources/assets/js/app.js', 'public/js')
+    .sass('resources/assets/sass/app.scss', 'public/css')
+    .js('resources/assets/js/web/web.js', 'public/js')
+    .sass('resources/assets/sass/web/web.sass', 'public/css')
     .options({
-      processCssUrls: false
-   });
+        processCssUrls: false,
+        outputStyle: 'compressed'
+    })
 
-// .js('resources/assets/js/vadmin/vadmin.js', 'public/js')
+    // Store
+    .js('resources/assets/js/store/store-scripts.js', 'public/js')
+    .sass('resources/assets/sass/store/store-custom.sass', 'public/css')
+    .options({
+        processCssUrls: false,
+        outputStyle: 'compressed'
+    })
+
+    // Vadmin 
+    .js('resources/assets/js/vadmin-ui.js', 'public/js')
+    .js('resources/assets/js/vadmin-functions.js', 'public/js')
+    .js('resources/assets/js/vadmin-forms.js', 'public/js')
+
+    .sass('resources/assets/sass/vadmin/vadmin.sass', 'public/css')
+    .webpackConfig({
+        plugins: [
+            new VueLoaderPlugin()
+        ]
+    })
+    .options({
+        processCssUrls: false,
+        outputStyle: 'compressed'
+    })
+    .options({
+        sourcemaps: 'inline-source-map'
+    })
+    .browserSync('http://localhost/bruna/public/');
+
+
+// Only Styles
+// mix.sass('resources/assets/sass/store/store-custom.sass', 'public/css')
+//     .options({
+//         processCssUrls: false,
+//         outputStyle: 'compressed',
+//         sourcemaps: 'inline-source-map'
+//     })
+//     .browserSync('http://localhost/bruna/public/');

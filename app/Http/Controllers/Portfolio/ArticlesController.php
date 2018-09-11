@@ -14,74 +14,63 @@ use File;
 class ArticlesController extends Controller
 {
 
-    /////////////////////////////////////////////////
-    //                   LIST                      //
-    /////////////////////////////////////////////////
-    /**
-    * Display a listing of the resource.
-    *
-    * @return \Illuminate\Http\Response
+    /*
+    |--------------------------------------------------------------------------
+    | VIEW
+    |--------------------------------------------------------------------------
     */
+
     public function index(Request $request)
     {
-        $articles = Article::search($request->title)->orderBy('id', 'DESCC')->paginate(12);
-        $articles->each(function($articles){
-            $articles->category;
-            $articles->user;
-            $articles->images;
-        });
+        $title    = $request->get('title');
+        $category = $request->get('category');
 
-        return view('vadmin.portfolio.index')->with('articles', $articles);
+        if(isset($title)){
+            $articles = Article::searchtitle($title)->orderBy('id', 'ASC')->paginate(15); 
+        } elseif(isset($category)) {
+            $articles = Article::where('category_id', $category)->orderBy('id', 'ASC')->paginate(15);
+        } else {
+            $articles = Article::orderBy('id', 'DESCC')->paginate(15);
+            $articles->each(function($articles){
+                $articles->category;
+                $articles->user;
+                $articles->images;
+            });
+        }
+
+        $categories = Category::orderBy('id','ASC')->pluck('name','id');
+
+        return view('vadmin.portfolio.index')
+            ->with('articles', $articles)
+            ->with('categories', $categories);
 
     }
 
-
-    // ----------- List --------------- //
-    public function ajax_list(Request $request)
+    public function show($id)
     {
-        
-        $articles = Article::search($request->title)->orderBy('id', 'DESCC')->paginate(12);
-        $articles->each(function($articles){
-            $articles->category;
-            $articles->user;
-            $articles->images;
-        });
-
-        return view('vadmin/portfolio/list')->with('articles', $articles);
-        
+        $article = Article::find($id);
+        return view('vadmin.portfolio.show')->with('article', $article);
     }
 
-    /////////////////////////////////////////////////
-    //                  CREATE                     //
-    /////////////////////////////////////////////////
-
-    /**
-    * Show the form for creating a new resource.
-    *
-    * @return \Illuminate\Http\Response
+    /*
+    |--------------------------------------------------------------------------
+    | CREATE
+    |--------------------------------------------------------------------------
     */
+
     public function create(Request $request)
     {
         $categories = Category::orderBy('name', 'ASC')->pluck('name', 'id');
         $tags       = Tag::orderBy('name', 'ASC')->pluck('name', 'id');
-        $status     = Article::search($request->status)->get();
         return view('vadmin.portfolio.create')
             ->with('categories', $categories)
-            ->with('tags', $tags)
-            ->with('status', $status);
+            ->with('tags', $tags);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-
+        
         $this->validate($request,[
-
             'title'       => 'required|min:4|max:250|unique:articles',
             'category_id' => 'required',
             'slug'        => 'required|alpha_dash|min:5|max:255|unique:articles,slug',
@@ -104,16 +93,16 @@ class ArticlesController extends Controller
             'image'                => 'El archivo adjuntado no es soportado',
         ]);
 
-        $path             = public_path("webimages/portfolio/"); 
-        $article          = new Article($request->all());
+        $path = public_path("webimages/portfolio/"); 
+        $article = new Article($request->all());
 
-        $article->user_id = \Auth::user()->id;
+        $article->user_id = auth()->guard('user')->user()->id;
         $article->save();
 
         // Sync() fills pivote table. Gets un array.
         $article->tags()->sync($request->tags);
 
-        $images           = $request->file('images');
+        $images = $request->file('images');
 
         if ($article->save() && $images)
         {
@@ -124,51 +113,23 @@ class ArticlesController extends Controller
                 
                 $img->fit(600)->save($path.'/'.$name);
 
-                // Strict Redimension
-                // $img->resize(400, 400)->save($path.'/'.$name);
-                
-                // Maintains Ratio
-                // $img->resize(400,400 ,function($constraint){
-                //     $constraint->aspectRatio();
-                // })->save($path.'/'.$name);
-                echo $phisic_image;
-
                 $image            = new Image();
                 $image->name      = $name;
                 $image->article()->associate($article);
                 $image->save();
             }
         } 
-
         return redirect()->route('portfolio.index')->with('message','Artículo creado');
-
     }
 
-    /////////////////////////////////////////////////
-    //                   UPDATE                    //
-    /////////////////////////////////////////////////
+    /*
+    |--------------------------------------------------------------------------
+    | UPDATE
+    |--------------------------------------------------------------------------
+    */
 
-    // /**
-    //  * Display the specified resource.
-    //  *
-    //  * @param  int  $id
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function show($id)
-    // {
-    //     $article = Article::find($id);
-    //     return view('vadmin.articles.show')->with('article', $article);
-    // }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {   
-
         $tags       = Tag::orderBy('name', 'DESC')->pluck('name', 'id');
         $article    = Article::find($id);
         $article->category;
@@ -187,25 +148,10 @@ class ArticlesController extends Controller
             ->with('tags', $tags)
             ->with('actual_tags', $actual_tags)
             ->with('status', $status);
-
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-
-        // $article = Article::find($id);
-        // $article->fill($request->all());
-        // $article->save();
-
-        // $article->tags()->sync($request->tags);
-
         $path      = public_path("webimages/portfolio/"); 
 
         $article   = Article::find($id);
@@ -232,57 +178,59 @@ class ArticlesController extends Controller
                 $image->save();
             }
         } 
-
         return redirect()->route('portfolio.index')->with('message', 'Se ha editado el artículo con éxito');
-        
     }
-
 
     public function updateStatus(Request $request, $id)
     {
-
             $article = Article::find($id);
             $article->status = $request->status;
             $article->save();
 
+            return response()->json([
+                "lastStatus" => $article->status,
+            ]);
     }
 
-    /////////////////////////////////////////////////
-    //                   DELETE                    //
-    /////////////////////////////////////////////////
+    /*
+    |--------------------------------------------------------------------------
+    | DESTROY
+    |--------------------------------------------------------------------------
+    */
 
-
-    public function deleteArticleImg(Request $request, $id)
-    {
-        $image  = Image::find($id);
-        $path   = 'webimages/portfolio/';
-        File::Delete(public_path($path . $image->name));
-        $image->delete();
-        echo 1;
-    }
-
-    // ---------- Ajax Bach Delete -------------- //
-
-    public function ajax_delete(Request $request, $id)
-    {
-        $article  = Article::find($id);
-
-        $path     = 'webimages/portfolio/';
-        $article->image;
-        $lastpath = Image::where('article_id', '=', $id);
-        $article->each(function($articles){
-            $articles->images;
-        });
-
-        // BORRAR IMAGEN ARREGLAR
-        $article_image = $article->images;
-
-        foreach ($article_image as $phisic_image) {
-            File::Delete(public_path( $path . $phisic_image->name));
+    public function destroy(Request $request)
+    {   
+        $ids = json_decode('['.str_replace("'",'"',$request->id).']', true);
+        
+        if(is_array($ids)) {
+            try {
+                foreach ($ids as $id) {
+                    $record = Article::find($id);
+                    $record->delete();
+                }
+                return response()->json([
+                    'success'   => true,
+                ]); 
+            }  catch (\Exception $e) {
+                return response()->json([
+                    'success'   => false,
+                    'error'    => 'Error: '.$e
+                ]);    
+            }
+        } else {
+            try {
+                $record = Article::find($id);
+                $record->delete();
+                    return response()->json([
+                        'success'   => true,
+                    ]);
+                } catch (\Exception $e) {
+                    return response()->json([
+                        'success'   => false,
+                        'error'    => 'Error: '.$e
+                    ]);    
+                }
         }
-
-        $article->delete();
-        echo 1;
-        // return redirect()->route('portfolio.index')->with('message', 'El artículo ha sido eliminado');
     }
+
 }

@@ -204,9 +204,6 @@ class CrudMigrationCommand extends GeneratorCommand
                 continue;
             }
 
-            $schemaFields .= "\$table->foreign('" . trim($parts[0]) . "')"
-            . "->references('" . trim($parts[1]) . "')->on('" . trim($parts[2]) . "')";
-
             $schemaFields .= ";\n" . $tabIndent . $tabIndent . $tabIndent;
 
         }
@@ -214,7 +211,7 @@ class CrudMigrationCommand extends GeneratorCommand
         $primaryKey = $this->option('pk');
 
         $schemaUp =
-            "Schema::create('" . $tableName . "', function(Blueprint \$table) {
+            "Schema::create('" . $tableName . "', function (Blueprint \$table) {
             \$table->increments('" . $primaryKey . "');
             " . $schemaFields . "\$table->timestamps();
         });";

@@ -8,30 +8,35 @@ class Article extends Model
 {
     protected $table = "articles";
 
-    protected $fillable = ['title', 'content', 'category_id', 'user_id', 'status', 'slug'];
+    protected $fillable = ['title', 'code', 'price', 'content', 'atribute1_id', 'category_id', 'user_id', 'status', 'slug'];
 
-     public function category(){
+    public function category()
+    {
     	return $this->belongsTo('App\Category');
     }
 
-     public function user(){
+    public function user()
+    {
     	return $this->belongsTo('App\User');
     }
 
-     public function images(){
+    public function images()
+    {
     	return $this->hasMany('App\Image');
     }
 
-     public function tags(){
+    public function tags(){
     	return $this->belongsToMany('App\Tag');
     }
 
-
     public function scopeSearch($query, $title)
     {
-        // Remember to add Namespace::search($request->$title)orderBy('id', 'DESCC')->paginate(5);
-        // In the controller
         return $query->where('title', 'LIKE', "%$title%");
-
     }
+
+    public function scopeSearchtitle($query, $title)
+    {
+        return $query->where('title', 'LIKE', "%$title%");
+    }
+
 }

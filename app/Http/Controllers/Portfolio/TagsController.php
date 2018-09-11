@@ -8,175 +8,126 @@ use App\Tag;
 
 class TagsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+ /*
+    |--------------------------------------------------------------------------
+    | VIEW
+    |--------------------------------------------------------------------------
+    */
+    
     public function index(Request $request)
-    {
+    {   
+        $name = $request->get('name');
 
-        $tags = Tag::search($request->name)->orderBy('id', 'ASC')->paginate(12);
+        if(isset($name)){
+            $tags = Tag::searchname($name)->orderBy('name', 'ASC')->paginate(15); 
+        } else {
+            $tags = Tag::orderBy('name','ASC')->paginate(15);
+        }
 
         return view('vadmin.portfolio.tags.index')->with('tags', $tags);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function show($id)
+    {
+        //
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | CREATE
+    |--------------------------------------------------------------------------
+    */
+
     public function create()
     {
-        return view('vadmin.tags.create');
+        return view('vadmin.portfolio.tags.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    // public function store(Request $request)
-    // {
-    //     $this->validate($request,[
-
-    //         'name'     => 'max:120|required|unique:tags',
-
-    //     ]);
-
-    //     $tag = new Tag($request->all());
-    //     $tag->save();
-
-    //     return redirect()->route('tags.index')->with('message','El talle '. $tag->name .' ha sido creado');
-
-    // }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $tag = Tag::find($id);
-        return view('vadmin.tags.edit')->with('tag', $tag);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    // public function update(Request $request, $id)
-    // {
-    //     $this->validate($request,[
-
-    //         'name'     => 'max:120|required|unique:tags',
-
-    //     ]);
-        
-    //     $tag = Tag::find($id);
-    //     $tag->fill($request->all());
-        
-    //     $tag->save();
-
-    //     return redirect()->route('tags.index')->with('message', 'El talle '. $tag->name.' ha sido actualizado');
-    // }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $tag = Tag::find($id);
-        $tag->delete();
-
-        return redirect()->route('tags.index')->with('message', 'El talle '. $tag->name.' ha sido eliminado');
-    }
-
-    
-////////////////////////////////////////
-//                                    //
-//               AJAX                 //
-//                                    //
-////////////////////////////////////////
-
-
-    // ---------- List -------------- //
-    public function ajax_list()
-    {
-        $tags = Tag::orderBy('id', 'DESC')->paginate(12);
-        return view('vadmin/tags/list')->with('tags', $tags);
-    }
-
-
-
-    // ---------- Store --------------- //
     public function store(Request $request)
     {
         $this->validate($request,[
-            'name' => 'max:120|required|unique:tags'
+            'name' => 'required|min:4|max:250|unique:tags',
         ],[
-            'name.unique'         => 'El talle ya existe'
+            'name.required' => 'Debe ingresar un nombre a la etiqueta',
+            'name.unique'   => 'La etiqueta ya existe',
         ]);
 
-        if ($request->ajax())
-        {            
-            $result = Tag::create($request->all());
-            if ($result)
-            {
-                return response()->json(['success'=>'true', 'message'=>'Talle creado']);
-            } else {
-                return response()->json(['success'=>'false', 'error'=>'Error']);        
-            }
-        }
+        $Tag = new Tag($request->all());
+        $Tag->save();
+
+        return redirect()->route('tags.index')->with('message','Etiqueta creada');
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | UPDATE
+    |--------------------------------------------------------------------------
+    */
 
-    // ---------- Edit --------------- //
-    public function ajax_edit($id)
+    public function edit($id)
     {
         $tag = Tag::find($id);
-        return response()->json($tag);
+        return view('vadmin.portfolio.tags.edit')->with('tag', $tag);
+
     }
 
-
-    // ---------- Update -------------- //
     public function update(Request $request, $id)
     {
+        $tag = Tag::find($id);
+
         $this->validate($request,[
-            'name'     => 'max:120|required|unique:categories'
+            'name' => 'required|min:4|max:250|unique:tags,name,'.$tag->id,
         ],[
-            'name.unique'         => 'La categoría ya existe'
+            'name.required' => 'Debe ingresar un nombre a la etiqueta',
+            'name.unique'   => 'La etiqueta ya existe'
         ]);
         
-        $tag = Tag::find($id);
         $tag->fill($request->all());
+        $tag->save();
 
-        $result = $tag->save();
-        if ($result) {
-            return response()->json(['success'=>'true']);
+        return redirect()->route('tags.index')->with('message','Etiqueta editada');
+    } 
+
+    /*
+    |--------------------------------------------------------------------------
+    | DESTROY
+    |--------------------------------------------------------------------------
+    */
+
+    public function destroy(Request $request)
+    {   
+        
+        $ids = json_decode('['.str_replace("'",'"',$request->id).']', true);
+        
+        if(is_array($ids)) {
+            try {
+                foreach ($ids as $id) {
+                    $record = Tag::find($id);
+                    $record->delete();
+                }
+                return response()->json([
+                    'success'   => true,
+                ]); 
+            }  catch (\Exception $e) {
+                return response()->json([
+                    'success'   => false,
+                    'error'    => 'Error: '.$e
+                ]);    
+            }
         } else {
-            return response()->json(['success'=>'false']);
+            try {
+                $record = Tag::find($id);
+                $record->delete();
+                    return response()->json([
+                        'success'   => true,
+                    ]);  
+                    
+                } catch (\Exception $e) {
+                    return response()->json([
+                        'success'   => false,
+                        'error'    => 'Error: '.$e
+                    ]);    
+                }
         }
     }
-
-
-    // ---------- Delete -------------- //
-    public function ajax_delete(Request $request, $id)
-    {
-        $tag  = Tag::find($id);
-        $tag->delete();
-        echo 1;
-    }
-
-
-
 } // End

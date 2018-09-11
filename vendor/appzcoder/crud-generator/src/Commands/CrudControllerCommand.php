@@ -16,11 +16,13 @@ class CrudControllerCommand extends GeneratorCommand
                             {--crud-name= : The name of the Crud.}
                             {--model-name= : The name of the Model.}
                             {--model-namespace= : The namespace of the Model.}
+                            {--controller-namespace= : Namespace of the controller.}
                             {--view-path= : The name of the view path.}
                             {--fields= : Fields name for the form & migration.}
                             {--validations= : Validation details for the fields.}
                             {--route-group= : Prefix of the route group.}
-                            {--pagination=25 : The amount of models per page for index pages.}';
+                            {--pagination=25 : The amount of models per page for index pages.}
+                            {--force : Overwrite already existing controller.}';
 
     /**
      * The console command description.
@@ -57,7 +59,21 @@ class CrudControllerCommand extends GeneratorCommand
      */
     protected function getDefaultNamespace($rootNamespace)
     {
-        return $rootNamespace . '\Http\Controllers';
+        return $rootNamespace . '\\' . ($this->option('controller-namespace') ? $this->option('controller-namespace') : 'Http\Controllers');
+    }
+
+    /**
+     * Determine if the class already exists.
+     *
+     * @param  string  $rawName
+     * @return bool
+     */
+    protected function alreadyExists($rawName)
+    {
+        if ($this->option('force')) {
+            return false;
+        }
+        return parent::alreadyExists($rawName);
     }
 
     /**
@@ -77,6 +93,8 @@ class CrudControllerCommand extends GeneratorCommand
         $modelName = $this->option('model-name');
         $modelNamespace = $this->option('model-namespace');
         $routeGroup = ($this->option('route-group')) ? $this->option('route-group') . '/' : '';
+        $routePrefix = ($this->option('route-group')) ? $this->option('route-group') : '';
+        $routePrefixCap = ucfirst($routePrefix);
         $perPage = intval($this->option('pagination'));
         $viewName = snake_case($this->option('crud-name'), '-');
         $fields = $this->option('fields');
@@ -104,15 +122,17 @@ class CrudControllerCommand extends GeneratorCommand
         }
 
         $snippet = <<<EOD
-if (\$request->hasFile('{{fieldName}}')) {
-    \$uploadPath = public_path('/uploads/');
+        if (\$request->hasFile('{{fieldName}}')) {
+            foreach(\$request['{{fieldName}}'] as \$file){
+                \$uploadPath = public_path('/uploads/{{fieldName}}');
 
-    \$extension = \$request->file('{{fieldName}}')->getClientOriginalExtension();
-    \$fileName = rand(11111, 99999) . '.' . \$extension;
+                \$extension = \$file->getClientOriginalExtension();
+                \$fileName = rand(11111, 99999) . '.' . \$extension;
 
-    \$request->file('{{fieldName}}')->move(\$uploadPath, \$fileName);
-    \$requestData['{{fieldName}}'] = \$fileName;
-}
+                \$file->move(\$uploadPath, \$fileName);
+                \$requestData['{{fieldName}}'] = \$fileName;
+            }
+        }
 EOD;
 
         $fieldsArray = explode(';', $fields);
@@ -132,6 +152,8 @@ EOD;
 
                 $whereSnippet .= ($index == 0) ? "where('$fieldName', 'LIKE', \"%\$keyword%\")" . "\n\t\t\t\t" : "->orWhere('$fieldName', 'LIKE', \"%\$keyword%\")" . "\n\t\t\t\t";
             }
+
+            $whereSnippet .= "->";
         }
 
         return $this->replaceNamespace($stub, $name)
@@ -141,7 +163,10 @@ EOD;
             ->replaceCrudNameSingular($stub, $crudNameSingular)
             ->replaceModelName($stub, $modelName)
             ->replaceModelNamespace($stub, $modelNamespace)
+            ->replaceModelNamespaceSegments($stub, $modelNamespace)
             ->replaceRouteGroup($stub, $routeGroup)
+            ->replaceRoutePrefix($stub, $routePrefix)
+            ->replaceRoutePrefixCap($stub, $routePrefixCap)
             ->replaceValidationRules($stub, $validationRules)
             ->replacePaginationNumber($stub, $perPage)
             ->replaceFileSnippet($stub, $fileSnippet)
@@ -235,10 +260,10 @@ EOD;
     }
 
     /**
-     * Replace the modelName for the given stub.
+     * Replace the modelNamespace for the given stub.
      *
      * @param  string  $stub
-     * @param  string  $modelName
+     * @param  string  $modelNamespace
      *
      * @return $this
      */
@@ -246,6 +271,64 @@ EOD;
     {
         $stub = str_replace(
             '{{modelNamespace}}', $modelNamespace, $stub
+        );
+
+        return $this;
+    }
+
+    /**
+     * Replace the modelNamespace segments for the given stub
+     *
+     * @param $stub
+     * @param $modelNamespace
+     *
+     * @return $this
+     */
+    protected function replaceModelNamespaceSegments(&$stub, $modelNamespace)
+    {
+        $modelSegments = explode('\\', $modelNamespace);
+        foreach ($modelSegments as $key => $segment) {
+            $stub = str_replace(
+                '{{modelNamespace[' . $key . ']}}', $segment, $stub
+            );
+        }
+
+        $stub = preg_replace(
+            '{{modelNamespace\[\d*\]}}', '', $stub
+        );
+
+        return $this;
+    }
+
+    /**
+     * Replace the routePrefix for the given stub.
+     *
+     * @param  string  $stub
+     * @param  string  $routePrefix
+     *
+     * @return $this
+     */
+    protected function replaceRoutePrefix(&$stub, $routePrefix)
+    {
+        $stub = str_replace(
+            '{{routePrefix}}', $routePrefix, $stub
+        );
+
+        return $this;
+    }
+
+    /**
+     * Replace the routePrefixCap for the given stub.
+     *
+     * @param  string  $stub
+     * @param  string  $routePrefixCap
+     *
+     * @return $this
+     */
+    protected function replaceRoutePrefixCap(&$stub, $routePrefixCap)
+    {
+        $stub = str_replace(
+            '{{routePrefixCap}}', $routePrefixCap, $stub
         );
 
         return $this;

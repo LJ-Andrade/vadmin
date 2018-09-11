@@ -56,8 +56,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => env('MAIL_FROM_ADDRESS', 'info@brunaindumentaria.com.ar'),
+        'name' => env('MAIL_FROM_NAME', 'Bruna'),
     ],
 
     /*
@@ -116,8 +116,8 @@ return [
         'theme' => 'default',
 
         'paths' => [
-            resource_path('views/vendor/mail'),
+            resource_path('views/vendor/mail/html/themes'),
         ],
     ],
-
+    
 ];

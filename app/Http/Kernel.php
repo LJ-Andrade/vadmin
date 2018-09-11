@@ -18,6 +18,7 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+        \App\Http\Middleware\TrustProxies::class,
     ];
 
     /**
@@ -39,7 +40,7 @@ class Kernel extends HttpKernel
         'api' => [
             'throttle:60,1',
             'bindings',
-        ],
+        ]
     ];
 
     /**
@@ -56,7 +57,10 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        // Custom MiddleWares
-        'admin' => \App\Http\Middleware\Admin::class
+        'admin' => \App\Http\Middleware\AdminMiddleware::class, // Custom Line
+        'customer' => \App\Http\Middleware\CustomerMiddleware::class,
+        'active-customer' => \App\Http\Middleware\CustomerActiveMiddleware::class,
+        'active-user' => \App\Http\Middleware\ActiveUser::class,
+        'verifyOrderStatus' => \App\Http\Middleware\CustomerVerifyOrderStatus::class
     ];
 }
