@@ -2,12 +2,12 @@
 @section('title', 'Vimana Studio | Inicio')
 
 @section('styles')
-    {{-- Slider --}}
-    <link rel="stylesheet" type="text/css" href="{{ asset('plugins/swiper-slider/swiper.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/swiper-slider/swiper.min.css') }}">
 @endsection
 
 @section('content')
-    {{-- Facebook Plugin --}}
+{{------------- Facebook App----------------}}
+{{------------------------------------------}}
     <div id="fb-root"></div>
     <script>(function(d, s, id) {
         var js, fjs = d.getElementsByTagName(s)[0];
@@ -16,237 +16,201 @@
         js.src = "//connect.facebook.net/es_ES/sdk.js#xfbml=1&version=v2.8&appId=240698342801213";
         fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
-    </script> 
-    {{-- /Facebook Plugin --}}
-    <div id="ActualSection" data-section="home"></div> {{-- JS Anchor --}}
-    {{-- Home Section Desktop --}}
-    <div  class="main-home" data-parallax="scroll">
-        <div class="main-info wow animated fadeIn" data-wow-delay="0s" data-wow-duration="1s">
-            <img src="{{ asset('webimages/logos/main-logo.png') }}">
-            <h1>Desarrollo Web y Diseño Gráfico</h1>
-            <div class="actions">
-                <a href="{{ route('web.portfolio') }}"><button class="button btnHollowGreyTrans">Nuestro Portfolio</button></a>
-                <a href="{{ url('/#contact') }}"><button class="button btnHollowGreen">Contactanos</button></a>
-            </div>
-        </div>
-    </div>
-    {{-- First Info --}}
-    <div class="container-fluid section-container home-section-2">
-        <div class="container">
-            <article class="row">
-                <div class="col-md-6 big-text">
-                    <span class="wow animated fadeIn" data-wow-duration="1s" data-wow-delay="0.1s">DISEÑO</span> <br>
-                    <span class="wow animated fadeIn" data-wow-duration="1s" data-wow-delay="0.2s">INNOVACIÓN</span> <br> 
-                    <span class="wow animated fadeIn" data-wow-duration="1s" data-wow-delay="0.3s">CREATIVIDAD</span>
-                </div>
-                <div class="col-md-6 small-text wow animated fadeIn">
+    </script>
+
+{{--------------- Home Top  ----------------}}
+{{------------------------------------------}}
+<section class="home-top-section">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="content">
+                <div class="inner">
+                    <span class="big-title white">Desarrollo Web y Diseño Gráfico</span>
                     <p>
-                        Somos un equipo de trabajo dedicado a crear soluciones visuales.
-                        Nos especializamos en el área del <b>diseño web</b>, <b>la programación</b>,
-                        el <b>diseño gráfico</b> y la <b>ilustración.</b> <br>
-                        Generamos contenido propio y personalizado para que cada
-                        cliente obtenga un producto único y original. <br>
+                        Somos un equipo de trabajo dedicado a crear soluciones visuales e interactivas
+                        para mejorar la estética, el impacto y la funcionalidad de un proyecto.
                     </p>
-                </div>     
-                <div class="icons horizontal-list power-icons">
-                    <ul>
-                        <li class="wow animated fadeInUp" data-wow-duration="1s" data-wow-delay="0.2s">
-                        <img src=" {{ asset('webimages/gral/home/icons/icon2.png') }} "></li>
-                        <li class="wow animated fadeInUp" data-wow-duration="1s" data-wow-delay="0.3s">
-                        <img src=" {{ asset('webimages/gral/home/icons/icon1.png') }} "></li>
-                        <li class="wow animated fadeInUp" data-wow-duration="1s" data-wow-delay="0.4s">
-                        <img src=" {{ asset('webimages/gral/home/icons/icon4.png') }} "></li>
-                        <li class="wow animated fadeInUp" data-wow-duration="1s" data-wow-delay="0.5s">
-                        <img src=" {{ asset('webimages/gral/home/icons/icon3.png') }} "></li>
-                        <li class="wow animated fadeInUp" data-wow-duration="1s" data-wow-delay="0.6s">
-                        <img src=" {{ asset('webimages/gral/home/icons/icon5.png') }} "></li>
-                    </ul>
-                </div>
-            </article>
-            <div class="row bottom-text wow animated fadeIn">
-                <span>Atendemos Empresas, Pymes, Proyectos y Particulares.</span> 
-            </div>
-        </div>
-    </div>
-
-    {{-- Our Services --}}
-    <div id="services" class="container-fluid our-services">
-        <div class="container inner">
-            <div class="container swiper-container-services">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <div class="col-md-5 column1">
-                            <img src="{{ asset('webimages/gral/home/servicio1.png') }}">    
-                        </div>
-                        <div class="col-md-7 column2">
-                            <h1>Diseño y Desarrollo Web</h1> 
-                            <p>
-                                Desarrollamos sitios personalizados. <br>Creados desde cero y con las últimas tecnologías web. <br>
-                                <b>Son visibles en todo tipo de dispositivo.</b>
-                                Entregamos un código limpio y optimizado para luego incluírlo en buscadores cumpliendo con sus exigencias. <br><br>
-                                <i class="ion-record"></i> <b>Adaptables</b> | Celulares | Tablets | Notebooks | Pc <br>
-                                <i class="ion-record"></i> <b>Sitios Institucionales</b> | Económicos | Rápido Desarrollo <br>
-                                <i class="ion-record"></i> <b>Diseño gráfico</b> | Creamos las piezas necesarias para el sitio<br>
-                                <i class="ion-record"></i> <b>Relacionado con Redes Sociales</b> | Aumenta el posicionamiento<br>
-                                <i class="ion-record"></i> <b>Exposición</b> | GoogleAdwords | Facebook | Buscadores | *Opcional<br>
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="swiper-slide">
-                        <div class="col-md-5 column1">
-                            <img src="{{ asset('webimages/gral/home/servicio2.png') }}">    
-                        </div>
-                        <div class="col-md-7 column2">
-                            <h1>Progamación y Desarrollo de Apps</h1> 
-                            <p>
-                                Creamos sistemas hechos a medida según las necesidades presentadas.<br>
-                                Desarrollamos: <br>
-                                <i class="ion-record"></i> <b>Gestores de Contenido</b><br>
-                                <i class="ion-record"></i> <b>Carros de Compras</b><br>
-                                <i class="ion-record"></i> <b>Portfolios</b><br>
-                                <i class="ion-record"></i> <b>Catálogos</b><br>
-                                <i class="ion-record"></i> <b>Blogs</b> <br>
-                                <b>* Son Autoadministrables !</b>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="col-md-5 column1">
-                            <img src="{{ asset('webimages/gral/home/servicio3.png') }}">    
-                        </div>
-                        <div class="col-md-7 column2">
-                            <h1>Diseño Gráfico</h1> 
-                            <p>
-                                Desarrollamos piezas personalizadas.  <br>
-                                Estudiamos el perfil de cliente para  <br>
-                                entregar un producto acorde a la imágen buscada <br><br>
-                                <i class="ion-record"></i> <b>Identidad Corporativa</b> | Marca | Logos <br>
-                                <i class="ion-record"></i> <b>Papelería industrial</b> | Tarjetas | Flyiers <br>
-                                <i class="ion-record"></i> <b>Publicidad</b> | Redes sociales | Plantillas | Posts <br>
-                                <i class="ion-record"></i> <b>Editorial</b> | Libros | Catálogos | Manuales | Folletos <br>
-                                <i class="ion-record"></i> <b>Packagin</b> | Etiquetas | Bolsas | Cajas <br>
-                            </p>
-                        </div>
+                    <div class="buttons">
+                        <button class="btn btn-primary">Ver Portfolio</button><button class="btn btn-gradient">Contactenos</button>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    
-    {{-- Our Works | Portfolio --}}
-    <div class="container-fluid our-works">
-        <div class="container wow animated fadeIn">
-            <div class="row">
-                {{-- Mobile --}} 
-                <div class="col-xs-12 col-sm-6 col-md-4 inner inner-mobile">
-                    <h1>NUESTRO<br>PORTFOLIO</h1>
-                    <p class="first">
-                        Una imágen vale más que un slogan.
-                    </p>
-                    <p class="second">
-                        Visitá nuestro portfolio y mirá como trabajamos.
-                    </p>
-                    <a href="{{ route('web.portfolio') }}"><button class="button btnHollowGreyTransBlack">Nuestro Portfolio</button></a>
+        </div> {{-- / row --}}
+    </div> {{-- / container-fluid --}}
+</section> {{-- / home-top-section --}
+
+{{--------------- Post Home ----------------}}
+{{------------------------------------------}}
+<section>
+    <div class="container-fluid post-home-section">
+        <div class="row">
+            <div class="col-md-12 col-lg-4 column-1">
+                <h1>DISEÑO E INNOVACIÓN</h1>
+                <div class="divisor"></div>
+                <h2>Especialidades</h2>
+                <p>
+                    Nos especializamos en el área del diseño web, la
+                    programación, el diseño gráfico y la ilustración. <br> <br>
+                    Generamos contenido propio y personalizado para que
+                    cada cliente obtenga un producto único y original. <br> <br>
+                    <b>Atendemos Empresas, Pymes, Proyectos y Particulares.</b>
+                </p>
+                <button class="btn btn-gradient">Contactanos</button>
+            </div>
+            <div class="col-md-12 col-lg-8 column-2">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-6">
+                        <img src="{{ asset('images/web/spec3.png') }}" alt="Vimana Studio Speciality">
+                        <h1>Desarrollo Web</h1>
+                        <p>
+                            Interfaces visuales modernas, cradas para maximizar el tiempo de permanencia del usuario y lograr mejores conversiones.
+                            Los sitios salen listos para ser posicionados cumpliendo las exigencias de los buscadores.
+                        </p>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6">
+                        <img src="{{ asset('images/web/spec4.png') }}" alt="Vimana Studio Speciality">
+                        <h1>Webs Autoadministrables</h1>
+                        <p>
+                            Son sitios diseñados para que puedan ser gestionados directamente por el cliente. <br>
+                            <b>Gestión de usuarios | Gestión de contenido | Gestión de galería de imágenes | Blogs, noticias </b>
+                        </p>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6">
+                        <img src="{{ asset('images/web/spec1.png') }}" alt="Vimana Studio Speciality">
+                        <h1>Diseño Gráfico</h1>
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex, commodi. Omnis quo minus eaque quas, 
+                            possimus officiis et nesciunt totam ducimus obcaecati 
+                        </p>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6">
+                        <img src="{{ asset('images/web/spec2.png') }}" alt="Vimana Studio Speciality">
+                        <h1>Marketing en Redes</h1>
+                        <p>
+                            Ofrecemos asesoramiento, gestión, planificación y demás tareas relacionadas 
+                            con la publicidad en redes sociales.
+                        </p>
+                    </div>
+                </div> {{-- / row --}}
+            </div> {{-- / col-md-8 col-sm-6 --}}
+        </div> {{-- / row --}}
+    </div> {{-- / container-fluid --}}
+</section>
+
+{{------------- Featured Jobs --------------}}
+{{------------------------------------------}}
+<section class="featured-jobs">
+    <div class="background"></div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 col-lg-5 column-1"></div>
+            <div class="col-md-12 col-lg-7 column-2">
+                <h1>DISEÑO E INNOVACIÓN</h1>
+                <div class="divisor"></div>
+                <h2>Web Adaptables</h2>
+                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nisi natus quis modi mollitia. Quasi eum adipisci veniam ducimus, dolores quas.
+                    Mollitia recusandae dolore rem fugit minima culpa quod eaque amet!
+                    Nisi natus quis modi mollitia. Quasi eum adipisci veniam ducimus, dolores quas.
+                    Mollitia recusandae dolore rem fugit minima culpa quod eaque amet!
+                </p>
+                <button class="btn btn-gradient">Contactanos</button>
+                <div class="img-icon-container">
+                    <div class="icon"><img src="{{ asset('images/web/icon-cube.png') }}" alt="Vimana Studio - Square Icon"></div>
+                    <div class="content">
+                        <h3>Diseño y Desarrollo Web</h3>
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis dolorum atque sit mollitia minus fuga, 
+                            soluta natus placeat nesciunt aliquam provident nihil, porro quaerat reiciendis alias libero assumenda excepturi ipsa.
+                        </p>
+                    </div>
                 </div>
-                {{-- Desk --}} 
-                <div class="col-xs-12 col-sm-6 col-md-4 inner inner-desk">
-                    <h1>NUESTRO<br>PORTFOLIO</h1>
-                    <p class="first">
-                        Una imágen vale más <br>que un slogan.
-                    </p>
-                    <p class="second">
-                        Visitá nuestro portfolio <br> y mirá como trabajamos.
-                    </p>
-                    <a href="{{ route('web.portfolio') }}"><button class="button btnHollowGreyTransBlack">Nuestro Portfolio</button></a>
+                <div class="img-icon-container">
+                    <div class="icon"><img src="{{ asset('images/web/icon-cube.png') }}" alt="Vimana Studio - Square Icon"></div>
+                    <div class="content">
+                        <h3>Diseño y Desarrollo Web</h3>
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis dolorum atque sit mollitia minus fuga, 
+                            soluta natus placeat nesciunt aliquam provident nihil, porro quaerat reiciendis alias libero assumenda excepturi ipsa.
+                        </p>
+                    </div>
                 </div>
-                <div class="col-xs-12 col-sm-6 col-md-8 inner">
+            </div>
+        </div> {{-- / row --}}
+    </div> {{-- / container-fluid --}}
+</section> {{-- / featured-jobs --}}
+
+
+{{----------- Portfolio Slider -------------}}
+{{------------------------------------------}}
+<section class="portfolio-slider-section">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="column column-1">
+                <div class="portfolio-slider">
                     <div class="swiper-container">
                         <div class="swiper-wrapper">
-                            <div class="swiper-slide"><img src="{{ asset('webimages/gral/home/portfolioslider/port1.jpg') }}" alt=""></div>
-                            <div class="swiper-slide"><img src="{{ asset('webimages/gral/home/portfolioslider/port2.jpg') }}" alt=""></div>
-                            <div class="swiper-slide"><img src="{{ asset('webimages/gral/home/portfolioslider/port3.jpg') }}" alt=""></div>
-                            <div class="swiper-slide"><img src="{{ asset('webimages/gral/home/portfolioslider/port4.jpg') }}" alt=""></div>
+                            <div class="swiper-slide"><img src="{{ asset('images/web/slider1.png') }}" alt="Vimana Studio Works"></div>
+                            <div class="swiper-slide"><img src="{{ asset('images/web/slider2.png') }}" alt="Vimana Studio Works"></div>
+                            <div class="swiper-slide"><img src="{{ asset('images/web/slider3.png') }}" alt="Vimana Studio Works"></div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    {{--  @include('layouts.web.partials.contact-tab')  --}}
-    @include('web.partials.contact')
-    @include('web.partials.foot')
+            <div class="column column-2"></div>
+        </div> {{-- / row --}}
+    </div> {{-- / container-fluid --}}
+</section> {{-- / portfolio-slider --}}
+
+
+{{---------- Work Planification ------------}}
+{{------------------------------------------}}
+<section class="work-planification">
+    <div class="container">
+        <div class="row-centered">
+            <h1>¿ Querés saber como trabajamos ?</h1>
+            <h2>Planificación de proyecto</h2>
+            <div class="centered">
+                <div class="divisor"></div>
+            </div>
+            <div class="text">
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint illo fugiat est et impedit,
+                    excepturi voluptatibus rem, nesciunt ex quam eligendi veniam officia, numquam similique
+                    at expedita voluptate voluptas porro?
+                </p>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
+                    <img src="{{ asset('images/web/icon1.png') }}" alt="">
+                    <p>
+                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Deserunt laudantium quibusdam obcaecati quidem fuga impedit? Doloribus.
+                    </p>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
+                    <img src="{{ asset('images/web/icon2.png') }}" alt="">
+                    <p>
+                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Deserunt laudantium quibusdam obcaecati quidem fuga impedit? Doloribus.
+                    </p>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
+                    <img src="{{ asset('images/web/icon3.png') }}" alt="">
+                    <p>
+                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Deserunt laudantium quibusdam obcaecati quidem fuga impedit? Doloribus.
+                    </p>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
+                    <img src="{{ asset('images/web/icon4.png') }}" alt="">
+                    <p>
+                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Deserunt laudantium quibusdam obcaecati quidem fuga impedit? Doloribus.
+                    </p>
+                </div>
+            </div>
+        </div> {{-- / row --}}
+    </div> {{-- / container-fluid --}}
+</section> {{-- / work-planification --}}
+<div id="Error"></div>
 @endsection
 
 @section('scripts')
-    <script type="text/javascript" src="{{ asset('plugins/parallax/parallax.min.js') }}"></script>
-    {{-- Slider --}}
-    <script type="text/javascript" src="{{ asset('plugins/swiper-slider/swiper.jquery.min.js') }}"></script>
-@endsection
-
-@section('custom_js')
-<script>    
-    // Home Parallax
-    var image = "{{ asset('webimages/gral/home/home-back.jpg') }}";
-    $('.main-home').parallax({ imageSrc: image });
-
-    var mySwiper2 = new Swiper('.swiper-container-services', {
-        grabCursor: true,
-        autoplay: true,
-        autoHeight: true,
-        spaceBetween: 150,
-        autoplay: {
-            delay: 4000,
-        },
-        loop: true,
-        speed: 2000
-    });
-    
-    // var swiper = new Swiper('.swiper-container');
-    var mySwiper = new Swiper('.swiper-container', {
-        // autoplay:true,
-        pagination: true,
-        // speed: 10000,
-        spaceBetween: 0,
-        //autoplay: true,
-        autoplay: {
-            delay: 2000,
-        },
-        delay: 0,
-        loop: true,
-        speed: 2500,
-    }); 
-
-    $(document).on('submit','#MainContactForm',function(e){
-        e.preventDefault();
-        var data   = $(this).serialize();
-        var route  = "{{ url('mail_sender') }}";
-        // var route  = "{{ url('test_sender') }}";
-        var loader = '<img src="{{ asset("images/loaders/loader-sm.svg") }}"/>' + '<div style="color: #fff; margin-left: 15px">Enviando...</div>';
-
-        $.ajax({
-            type: "POST",
-            url: route,
-            dataType: 'json',
-            data: data,
-            beforeSend: function(){
-                var loader = "<img src='{{ asset('images/loaders/loader-sm.svg') }}'>";
-                $('#ContactBtn').html('Enviando ' + loader);
-            },
-            success: function(data) {
-                $('#MainContactForm').hide();
-                $('#FormSuccess').removeClass('Hidden');
-                $('#FormResponse').hide();
-                console.log(data);
-            },
-            error: function(data) {
-                $('#FormResponse').hide();
-                $('#MainContactForm').hide();
-                $('#ContactBtn').html('ENVIAR');
-                $('#FormError').removeClass('Hidden');
-                console.log(data);
-            }
-        });
-    });
-</script>
+    <script type="text/javascript" src="{{ asset('vendor/swiper-slider/swiper.jquery.min.js') }}"></script>
 @endsection

@@ -1,6 +1,103 @@
-.error-page
+//
+// |--------------------------------------------------------------------------
+// | Text
+// |--------------------------------------------------------------------------
+//
+
+.big-title
+    font-family: $font1
+    font-size: 4.5rem
+    font-weight: 800
+    line-height: 5rem
+
+
+//
+// |--------------------------------------------------------------------------
+// | Buttons
+// |--------------------------------------------------------------------------
+//
+
+.btn
+    border-radius: 50px !important
+    margin: 5px 10px
+    border: 0
+    padding: 10px 20px
+    &:hover
+        // filter: brightness(1.1)
+
+.btn-primary
+    &:hover
+        background-color: $color1
+        filter: brightness(1.1) !important
+    
+.btn-gradient
+    @include linear-gradient(to left, $green, $blue3)
+    color: #fff
+    &:hover
+        background: $color1
+
+//
+// |--------------------------------------------------------------------------
+// | Items
+// |--------------------------------------------------------------------------
+//
+
+.img-icon-container
+    position: relative
+    .icon
+        position: absolute
+        left: 0
+        top: 0
+        img
+            max-width: 100%
+            width: 50px
+    .content
+        padding-left: 60px
+            
+.centered-column
     @include flex-center()
-    margin-top: 150px
-    text-align: center
-    h1
-        font-size: 3rem
+    .inner
+        ul
+            li
+                padding: 0 20px
+                float: left
+                display: block
+                max-width: 300px
+                
+.square-icons
+    border: 1px solid #ffffff
+    margin: 5px
+    width: 60px
+    height: 60px
+    padding: 16px 4px
+    @include transition(0.2s)
+    i
+        @include transition(0.2s)
+        color: #fff
+        font-size: 1.5rem
+    &:hover
+        background: #ffffff
+        @include box-shadow-right()
+        i
+            
+            color: $color1
+
+.horizontal-list
+	ul
+		padding-left: 0
+		padding: 0
+		margin: 0
+		li
+			display: inline-block
+			list-style: none
+//
+// |--------------------------------------------------------------------------
+// | Decoration
+// |--------------------------------------------------------------------------
+//
+
+.divisor
+    border-top: 1px solid rgba(#383838,.5)
+    max-width: 100px
+    width: 100px
+    margin-bottom: 10px

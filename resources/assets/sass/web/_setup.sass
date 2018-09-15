@@ -1,0 +1,143 @@
+//
+// |--------------------------------------------------------------------------
+// | Fonts
+// |--------------------------------------------------------------------------
+//
+
+@import url('https://fonts.googleapis.com/css?family=Montserrat:200,300,400,600,800|Nixie+One')
+
+$font1: 'Montserrat', sans-serif
+$font2: 'Nixie One', cursive
+
+//
+// |--------------------------------------------------------------------------
+// | Colors - Backgrounds
+// |--------------------------------------------------------------------------
+//
+
+$red:    #D77777
+$blue:   #3122C7
+$blue2:  #1d3dd0
+$blue3:  #26a5d2
+$green:  #1ADBBC
+$lgrey:  #F3F3F3
+$dgrey:  #5f5f5f
+$color1: $blue
+$color2: $green
+
+.white
+	color: #fff
+.black
+	color: #383838
+.white-bg
+	background-color: #fff
+.black-bg
+	background-color: #383838
+.gradient
+    @include linear-gradient(to left, $green, $blue3)
+
+//
+// |--------------------------------------------------------------------------
+// | General
+// |--------------------------------------------------------------------------
+//
+
+html
+	min-height: 100%
+	position: relative
+	font-size: 100%
+	overflow-x: hidden
+
+body
+	background-color: #fff
+	height: 100%
+	margin: 0
+	font-size: 18px
+	font-family: $font1
+	font-weight: 300
+	line-height: 24px
+	color: #383838
+	overflow-x: hidden
+a
+	text-decoration: none
+	color: rgb(187, 183, 242)
+	&:hover
+		text-decoration: none
+
+p
+	font-size: 0.9rem
+	font-weight: 300
+	line-height: 1.3rem
+
+h1,h2
+	font-family: $font2
+	color: $dgrey
+h1
+	font-size: 1.2rem
+	font-weight: 300
+h2
+	font-weight: 400
+	font-size: 3rem
+	color: $dgrey
+h3
+	font-size: 1.3rem
+	font-weight: 300
+h4
+	font-size: 1.2rem
+	font-weight: 300
+
+@media (max-width: 1250px)
+	h2
+		font-weight: 400
+		font-size: 2.6rem
+		color: $dgrey
+
+section
+	padding: 50px 20px
+
+//
+// |--------------------------------------------------------------------------
+// | Helpers
+// |--------------------------------------------------------------------------
+//
+
+.brd
+	border: 1px solid red
+.txL
+	text-align: left
+.txR
+	text-align: right
+.txC
+	text-align: center
+.pad0
+	padding: 0
+.mar0
+	margin: 0
+.margTop0
+	margin-top: 0 !important
+.padTop0
+	padding-top: 0 !important
+
+@media (max-width: 900px)
+	.hideMobile900
+		display: none !important
+.Hidden
+	display: none !important
+.floatRight
+	float: right
+.floatLeft
+	float: left
+.centered
+	text-align: center
+	@include flex-center()
+	
+//
+// |--------------------------------------------------------------------------
+// | Resets
+// |--------------------------------------------------------------------------
+//
+
+ul
+	padding-left: 0
+	li
+		list-style-type: none

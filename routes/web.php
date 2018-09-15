@@ -50,9 +50,6 @@ Route::group(['prefix'=> 'vadmin'], function() {
     Route::post('password/reset', ['uses' => 'Auth\ResetPasswordController@reset']);
 });
 
-
-
-
 /*
 |--------------------------------------------------------------------------
 | Web
@@ -61,6 +58,8 @@ Route::group(['prefix'=> 'vadmin'], function() {
 */
 
 Route::get('/', ['as' => 'web', 'uses' => 'WebController@home']);
+Route::post('send-contact', ['as' => 'send-contact', 'uses' => 'WebController@sendContact']);
+
 // Route::get('contacto', function(){ return view('web.web.contacto'); });
 
 /*
@@ -189,7 +188,7 @@ Route::group(['prefix' => 'vadmin', 'middleware' => ['active-user', 'admin']], f
     // -- MESSAGES --
     Route::get('/mensajes_recibidos/{status}', 'VadminController@storedContacts');
     Route::post('buscar_mensajes_recibidos', ['as' => 'searchStoredContact', 'uses' => 'VadminController@searchStoredContact']);
-    Route::get('mensajes_recibidos/{id}', 'VadminController@showStoredContact');
+    Route::get('mensaje/{id}', 'VadminController@showStoredContact');
     Route::post('setMessageAsReaded', 'VadminController@setMessageAsReaded');
     
     // -- PORTFOLIO --

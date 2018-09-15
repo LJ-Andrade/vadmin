@@ -1,0 +1,132 @@
+//
+// |--------------------------------------------------------------------------
+// | Full Screen Navigation 
+// |--------------------------------------------------------------------------
+//
+.navfull
+	background-color: $color1
+	@include vimana-gradient()
+	position: fixed
+	width: 100%
+	padding: 0
+	top: 0
+	left: 0
+	height: 0
+	z-index: 9998
+	display: flex
+	visibility: hidden
+	-webkit-transition: opacity .35s, visibility .35s, height .35s
+	@include flex-column
+	.menu-content
+		ul
+			text-align: center
+			margin-bottom: 0
+			li 
+				padding: 15px 40px
+				a
+					opacity: 0
+					font-size: 3rem
+					line-height: 4rem
+					font-family: $font2
+					font-weight: 300
+					color: #f9f9f9
+					text-decoration: none
+					@include transition(0.5s)
+				.nav-line
+					@include flex-center()
+					width: 100%
+					div
+						@include transition-bounce(0.6s)
+						width: 0
+						border-bottom: 1px solid #fff
+				&:hover
+					cursor: pointer
+					.nav-line div
+						width: 60%
+					a
+						color: #fff
+						filter: brightness(1.5)
+	.social
+		height: 100%
+		@include flex-center()
+		position: absolute
+		left: 10px
+		.inner
+			ul li 
+				text-align: center
+				margin: 10px 0
+				height: 30px
+				width: 30px
+				i
+					opacity: 0
+					color: #fff
+					font-size: 1.5rem
+					@include transition(0.2s)
+				&:hover
+					i
+						color: $color1
+						font-size: 1.2rem
+
+
+@media (max-width: 640px)
+	.nav-full
+		.right
+			display: none
+
+.navfull-active
+	visibility: visible
+	height: 100%
+	.menu-content ul li a, .social .inner ul li i
+		opacity: 1
+//
+// |--------------------------------------------------------------------------
+// | Nav Trigger
+// |--------------------------------------------------------------------------
+//
+.navfull-button
+	position: fixed
+	cursor: pointer
+	z-index: 9999
+
+// Top Nav button
+.navfull-top-button
+	top: 20px
+	right: 20px
+	padding: 0
+	height: 28px
+	width: 50px
+	.bar
+		background-color: $color1
+		display: block
+		width: 100%
+		height: 8px
+		border: 0
+		-webkit-transition: all .35s ease
+		transition: all .35s ease
+		border-bottom: 1px solid #ccc
+		+ .bar
+			margin-top: 1px
+	.middle
+		top: 11px
+	.bottom
+		top: 22px
+	.toggle-button:hover
+		opacity: .7
+
+@media (max-width: 500px)
+	.navfull-top-button
+		padding: 0
+		margin: 0
+		right: 10px
+		top: 25px
+		width: 40px
+
+.navfull-top-active
+	.bar
+		background-color: #fff
+	.top
+		-webkit-transform: translateY(6px) translateX(0) rotate(45deg)
+	.middle
+		opacity: 0
+	.bottom
+		-webkit-transform: translateY(-12px) translateX(0) rotate(-45deg)

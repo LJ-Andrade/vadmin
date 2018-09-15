@@ -1,0 +1,370 @@
+//
+// |--------------------------------------------------------------------------
+// | Site Brand
+// |--------------------------------------------------------------------------
+//
+	
+.site-brand
+	height: 100%
+	max-width: 200px
+	position: absolute
+	top: 0
+	left: 0
+	padding: 10px
+	img
+		max-width: 100%
+
+//
+// |--------------------------------------------------------------------------
+// | Home
+// |--------------------------------------------------------------------------
+//
+	
+.home-top-section
+	background: url(../images/web/home-top-background.jpg)
+	background-size: cover
+	background-size: contain
+	background-repeat: no-repeat
+	width: 100%
+	height: 0
+	padding-top: 66.50%
+	.content
+		position: absolute
+		top: 0
+		left: 0
+		max-width: 700px
+		height: 100vh
+		@include flex-center()
+		.inner
+			padding: 0 50px 
+			.big-title
+				font-size: 6rem
+				line-height: 6.5rem
+			p
+				margin-top: 10px
+				color: #fff
+				font-size: 1.1rem
+				line-height: 1.2rem
+				max-width: 450px
+
+// Post Home
+// ------------------------------------------    
+.post-home-section
+	margin-top: -220px
+	.column-1
+		padding: 50px
+		h2
+			margin-bottom: 25px
+			color: $color1
+		p
+			margin-bottom: 25px
+		.btn
+			margin-left: 0
+	.column-2
+		img
+			max-width: 100%
+			width: 150px
+		h1
+			color: $color1
+
+@media only screen and  (max-width: 1400px)
+	.home-top-section 
+		.content
+			height: 100vh
+			max-width: 550px
+			.inner
+				.big-title
+					font-size: 4.5rem
+					line-height: 5rem
+
+@media only screen and  (max-width: 1300px)
+	.home-top-section
+		.content
+			height: 80vh
+			max-width: 600px
+			.inner
+				.big-title
+					font-size: 4.5rem
+					line-height: 4.5rem
+
+@media only screen and  (max-width: 1100px)
+	.home-top-section
+		.content  
+			max-width: 500px  
+			height: 70vh
+			.inner
+				padding: 0 50px 
+				.big-title
+					font-size: 3rem
+					line-height: 4rem
+
+@media only screen and  (max-width: 1000px)
+	.home-top-section
+		.content  
+			max-width: 500px
+			.inner
+				padding: 0 50px 
+				.big-title
+					font-size: 3rem
+					line-height: 4rem
+	.post-home-section
+		margin-top: -180px
+		.column-1
+			padding-top: 10px
+
+@media only screen and  (max-width: 850px)
+	.home-top-section
+		
+		.content
+			max-width: 100%
+			height: auto
+			top: 100px
+			left: 0
+			.inner
+				.big-title
+					font-size: 3rem
+					line-height: 3.5rem
+	.post-home-section
+		margin-top: -150px
+
+@media only screen and  (max-width: 768px)
+	.home-top-section
+		background: url(../images/web/home-top-background-mobile.jpg)  no-repeat scroll top center / cover
+		width: 100%
+		height: auto
+		padding-top: 100px
+		.content
+			position: relative
+			left: auto
+			top: auto
+			height: auto
+			.inner
+				p
+					text-shadow: 0px 0px 5px #383838
+	.post-home-section
+		margin-top: 0
+		.column-2
+			text-align: center
+
+@media only screen and  (max-width: 450px)
+	.home-top-section .content .inner
+		padding: 0
+		.buttons
+			white-space: nowrap
+
+	.post-home-section
+		.column-1
+			padding: 5px
+
+@media only screen and  (max-width: 340px)
+	.post-home-section
+		.column-1
+			h2
+				font-size: 2rem
+
+// Featured Jobs
+// ------------------------------------------
+.featured-jobs
+	padding: 50px 20px 50px 0
+	background: url(../images/web/featured-jobs-back.jpg) no-repeat center center
+	-webkit-background-size: auto 100%
+	-moz-background-size: auto 100%
+	-o-background-size: auto 100%
+	background-size: auto 100%
+	background-position-x: 0 
+	.column-1
+	.column-2
+		h2
+			margin: 10px 0
+		.btn
+			margin-bottom: 25px
+		
+@media only screen and  (max-width: 991px)
+	.featured-jobs
+		padding: 0
+		padding: 20px
+		background: none
+		position: relative
+		h2
+			font-weight: 400
+			color: $color1
+		.background
+			position: absolute
+			left: 0
+			top: 0
+			width: 100%
+			height: 100%
+			background: url(../images/web/featured-jobs-back.jpg) no-repeat center center
+			-webkit-background-size: auto 100%
+			-moz-background-size: auto 100%
+			-o-background-size: auto 100%
+			background-size: auto 100%
+			background-position-x: 0
+			opacity: .1
+		.column-2
+			padding: 20px
+		
+// Portfolio Slider
+// ------------------------------------------
+
+.portfolio-slider-section
+	display: flex
+	.column
+		display: flex
+		padding: 50px 50px
+	.column-1
+		width: 40%
+	.column-2
+		background: url(../images/web/portfolio-slider-back.jpg) no-repeat scroll top center / cover
+		width: 50%
+	.portfolio-slider
+		.swiper-container
+			max-width: 700px
+			right: -150px
+			img
+				max-width: 100%
+
+@media only screen and  (min-width: 1500px)
+	.portfolio-slider-section
+		.portfolio-slider
+			.swiper-container
+				max-width: 700px
+				right: -250px
+
+@media only screen and  (max-width: 1300px)
+	.portfolio-slider-section
+		.column-1
+			width: 45%
+		.portfolio-slider
+			.swiper-container
+				right: -100px
+
+@media only screen and  (max-width: 1100px)
+	.portfolio-slider-section
+		.column-1
+			width: 100%
+		.column-2
+			width: 0
+			background: none
+		.portfolio-slider
+			@include flex-center()
+			width: 100%
+			.swiper-container
+				right: 0
+
+
+@media only screen and  (max-width: 750px)
+	.portfolio-slider-section
+		padding: 10px
+		.column
+			padding: 10px
+
+// Work Planification
+// ------------------------------------------
+.work-planification
+	text-align: center
+	h2
+		color: $color1
+	.text
+		@include flex-center()
+		p
+			margin-top: 15px
+			max-width: 550px
+
+// Contact Section
+// ------------------------------------------
+.contact-section
+	background: url(../images/web/contact.jpg) no-repeat center center
+	-webkit-background-size: cover
+	-moz-background-size: cover
+	-o-background-size: cover
+	background-size: cover
+	background-position-y: 0
+	padding-top: 450px 
+	margin-top: -150px
+	padding-bottom: 60px
+	h2
+		color: #fff
+		font-size: 2.5rem
+		margin-top: 45px
+	.contact-data
+		margin: 35px 0 50px
+	.item-1
+		color: #fff
+		font-size: 1.3rem
+		font-family: $font2
+		font-weight: 600
+	.item-2
+		font-family: $font2
+		color: #000
+		font-weight: 400
+	.contact-form
+		@include flex-center()
+		margin-top: 20px
+		form
+			@include placeholders(#fff)
+			max-width: 800px
+			.form-group
+				margin: 0
+			> div
+				padding: 0
+				input, textarea
+					border: 1px solid #fff
+					border-radius: 0
+					background: transparent
+					color: #fff
+					font-size: 1.1rem
+					font-weight: 400
+					@include transition(0.2s)
+					&:hover
+						cursor: pointer
+						border: 1px solid rgba($color1,.2)
+						color: #fff
+				input
+					height: 60px
+				textarea
+					height: 180px
+				.submit
+					background: #fff
+					border: 0
+					padding: 10px 35px
+					font-size: 1.2rem
+					width: 400px
+					@include transition(0.2s)
+					&:hover
+						cursor: pointer
+						background: $color1
+						color: #fff
+	.form-responses
+		padding-top: 30px
+		padding-bottom: 20px
+		color: #fff
+		font-size: 1.5rem
+		h2
+			margin-top: 10px
+		i
+			font-size: 4rem
+		i.success
+			color: $green
+		i.error
+			color: $red
+		hr
+			margin-top: 60px
+	.social
+		margin-top: 50px 
+
+footer
+	background-color: #000
+	padding-left: 0 !important
+	padding-right: 0 !important
+	.footer
+		padding: 20px 10px 40px
+	.copyright
+		background-color: #0A1120
+		padding: 10px 5px
+		text-align: center
+		color: #fff
+		font-family: $font2
+		font-weight: 400
+		font-size: 1rem
+

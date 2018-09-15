@@ -1,20 +1,34 @@
-<div class="navbar navbar-default navbar-fixed-top text-center" role="navigation">        
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            </button>  
-            <a class="navbar-brand" href="{{ url('/') }}"><img src="{{ asset('webimages/logos/logo.png') }}"></a>
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="{{ url('/') }}">Inicio</a></li>
-                <li><a href="{{ route('web.portfolio') }}">Portfolio</a></li>
-                <li><a class="contacto" href="{{ url('/#contact') }}"><i class="ion-ios-email-outline"></i> Contacto</a></li>   
+<div class="top-bar">
+</div>
+<div class="site-brand">
+    <img src="{{ asset('images/web/logo-h.png') }}" alt="Vimana Studio">
+</div>
+<div id="navfull-top-btn" class="navfull-button navfull-top-button">
+    <div class="toggle-button">
+        <span class="bar top"></span>
+        <span class="bar middle"></span>
+        <span class="bar bottom"></span>
+    </div>
+</div>
+
+<nav id="navfull" class="main-navigation navfull col-md-12">
+    <div class="menu-content">
+        <ul>
+            <li><a href="index.php">INICIO</a><div class="nav-line"><div></div></div></li>    
+            <li><a href="index.php">PORTFOLIO</a><div class="nav-line"><div></div></div></li>
+            <li><a href="index.php">CONTACTO</a><div class="nav-line"><div></div></div></li>
+        </ul>
+    </div>
+    <div class="social">
+        <div class="inner">
+            <ul>
+                <li><a href="https://facebook.com"><i class="fab fa-instagram"></i></a></li>
+                <li><a href="https://facebook.com"><i class="fab fa-pinterest-p"></i></a></li>
+                <li><a href="https://www.facebook.com/studiograficovimana"><i class="fab fa-facebook-f"></i></a></li>
+                <li><a href="https://twitter.com/StudioVimana"><i class="fab fa-twitter"></i></a></li>
+                <li><a href="https://facebook.com"><i class="fab fa-behance"></i></a></li>
+                <li><a href="https://facebook.com"><i class="fab fa-google-plus-g"></i></a></li>
             </ul>
         </div>
     </div>
-</div>
+</nav>

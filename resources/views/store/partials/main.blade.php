@@ -20,7 +20,7 @@
 		<!-- Vendor Styles including: Bootstrap, Font Icons, Plugins, etc.-->
 		<link rel="stylesheet" media="screen" href="{{ asset('store-ui/css/vendor.min.css') }}">
 		<link rel="stylesheet" media="screen" href="{{ asset('store-ui/css/iziToast.min.css') }}">
-		<link rel="stylesheet" href="{{ asset('plugins/font-awesome/css/all.css') }}">
+		<link rel="stylesheet" href="{{ asset('vendor/font-awesome/css/all.css') }}">
 		<!-- Main Template Styles-->
 		<link rel="stylesheet" media="screen" href="{{ asset('css/store-custom.css') }}">
 		
@@ -66,7 +66,7 @@
 		<script src="{{ asset('store-ui/js/vendor.min.js') }}"></script>
 		<script src="{{ asset('store-ui/js/iziToast.min.js') }}"></script>
 		<script src="{{ asset('store-ui/js/scripts.min.js') }}"></script>
-		<script src="{{ asset('plugins/jquery/jquery-3.3.1.min.js') }}"></script>
+		<script src="{{ asset('vendors/jquery/jquery-3.3.1.min.js') }}"></script>
 		<script src="{{ asset('js/store-scripts.js') }}"></script>
 		@include('store.partials.scripts')
 		@yield('scripts')
