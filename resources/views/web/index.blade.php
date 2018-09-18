@@ -46,7 +46,7 @@
                     We are a team of digital artists passionate about delivering quality content.<br><br>
                     <b>We deliver only custom content</b><br><br>
     
-                    The visual aspect is the first step to growing a brand online.
+                    The visual aspect is the first step to growing a brand online.<br>
 
                     <b>Do you want to step up ?</b>
                 </p>

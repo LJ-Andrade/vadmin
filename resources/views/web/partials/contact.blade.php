@@ -36,7 +36,7 @@
 					{!! Form::text('phone', null, ['class' => 'form-control', 'placeholder' => 'Enter you contact number', 'required' => '']) !!}
 				</div>
 				<div class="col-md-6 form-group">
-					{!! Form::textarea('message', null, ['id' => 'Form-Textarea', 'class' => 'form-control', 'placeholder' => 'Dejanos tu consulta o mensaje', 'required' => '']) !!}
+					{!! Form::textarea('message', null, ['id' => 'Form-Textarea', 'class' => 'form-control', 'placeholder' => 'Leave us a message', 'required' => '']) !!}
 				</div>
 				<div class="col-md-12 centered">
 					<button id="ContactSubmit" class="submit"><i class="fas fa-paper-plane"></i> SEND !</button>
