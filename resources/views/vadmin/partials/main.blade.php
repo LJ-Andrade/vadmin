@@ -89,7 +89,6 @@
 		<script src="{{ asset('vadmin-ui/app-assets/vendors/js/ui/unison.min.js') }}" type="text/javascript"></script>
 		<script src="{{ asset('vadmin-ui/app-assets/vendors/js/ui/blockUI.min.js') }}" type="text/javascript"></script>
 		<script src="{{ asset('vadmin-ui/app-assets/vendors/js/ui/jquery.matchHeight-min.js') }}" type="text/javascript"></script>
-		{{-- <script src="{{ asset('vadmin-ui/app-assets/vendors/js/ui/screenfull.min.js') }}" type="text/javascript"></script> --}}
 		<script src="{{ asset('vadmin-ui/app-assets/vendors/js/extensions/pace.min.js') }}" type="text/javascript"></script>
 		<script src="{{ asset('vadmin-ui/app-assets/js/core/app-menu.js') }}" type="text/javascript"></script>
 		<script src="{{ asset('vadmin-ui/app-assets/js/core/app.js') }}" type="text/javascript"></script>
@@ -110,10 +109,10 @@
 
 			// Check If Img Is Broken and replace with default img 
 			// Add ".CheckImg" ass Class in any Img to add this function
-			$('.CheckImg').on('error', function(){
-				var defaultImg = "{{ asset('images/users/default.jpg') }}"
-				$(this).attr('src', defaultImg);
-			});
+			// $('.CheckImg').on('error', function(){
+			// 	var defaultImg = "{{ asset('images/users/default.jpg') }}"
+			// 	$(this).attr('src', defaultImg);
+			// });
 
 			$('.BtnLoader').click(function(){
 				var loadertext = $(this).data('loadertext');
