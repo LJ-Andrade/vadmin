@@ -117,8 +117,13 @@ class WebController extends Controller
 			$contact->fill($request->all());
 			$contact->save();
 			$subject = 'Nuevo contacto desde la web';
-
-			Mail::to(APP_EMAIL_1)->send(new WebContactMail($subject, $contact));
+			
+			try{
+				Mail::to(APP_EMAIL_1)->send(new WebContactMail($subject, $contact));
+			}
+			catch(Exception $e){ 
+				// Nothing
+			}
 			
 			return response()->json(['response' => 1,
 									 'message'    => '0']); 
