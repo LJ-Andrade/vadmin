@@ -16,7 +16,10 @@
     </style>
 @endsection
 @section('content')
-
+    <header>
+        @include('web.partials.nav')
+    </header>
+    @php($lang = 'en')
     {{-- <div class="container-fluid">
         @include('web.portfolio.partials.filter')
     </div> --}}
