@@ -35,6 +35,7 @@
     color: #fff
     &:hover
         background: $color1
+        color: #fff
 
 //
 // |--------------------------------------------------------------------------
@@ -90,6 +91,45 @@
 		li
 			display: inline-block
 			list-style: none
+
+    
+#go-to-top
+    padding: 11px 10px
+    position: fixed
+    right: 36px
+    bottom: 50px
+    background-color: $color1
+    width: 40px
+    height: 40px
+    color: #fff
+    font-size: 2rem
+    z-index: 9997
+    &:hover,&:active,&:focus
+        color: #fff
+        cursor: pointer
+    
+@media (max-width: 500px)
+    #go-to-top
+        right: 15px
+
+//
+// |--------------------------------------------------------------------------
+// | Decoration
+// |--------------------------------------------------------------------------
+//
+
+.portfolio-container        
+    padding-top: 80px
+    .portfolio-list
+        .item
+            padding: 0
+            // margin-bottom: 25px
+            @include box-shadow()
+            img 
+                max-width: 100%
+    .pagination
+        margin-left: 25px
+        margin-top: 25px
 //
 // |--------------------------------------------------------------------------
 // | Decoration

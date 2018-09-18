@@ -100,6 +100,11 @@
 	-moz-box-shadow: $horiz $vert $blur $spread $color
 	box-shadow: $horiz $vert $blur $spread $color
 
+@mixin text-shadow($color)
+	text-shadow: 2px 2px 2px $color
+
+@mixin text-shadow-soft()
+	text-shadow: 8px 4px 23px rgba(88, 88, 88, 0.5019607843137255)
 
 // GRADIENTS
 

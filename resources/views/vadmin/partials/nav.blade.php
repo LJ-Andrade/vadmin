@@ -204,6 +204,46 @@
 			</ul>
 		</li>
 
+		{{--  CATALOGO  --}}
+		<li class="nav-item has-sub {{ Menu::activeMenu('galeria') }}"><a href="#"><i class="icon-clipboard"></i>
+			<span data-i18n="nav.menu_levels.main" class="menu-title">Galería</span></a>
+			<ul class="menu-content" style="">
+				<li class="is-shown {{ Menu::activeMenu('cat_tags') }}">
+					<a href="{{ route('gallery.index') }}" data-i18n="nav.menu_levels.second_level_child.third_level" class="menu-item">
+					<i class="icon-list"></i> Listado</a>
+				</li>
+				
+				<li class="has-sub is-shown {{ Menu::activeMenu('cat_tags') }}"><a href="#" data-i18n="nav.menu_levels.second_level_child.main" class="menu-item">
+					Etiquetas</a>
+					<ul class="menu-content" style="">
+						<li class="is-shown {{ Menu::activeMenu('cat_tags') }}"><a href="{{ route('cat_tags.index') }}" data-i18n="nav.menu_levels.second_level_child.third_level" class="menu-item">
+							<i class="icon-list"></i> Listado</a></li>
+						<li class="is-shown {{ Menu::activeMenu('cat_tags') }}"><a href="{{ route('cat_tags.create') }}" data-i18n="nav.menu_levels.second_level_child.third_level" class="menu-item">
+							<i class="icon-plus-round"></i> Nueva Etiqueta</a></li>
+					</ul>
+				</li>
+				<li class="has-sub is-shown {{ Menu::activeMenu('cat_atribute1') }}"><a href="#" data-i18n="nav.menu_levels.second_level_child.main" class="menu-item">
+					Talles</a>
+					<ul class="menu-content" style="">
+						<li class="is-shown {{ Menu::activeMenu('cat_atribute1') }}"><a href="{{ route('cat_atribute1.index') }}" data-i18n="nav.menu_levels.second_level_child.third_level" class="menu-item">
+							<i class="icon-list"></i> Listado</a></li>
+						<li class="is-shown {{ Menu::activeMenu('cat_atribute1') }}"><a href="{{ route('cat_atribute1.create') }}" data-i18n="nav.menu_levels.second_level_child.third_level" class="menu-item">
+							<i class="icon-plus-round"></i> Nuevo Talle</a></li>
+					</ul>
+				</li>
+				<li class="has-sub is-shown {{ Menu::activeMenu('coupons') }}"><a href="#" data-i18n="nav.menu_levels.second_level_child.main" class="menu-item">
+					Cupones</a>
+					<ul class="menu-content" style="">
+						<li class="is-shown {{ Menu::activeMenu('coupons') }}"><a href="{{ route('coupons.index') }}" data-i18n="nav.menu_levels.second_level_child.third_level" class="menu-item">
+							<i class="icon-list"></i> Listado</a></li>
+						<li class="is-shown {{ Menu::activeMenu('coupons') }}"><a href="{{ route('coupons.create') }}" data-i18n="nav.menu_levels.second_level_child.third_level" class="menu-item">
+							<i class="icon-plus-round"></i> Nuevo Cupón</a></li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+
+
 		{{-- <li class="nav-item has-sub PortfolioLi"><a href="#"><i class="icon-briefcase2"></i><span data-i18n="nav.menu_levels.main" class="menu-title">Portfolio</span></a>
 			<ul class="menu-content" style="">
 				<li class="PortfolioList"><a href="{{ route('portfolio.index') }}" class="menu-item"><i class="icon-list"></i> Listado</a></li>

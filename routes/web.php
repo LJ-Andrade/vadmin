@@ -58,6 +58,9 @@ Route::group(['prefix'=> 'vadmin'], function() {
 */
 
 Route::get('/', ['as' => 'web', 'uses' => 'WebController@home']);
+Route::get('/Es', 'WebController@homeEs');
+Route::get('/es', 'WebController@homeEs');
+Route::get('portfolio', ['as'   => 'web.portfolio',	'uses' => 'WebController@portfolio']);
 Route::post('send-contact', ['as' => 'send-contact', 'uses' => 'WebController@sendContact']);
 
 // Route::get('contacto', function(){ return view('web.web.contacto'); });
@@ -68,7 +71,7 @@ Route::post('send-contact', ['as' => 'send-contact', 'uses' => 'WebController@se
 |--------------------------------------------------------------------------
 */
 
-Route::get('portfolio', ['as'   => 'web.portfolio',	'uses' => 'WebController@portfolio']);
+Route::get('portfolio', ['as'   => 'web.portfolio',	'uses' => 'WebController@gallery']);
 // Show Article / Catalogue
 Route::get('article/{slug}', ['as' => 'web.portfolio.article', 'uses' => 'WebController@showWithSlug'])->where('slug', '[\w\d\-\_]+');
 // Article Searcher
@@ -171,6 +174,10 @@ Route::group(['prefix' => 'vadmin', 'middleware' => 'active-user'], function(){
 // Admin and SuperAdmin Only
 Route::group(['prefix' => 'vadmin', 'middleware' => ['active-user', 'admin']], function(){
     
+    // -- GALLERY --
+    Route::resource('gallery', 'Gallery\GalleryController');
+
+
     //Route::get('/home', 'VadminController@index');
     Route::get('panel-de-control', ['as' => 'storeControlPanel', 'uses' => 'VadminController@storeControlPanel']);
     

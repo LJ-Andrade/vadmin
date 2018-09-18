@@ -6,32 +6,26 @@
 @endsection
 
 @section('content')
-{{------------- Facebook App----------------}}
-{{------------------------------------------}}
-    <div id="fb-root"></div>
-    <script>(function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/es_ES/sdk.js#xfbml=1&version=v2.8&appId=240698342801213";
-        fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
-    </script>
+<header>
+    @include('web.partials.nav')
+</header>
+@php($current = 'home')
+@php($lang = 'en')
 
 {{--------------- Home Top  ----------------}}
 {{------------------------------------------}}
-<section class="home-top-section">
+<section id="Home" class="home-top-section">
     <div class="container-fluid">
         <div class="row">
             <div class="content">
                 <div class="inner">
-                    <span class="big-title white">Desarrollo Web y Diseño Gráfico</span>
+                    <span class="big-title white">Digital Solutions</span>
                     <p>
-                        Somos un equipo de trabajo dedicado a crear soluciones visuales e interactivas
-                        para mejorar la estética, el impacto y la funcionalidad de un proyecto.
+                        Web Design - 3D Modeling - Assets Creation
                     </p>
                     <div class="buttons">
-                        <button class="btn btn-primary">Ver Portfolio</button><button class="btn btn-gradient">Contactenos</button>
+                        <a href="@if($current == 'home') #Contact @else {{ url('/#Contact') }} @endif" onclick="toggleNav()" class="btn btn-primary">Portfolio</a>
+                        <a href="@if($current == 'home') #Contact @else {{ url('/#Contact') }} @endif" class="btn btn-gradient">Contact Us</a>
                     </div>
                 </div>
             </div>
@@ -45,50 +39,48 @@
     <div class="container-fluid post-home-section">
         <div class="row">
             <div class="col-md-12 col-lg-4 column-1">
-                <h1>DISEÑO E INNOVACIÓN</h1>
+                <h1>INNOVATION & CREATIVITY</h1>
                 <div class="divisor"></div>
-                <h2>Especialidades</h2>
+                <h2>WE CREATE</h2>
                 <p>
-                    Nos especializamos en el área del diseño web, la
-                    programación, el diseño gráfico y la ilustración. <br> <br>
-                    Generamos contenido propio y personalizado para que
-                    cada cliente obtenga un producto único y original. <br> <br>
-                    <b>Atendemos Empresas, Pymes, Proyectos y Particulares.</b>
+                    We are a team of digital artists passionate about delivering quality content.<br><br>
+                    <b>We deliver only custom content</b><br><br>
+    
+                    The visual aspect is the first step to growing a brand online.
+
+                    <b>Do you want to step up ?</b>
                 </p>
-                <button class="btn btn-gradient">Contactanos</button>
+                <a href="@if($current == 'home') #Contact @else {{ url('/#Contact') }} @endif" class="btn btn-gradient">OK ! Let's do it !</a>
             </div>
             <div class="col-md-12 col-lg-8 column-2">
                 <div class="row">
                     <div class="col-xs-12 col-sm-6 col-md-6">
                         <img src="{{ asset('images/web/spec3.png') }}" alt="Vimana Studio Speciality">
-                        <h1>Desarrollo Web</h1>
+                        <h1>Web Design</h1>
                         <p>
-                            Interfaces visuales modernas, cradas para maximizar el tiempo de permanencia del usuario y lograr mejores conversiones.
-                            Los sitios salen listos para ser posicionados cumpliendo las exigencias de los buscadores.
-                        </p>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-6">
-                        <img src="{{ asset('images/web/spec4.png') }}" alt="Vimana Studio Speciality">
-                        <h1>Webs Autoadministrables</h1>
-                        <p>
-                            Son sitios diseñados para que puedan ser gestionados directamente por el cliente. <br>
-                            <b>Gestión de usuarios | Gestión de contenido | Gestión de galería de imágenes | Blogs, noticias </b>
+                            We build sites that adapt to all kind of devices. The information is resized for an optimized display.
                         </p>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-6">
                         <img src="{{ asset('images/web/spec1.png') }}" alt="Vimana Studio Speciality">
-                        <h1>Diseño Gráfico</h1>
+                        <h1>Graphic Design</h1>
                         <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex, commodi. Omnis quo minus eaque quas, 
-                            possimus officiis et nesciunt totam ducimus obcaecati 
+                            We offer a complete line of services for branding and marketing purposes.
+                        </p>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6">
+                        <img src="{{ asset('images/web/spec4.png') }}" alt="Vimana Studio Speciality">
+                        <h1>E-Commerce and Content Management</h1>
+                        <p>
+                            We make your work easy with our content managers.
+                            Sell online, write a blog or manage a photo gallery.
                         </p>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-6">
                         <img src="{{ asset('images/web/spec2.png') }}" alt="Vimana Studio Speciality">
-                        <h1>Marketing en Redes</h1>
+                        <h1>Digital Assets</h1>
                         <p>
-                            Ofrecemos asesoramiento, gestión, planificación y demás tareas relacionadas 
-                            con la publicidad en redes sociales.
+                            We create all kind of digital assets: Web themes, templates, game assets, scripts and more.
                         </p>
                     </div>
                 </div> {{-- / row --}}
@@ -96,48 +88,6 @@
         </div> {{-- / row --}}
     </div> {{-- / container-fluid --}}
 </section>
-
-{{------------- Featured Jobs --------------}}
-{{------------------------------------------}}
-<section class="featured-jobs">
-    <div class="background"></div>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12 col-lg-5 column-1"></div>
-            <div class="col-md-12 col-lg-7 column-2">
-                <h1>DISEÑO E INNOVACIÓN</h1>
-                <div class="divisor"></div>
-                <h2>Web Adaptables</h2>
-                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nisi natus quis modi mollitia. Quasi eum adipisci veniam ducimus, dolores quas.
-                    Mollitia recusandae dolore rem fugit minima culpa quod eaque amet!
-                    Nisi natus quis modi mollitia. Quasi eum adipisci veniam ducimus, dolores quas.
-                    Mollitia recusandae dolore rem fugit minima culpa quod eaque amet!
-                </p>
-                <button class="btn btn-gradient">Contactanos</button>
-                <div class="img-icon-container">
-                    <div class="icon"><img src="{{ asset('images/web/icon-cube.png') }}" alt="Vimana Studio - Square Icon"></div>
-                    <div class="content">
-                        <h3>Diseño y Desarrollo Web</h3>
-                        <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis dolorum atque sit mollitia minus fuga, 
-                            soluta natus placeat nesciunt aliquam provident nihil, porro quaerat reiciendis alias libero assumenda excepturi ipsa.
-                        </p>
-                    </div>
-                </div>
-                <div class="img-icon-container">
-                    <div class="icon"><img src="{{ asset('images/web/icon-cube.png') }}" alt="Vimana Studio - Square Icon"></div>
-                    <div class="content">
-                        <h3>Diseño y Desarrollo Web</h3>
-                        <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis dolorum atque sit mollitia minus fuga, 
-                            soluta natus placeat nesciunt aliquam provident nihil, porro quaerat reiciendis alias libero assumenda excepturi ipsa.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div> {{-- / row --}}
-    </div> {{-- / container-fluid --}}
-</section> {{-- / featured-jobs --}}
 
 
 {{----------- Portfolio Slider -------------}}
@@ -167,41 +117,39 @@
 <section class="work-planification">
     <div class="container">
         <div class="row-centered">
-            <h1>¿ Querés saber como trabajamos ?</h1>
-            <h2>Planificación de proyecto</h2>
+            <h1>Do you know how we work?</h1>
+            <h2>Workflow</h2>
             <div class="centered">
                 <div class="divisor"></div>
             </div>
-            <div class="text">
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint illo fugiat est et impedit,
-                    excepturi voluptatibus rem, nesciunt ex quam eligendi veniam officia, numquam similique
-                    at expedita voluptate voluptas porro?
-                </p>
-            </div>
+            <br>
             <div class="row">
                 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
                     <img src="{{ asset('images/web/icon1.png') }}" alt="">
+                    <h1 class="color-1">Managing expectations</h1>
                     <p>
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Deserunt laudantium quibusdam obcaecati quidem fuga impedit? Doloribus.
+                        Our primary responsibility is to understand the requirement of the project in detail.
                     </p>
                 </div>
                 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
                     <img src="{{ asset('images/web/icon2.png') }}" alt="">
+                    <h1 class="color-1">Define content</h1>
                     <p>
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Deserunt laudantium quibusdam obcaecati quidem fuga impedit? Doloribus.
+                        We set the overall mission, gather the content and find the best way to show it.
                     </p>
                 </div>
                 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
                     <img src="{{ asset('images/web/icon3.png') }}" alt="">
+                    <h1 class="color-1">Content Creation</h1>
                     <p>
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Deserunt laudantium quibusdam obcaecati quidem fuga impedit? Doloribus.
+                        In this step we are in touch with the client, showing our progress to get feedback.
                     </p>
                 </div>
                 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
                     <img src="{{ asset('images/web/icon4.png') }}" alt="">
+                    <h1 class="color-1">Fine Tunning</h1>
                     <p>
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Deserunt laudantium quibusdam obcaecati quidem fuga impedit? Doloribus.
+                        Once content creation is finished we are watching how it goes to make corrections and improvements.
                     </p>
                 </div>
             </div>
@@ -209,8 +157,22 @@
     </div> {{-- / container-fluid --}}
 </section> {{-- / work-planification --}}
 <div id="Error"></div>
+@include('web.partials.contact')
 @endsection
 
 @section('scripts')
     <script type="text/javascript" src="{{ asset('vendor/swiper-slider/swiper.jquery.min.js') }}"></script>
+    <script>
+        const mySwiper2 = new Swiper('.portfolio-slider .swiper-container', {
+            grabCursor: true,
+            autoplay: true,
+            autoHeight: true,
+            spaceBetween: 150,
+            autoplay: {
+                delay: 4000,
+            },
+            loop: true,
+            speed: 2000
+        });
+    </script>
 @endsection

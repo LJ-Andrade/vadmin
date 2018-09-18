@@ -1,83 +1,42 @@
-@extends('layouts.web.main')
-
-@section('title', 'Studio Vimana | Portfolio')
+@extends('web.partials.main')
+@section('title', 'Vimana Studio | Portfolio')
 
 @section('styles')
+    <style>
+        body {
+            background: rgba(26,219,187,1);
+            background: -moz-linear-gradient(-45deg, rgba(26,219,187,1) 0%, rgba(48,34,199,1) 76%, rgba(48,34,199,1) 100%);
+            background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(26,219,187,1)), color-stop(76%, rgba(48,34,199,1)), color-stop(100%, rgba(48,34,199,1)));
+            background: -webkit-linear-gradient(-45deg, rgba(26,219,187,1) 0%, rgba(48,34,199,1) 76%, rgba(48,34,199,1) 100%);
+            background: -o-linear-gradient(-45deg, rgba(26,219,187,1) 0%, rgba(48,34,199,1) 76%, rgba(48,34,199,1) 100%);
+            background: -ms-linear-gradient(-45deg, rgba(26,219,187,1) 0%, rgba(48,34,199,1) 76%, rgba(48,34,199,1) 100%);
+            background: linear-gradient(135deg, rgba(26,219,187,1) 0%, rgba(48,34,199,1) 76%, rgba(48,34,199,1) 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1adbbb', endColorstr='#3022c7', GradientType=1 );
+        }
+    </style>
 @endsection
-
 @section('content')
-    <div id="ActualSection" data-section="portfolio"></div> {{-- JS - This Section --}}
 
-    <div class="container-fluid dark-container-top">
+    {{-- <div class="container-fluid">
         @include('web.portfolio.partials.filter')
-    </div>
+    </div> --}}
 
     <div class="container-fluid portfolio-container">
-
-        <div class="row ">
-            @if(! count($articles))
-                <div class="container">
-                    <h2>No se encontraron artículos</h2>
-                    <hr>
-                    <h4>Puede realizar una nueva búsqueda o  <a href="{{ route('web.portfolio') }}"></i> ver todos los trabajos</a></h4>
+        <div class="row portfolio-list">
+            @foreach($items as $item)
+                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 item">
+                    <img src="{{ asset($item) }}" alt="Vimana Studio Portfolio">
                 </div>
-            @endif
-
-            @foreach($articles as $article)
-            <div class="col-sm-6 col-md-4 col-lg-3 portfolio-item">
-                <div class="inner">
-                    {{-- <a href="{!! route('web.portfolio.article',$article->slug ) !!}"></a> --}}
-                    {{-- IMAGE --}}
-                    {{-- Prevents error when No image is uploaded in article --}}
-                    <a href="{!! route('web.portfolio.article',$article->slug ) !!}">
-                        @if (count($article->images))
-                            <img src="{{ secure_asset('webimages/portfolio/'. $article->images->first()->name ) }}" class="img-responsive" alt="">
-                        @else
-                            <img src="{{ secure_asset('webimages/gen/genlogo.jpg') }}" class="img-responsive" alt="">
-                        @endif
-                    </a>
-
-                    {{-- ARTICLE INFO --}}
-                    <div class="info">
-                        {{-- SLUG --}}
-                        <a href="{!! route('web.portfolio.article',$article->slug ) !!}">
-                            <span class="text title"> {!! $article->title !!} </span> <br>
-                        </a>
-                        {{-- CATEGORY --}}
-                        <a href="{{ route('web.search.category', $article->category->name ) }}">
-                            <span class="text cat-title">Categoría: </span><span class="text cat-text">{{ $article->category->name }}</span>
-                        </a>
-                        <hr>
-                        <div class="bottom-content">
-                            {{-- TAGS --}}
-                            <div class="tags">
-                                @foreach($article->tags as $tag)
-                                    <a href="{{ route('web.search.tag', $tag->name ) }}">
-                                        <span class="badgeHollow">{!! $tag->name !!}</span>
-                                    </a>
-                                @endforeach
-                            </div>
-                            {{-- DATE --}}
-                            <div class="date">
-                                <span class="text">{{ $article->created_at->diffForHumans() }}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="clear"></div>
             @endforeach
         </div>
-        {!! $articles->render(); !!}
+        <div class="row">
+            {!! $items->render(); !!}
+        </div>
     </div>
-
 @endsection
 
 
 @section('scripts')
-@endsection
-
-@section('custom_js')
     <script type="text/javascript">
 
         $('.Show-Mobile-Filter').click(function(){
@@ -93,6 +52,7 @@
 
     </script>
 @endsection
+
 
 
 

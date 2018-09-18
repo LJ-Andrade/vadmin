@@ -9,6 +9,8 @@ use App\Tag;
 use App\Contact;
 use Mail;
 use App\Mail\WebContactMail;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 
 class WebController extends Controller
 {
@@ -22,6 +24,11 @@ class WebController extends Controller
 	{
 		return view('web.index');
 	}
+
+	public function homeEs()
+	{
+		return view('web.index-es');
+	}
 	
 	public function getDownload($data){
 		
@@ -31,15 +38,31 @@ class WebController extends Controller
 		return \Response::download($file, $data, $headers);
 	}
 
-	public function portfolio(Request $request)
+
+	public function gallery(Request $request)
 	{
-		$articles = Article::search($request->title)->orderBy('id', 'DESC')->where('status', '1')->paginate(12);
-		$articles->each(function($articles){
-			$articles->category;
-			$articles->images;
-		}); 
+		$images = array();
+		for($i = 11; $i < 131; $i++)
+		{
+			array_push($images, 'webimages/gallery/'.$i.'.jpg');
+		}
+
+		$items = $this->paginate($images, 16);
+
 		return view('web.portfolio.portfolio')
-			->with('articles', $articles);
+			->with('items', $items);
+	}
+
+	public function paginate($items, $perPage)
+	{
+		$pageStart = \Request::get('page', 1);
+		// Start displaying items from this number;
+		$offSet = ($pageStart * $perPage) - $perPage; 
+
+		// Get only the items you need using array_slice
+		$itemsForCurrentPage = array_slice($items, $offSet, $perPage, true);
+
+		return new LengthAwarePaginator($itemsForCurrentPage, count($items), $perPage,Paginator::resolveCurrentPage(), array('path' => Paginator::resolveCurrentPath()));
 	}
 
 	public function searchCategory($name)

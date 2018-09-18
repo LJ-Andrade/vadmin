@@ -11,15 +11,15 @@
 		<meta name="theme-color" content="#0d1d41"><!-- Chrome, Firefox OS and Opera -->
 		<meta name="msapplication-navbutton-color" content="#0d1d41"><!-- Windows Phone -->
 		<meta name="apple-mobile-web-app-status-bar-style" content="#0d1d41"><!-- iOS Safari -->
-		<link rel="shortcut icon" href="{{ asset('webimages/logos/favicon.png') }}"><!-- Favicon -->
-		<meta property="og:url"         content="http://vimana.studio" />
+		<link rel="shortcut icon" href="{{ asset('images/web/favicon.png') }}"><!-- Favicon -->
+		<meta property="og:url"         content="https://vimana.studio" />
 		<meta property="og:type"        content="article" />
 		<meta property="og:title"       content="Diseño Web y Diseño Gráfico" />
 		<meta property="og:description" content="Somos un equipo de trabajo dedicado a desarrollar contenido visual e interactivo" />
 		<meta property="og:image"       content="{{ asset('webimages/logos/main-logo.png') }}" />
 		<meta name="twitter:title"      content="Studio Vimana" />
 		<meta name="twitter:image"      content="{{ asset('webimages/logos/main-logo.png') }}" />
-		<meta name="twitter:url"        content="http://vimana.studio" />
+		<meta name="twitter:url"        content="https://vimana.studio" />
 		{{-- Vendor --}}
 		<link rel="stylesheet" type="text/css" href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}">
 		<link rel="stylesheet" href="{{ asset('vendor/font-awesome/css/all.css') }}">
@@ -29,39 +29,24 @@
 		@yield('styles')
 	</head>
 	<body>
+		
 		<!-- Google Tag Manager (noscript) -->
 		<noscript>
 			<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TM4GWS3" height="0" width="0" style="display: none; visibility: hidden"></iframe>
 		</noscript>
 		<!-- End Google Tag Manager (noscript) -->
-		<header>
-			@include('web.partials.nav')
-		</header>
 		@yield('content')
-		@include('web.partials.contact')
+		<div id="go-to-top">
+			<i class="fas fa-sort-up"></i>
+		</div>
 		@include('web.partials.foot')
 		<script type="text/javascript" src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
 		<script type="text/javascript" src="{{ asset('vendor/bootstrap/js/bootstrap.min.js')}} "></script>
 		<script type="text/javascript" src="{{ asset('js/web.js') }} "></script>
 		@yield('scripts')
 		<script>
-			// Contact Tab (WhatsApp)
 			$(document).ready(function(){
-				//  if (screen.width < 765){
-				//      console.log('celular');
-				//      $('.Contact-Tab').hide(200);
-				//      $(window).scroll(function(){
-				//          if ($(window).scrollTop() > 500){
-				//              $('.Contact-Tab').show(200);
-				//          } else {
-				//              $('.Contact-Tab').hide(200);
-				//          }
-				//      });
-				//  } else {
-				//      console.log('escritorio');
-				//  }
-									
-				// ------------ Tawk.to ONLINE CHAT ---------------
+				// ---------------------- Tawk.to ONLINE CHAT -------------------------
 					// var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
 					// 	(function(){
 					// 		var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
@@ -105,6 +90,7 @@
 					});
 				});
 			});
+
 		</script>
 	</body>
 </html>
