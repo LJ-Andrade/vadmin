@@ -70,7 +70,7 @@
 						dataType: 'JSON',
 						data: data,
 						beforeSend: function(){
-							$('#ContactSubmit').html('Enviando ' + loader);
+							$('#ContactSubmit').html(loader);
 						},
 						success: function(data) {
 							$('#MainContactForm').hide();

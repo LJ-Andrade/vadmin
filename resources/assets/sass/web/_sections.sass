@@ -305,7 +305,7 @@
 		margin-top: 20px
 		form
 			@include placeholders(#fff)
-			max-width: 800px
+			max-width: 100%
 			.form-group
 				margin: 0
 			> div
@@ -354,6 +354,41 @@
 			margin-top: 60px
 	.social
 		margin-top: 50px 
+
+@media (min-width: 991px)
+	.contact-section .contact-form form
+		max-width: 800px
+
+@media (max-width: 991px)
+	.contact-section
+		padding-top: 20px
+		margin-top: 0
+		h2
+			color: #383838
+			margin-top: 0
+		.contact-data
+			margin: 0
+			.item-2
+				font-size: 1.5rem
+				color: #383838
+		.contact-form
+			form
+				@include placeholders(#383838)
+				.form-control
+					border: 1px solid rgba(#000,.10)
+					background-color: rgba(#fff,.50)
+					color: #383838 !important
+
+@media (max-width: 768px)
+	.contact-section
+		#ContactSubmit
+			width: 100%
+		.square-icons
+			width: 45px
+			height: 45px
+			padding: 11px 4px
+			i
+				font-size: 1.2rem
 
 footer
 	background-color: #000

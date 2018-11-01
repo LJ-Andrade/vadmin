@@ -12,7 +12,7 @@
 			<div class="inner">
 				<ul>
 					<li class="text-center">
-						<div class="item-1"><i class="fa fa-envelope"></i> E-MAIL</div>
+						{{-- <div class="item-1"><i class="fa fa-envelope"></i> E-MAIL</div> --}}
 						<div class="item-2">info@vimana.studio</div>
 					</li>
 					{{-- <li>
@@ -29,7 +29,7 @@
 		{{-- Contact Form --}}
 		<div class="row contact-form">
 			{!! Form::open(['id' => 'MainContactForm', 'class' => 'row']) !!}
-				{{ csrf_field() }}
+				{{-- {{ csrf_field() }} --}}
 				<div class="col-md-6">
 					{!! Form::text('name', null, ['id' => 'Form-Name-Input', 'class' => 'form-control', 'placeholder' => 'Enter your name', 'required' => '']) !!}
 					{!! Form::email('email', null, ['class' => 'form-control', 'placeholder' => 'Enter your e-mail', 'required' => '']) !!}
@@ -64,7 +64,7 @@
 		<div class="row centered social">
 			<div class="horizontal-list">
 				<ul>
-					<li class="square-icons"><a href="https://www.instagram.com/studiovimana/" target="_blank""><i class="fab fa-instagram"></i></ac></li>
+					<li class="square-icons"><a href="https://www.instagram.com/studiovimana/" target="_blank""><i class="fab fa-instagram"></i></a></li>
 					<li class="square-icons"><a href="https://ar.pinterest.com/admstudiovimana/" target="_blank""><i class="fab fa-pinterest-p"></i></a></li>
 					<li class="square-icons"><a href="https://www.facebook.com/studiograficovimana" target="_blank""><i class="fab fa-facebook-f"></i></a></li>
 					<li class="square-icons"><a href="https://twitter.com/StudioVimana" target="_blank""><i class="fab fa-twitter"></i></a></li>
