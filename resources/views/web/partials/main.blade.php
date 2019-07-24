@@ -90,7 +90,7 @@
 					});
 				});
 			});
-
+			<script type="text/javascript">var subscribersSiteId='8c70baf8-147e-4cde-a566-af525b1819a3';</script><script type="text/javascript" src="https://cdn.subscribers.com/assets/subscribers.js"></script>
 		</script>
 	</body>
 </html>
