@@ -13,21 +13,21 @@
 				<ul>
 					<li>
 						<div class="item-1"><i class="fa fa-envelope"></i> E-MAIL</div>
-						<div class="item-2">info@vimana.studio</div>
+						<div class="item-2"><a style="color: #000; font-weight: 400" href="mailto:info@vimanastudio.com.ar">info@vimanastudio.com.ar</a></div>
 					</li>
 					<li>
-						<div class="item-1"><i class="fa fa-envelope"></i> TELÉFONO</div>
-						<div class="item-2">(011) 3529-4527</div>
+						<div class="item-1"><i class="fa fa-envelope"></i> WHATSAPP</div>
+						<div class="item-2">(011) 11-5809-0227</div>
 					</li>
 					<li>
-						<div class="item-1"><i class="fa fa-envelope"></i> MENSAJES</div>
+						<div class="item-1"><i class="fa fa-phone"></i> LLAMADOS</div>
 						<div class="item-2">(011) 15-5160-1565</div>
 					</li>
 				</ul>
 			</div>
 		</div>
 		{{-- Contact Form --}}
-		<div class="row contact-form">
+{{--		<div class="row contact-form">
 			{!! Form::open(['id' => 'MainContactForm', 'class' => 'row']) !!}
 				{{ csrf_field() }}
 				<div class="col-md-6">
@@ -43,6 +43,7 @@
 				</div>
 			{!! Form::close() !!}
 		</div>
+--}}
 		{{-- Form Responses --}}
 		<div class="row centered">
 			<div id="FormResponse"></div>
@@ -68,7 +69,7 @@
                     <li class="square-icons"><a href="https://www.facebook.com/studiograficovimana" target="_blank""><i class="fab fa-facebook-f"></i></a></li>
                     <li class="square-icons"><a href="https://twitter.com/StudioVimana" target="_blank""><i class="fab fa-twitter"></i></a></li>
                     <li class="square-icons"><a href="https://www.behance.net/studiovimana" target="_blank""><i class="fab fa-behance"></i></a></li>
-                    <li class="square-icons"><a href="https://plus.google.com/u/0/+StudioVimana" target="_blank""><i class="fab fa-google-plus-g"></i></a></li>
+{{--                    <li class="square-icons"><a href="https://plus.google.com/u/0/+StudioVimana" target="_blank""><i class="fab fa-google-plus-g"></i></a></li> --}}
 				</ul>
 			</div>
 		</div>

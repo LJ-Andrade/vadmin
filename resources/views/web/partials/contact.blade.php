@@ -27,9 +27,8 @@
 			</div>
 		</div>
 		{{-- Contact Form --}}
-		<div class="row contact-form">
+{{--		<div class="row contact-form">
 			{!! Form::open(['id' => 'MainContactForm', 'class' => 'row']) !!}
-				{{-- {{ csrf_field() }} --}}
 				<div class="col-md-6">
 					{!! Form::text('name', null, ['id' => 'Form-Name-Input', 'class' => 'form-control', 'placeholder' => 'Enter your name', 'required' => '']) !!}
 					{!! Form::email('email', null, ['class' => 'form-control', 'placeholder' => 'Enter your e-mail', 'required' => '']) !!}
@@ -42,7 +41,7 @@
 					<button id="ContactSubmit" class="submit"><i class="fas fa-paper-plane"></i> SEND !</button>
 				</div>
 			{!! Form::close() !!}
-		</div>
+		</div> --}}
 		{{-- Form Responses --}}
 		<div class="row centered">
 			<div id="FormResponse"></div>

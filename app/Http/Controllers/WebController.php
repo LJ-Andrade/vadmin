@@ -22,7 +22,7 @@ class WebController extends Controller
 
 	public function home()
 	{
-		return view('web.index');
+		return view('web.index-es');
 	}
 
 	public function homeEs()
