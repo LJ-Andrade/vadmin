@@ -57,93 +57,120 @@
             @endif
             @endslot
             @slot('tableTitles')
-                <th></th>
-                <th>Artículo</th>
-                <th>Talle - Color - Tela</th>
-                <th>P.U.</th>
                 <th>Cantidad</th>
+                <th>Artículo</th>
+                <th>Talle/Color</th>
+                <th>Tela</th>
+                <th>Marca</th>
+                <th>P.U.</th>
                 <th>Total</th>
             @endslot
             @slot('tableContent')
-                @foreach($order['rawdata']->items as $item)
-                <tr>
-                    <td></td>
-                    {{-- <td class="w-50">
-                        <label class="custom-control custom-checkbox list-checkbox">
-                            <input type="checkbox" class="List-Checkbox custom-control-input row-checkbox" data-id="{{ $item->id }}">
-                            <span class="custom-control-indicator"></span>
-                            <span class="custom-control-description"></span>
-                        </label>
-                    </td> --}}
-                    <td><a href="">{{ $item->article->name }} (#{{ $item->article->code }})</a></td>
-                    
-                    <td>@foreach($item->article->atribute1 as $atribute) {{ $atribute->name }} @endforeach | {{ $item->color }} | {{ $item->textile }}</td>
-                    
-                    @if($order['rawdata']->status != 'Active')
-                    {{-- FIXED PRICES | ORDER READY --}}
-                        <td>$ {{ $item->final_price }}</td>
-                        <td>{{ $item->quantity }}</td>
-                        <td >$ {{ number_format($item->quantity * $item->final_price,2) }}</td>
-                    @else
-                    {{-- DYNAMIC PRICES | ACTIVE CART --}}
-                    <td>
-                        @if($order['rawdata']->customer->group == '3')
-                            {{-- Reseller Prices --}}
-                            @if($item->article->discount > 0)
-                                $ {{ $price = calcValuePercentNeg($item->article->reseller_price, $item->article->reseller_discount) + 0 }}
+                @php $itemSum = 0 @endphp
+                {{-- @foreach($order->items->sortBy('name') as $item) --}}
+                @foreach($order['rawdata']->items->sortBy('article_name') as $item)
+                    @php $itemSum += $item->quantity; @endphp
+                    <tr>
+                        <td>x {{ $item->quantity }}</td>
+                        {{-- <td class="w-50">
+                            <label class="custom-control custom-checkbox list-checkbox">
+                                <input type="checkbox" class="List-Checkbox custom-control-input row-checkbox" data-id="{{ $item->id }}">
+                                <span class="custom-control-indicator"></span>
+                                <span class="custom-control-description"></span>
+                            </label>
+                        </td> --}}
+                        <td><a style="color: #967adc">{{ $item->article_name }}
+                            @if($item->article != null) (#{{ $item->article->code }}) 
+                            @else 
+                            (Discontinuado)
+                            @endif </a></td>
+                        {{-- Size | Color | Textile --}}
+                        <td>
+                            @if($item->variant)
+                                {{ $item->variant->combination }}   
                             @else
-                                $ {{ $price = $item->article->reseller_price + 0 }}
+                                Sin Variante
                             @endif
+                        </td>
+                        <td>
+                            {{ $item->textile }} 
+                            {{-- {{ $item->color }} @if($item->color != '') | @endif 
+                            {{ $item->size}} | --}}
+                        </td>
+                        <td>@if($item->article->brand) {{ $item->article->brand->name }} @else Sin Marca @endif</td>
+                        {{-- Unit Price --}}
+                        @if($order['rawdata']->status != 'Active')
+                        {{-- FIXED PRICES | ORDER READY --}}
+                            <td>$ {{ $item->final_price }}</td>
+                            <td>$ {{ number_format($item->quantity * $item->final_price, 2) }}</td>
                         @else
-                            {{-- Standard Prices --}}
-                            @if($item->article->discount > 0)
-                                $ {{ $price = calcValuePercentNeg($item->article->price, $item->article->discount) + 0 }}
+                        {{-- DYNAMIC PRICES | ACTIVE CART --}}
+                        <td>
+                            @if($item->article != null)
+                                @if($order['rawdata']->customer->group == '3')
+                                    {{-- Reseller Prices --}}
+                                    @if($item->article->discount > 0)
+                                        $ {{ $price = calcValuePercentNeg($item->article->reseller_price, $item->article->reseller_discount) + 0 }}
+                                    @else
+                                        $ {{ $price = $item->article->reseller_price + 0 }}
+                                    @endif
+                                @else
+                                    {{-- Standard Prices --}}
+                                    @if($item->article->discount > 0)
+                                        $ {{ $price = calcValuePercentNeg($item->article->price, $item->article->discount) + 0 }}
+                                    @else
+                                        $ {{ $price = $item->article->price + 0 }}
+                                    @endif
+                                @endif
+                            </td>
+                            <td >$ {{ $item->quantity * $price + 0 }}</td>
                             @else
-                                $ {{ $price = $item->article->price + 0 }}
+                                -</td>
+                                <td>-</td>
                             @endif
                         @endif
-                    </td>
-                    <td>{{ $item->quantity }}</td>
-                    <td >$ {{ $item->quantity * $price + 0 }}</td>
-                    @endif
-
-                </tr>
+                    </tr>
                 @endforeach
                 @if($order['rawdata']->status != 'Active')
-                {{-- FIXED PRICES | ORDER READY --}}
                     <tr style="border-top: 10px solid #f9f9f9">
-                        <td></td><td></td><td></td><td></td>
+                        <td><b>x {{ $itemSum }} Artículos</b></td>
+                        <td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+	                {{-- FIXED PRICES | ORDER READY --}}
+                    <tr style="border-top: 10px solid #f9f9f9">
+                        <td></td><td></td><td></td><td></td><td></td>
                         <td><b>SUBTOTAL</b></td>
                         <td><b>$ {{ $order['subTotal'] }}</b></td>
                     </tr>
                     @if($order['orderDiscount'] != '0')
-                    <tr>
-                        <td></td><td></td><td></td><td></td>
-                        <td><b>Descuento: </b> <span class="dont-break">% {{ $order['orderDiscount'] }}</span></td>
-                        <td>$ - {{ $order['discountValue'] }}</td>
-                    </tr>
+                        <tr>
+                            <td></td><td></td><td></td><td></td>
+                            <td><b>Descuento: </b> <span class="dont-break">% {{ $order['orderDiscount'] }}</span></td>
+                            <td>$ - {{ $order['discountValue'] }}</td>
+                        </tr>
                     @endif
                     <tr>
-                        <td></td><td></td><td></td><td></td>
-                        @if($order['rawdata']->shipping_id != null)
-                        <td><b>Envío:</b> {{ $order['rawdata']->shipping->name }}</td>
-                        <td>$ {{ $order['shippingCost'] }}</td>
+			            <td></td><td></td><td></td><td></td><td></td>
+                        @if($order['rawdata']->shipping_id && $order['rawdata']->shipping)
+                            <td><b>Envío:</b> {{ $order['rawdata']->shipping->name }}</td>
+                            <td>$ {{ $order['shippingCost'] }}</td>
                         @else
-                        <td>Envío no seleccionado</td>
-                        <td>-</td>
-                        @endif
-                    </tr>
-                        <td></td><td></td><td></td><td></td>
-                        @if($order['rawdata']->payment_method_id != null)
-                        <td><b>Forma de Pago:</b> {{ $order['rawdata']->payment->name }} (%{{$order['rawdata']->payment_percent}})</td>
-                        <td>$ {{ $order['paymentCost'] }}</td>
-                        @else
-                        <td>Forma de pago no seleccionada</td>
-                        <td>-</td>
+                            <td>Envío no seleccionado</td>
+                            <td>-</td>
                         @endif
                     </tr>
                     <tr>
-                        <td></td><td></td><td></td><td></td>
+                        <td></td><td></td><td></td><td></td><td></td>
+                        @if($order['rawdata']->payment_method_id && $order['rawdata']->payment)
+                            <td><b>Forma de Pago:</b> {{ $order['rawdata']->payment->name }} (%{{$order['rawdata']->payment_percent}})</td>
+                            <td>$ {{ $order['paymentCost'] }}</td>
+                        @else
+                            <td>Forma de pago no seleccionada</td>
+                            <td>-</td>
+                        @endif
+                    </tr>
+                    <tr>
+                        <td></td><td></td><td></td><td></td><td></td>
                         <td><b>TOTAL</b></td>
                         <td><b>$ {{ $order['total'] }}</b></td>
                     </tr>
@@ -151,7 +178,7 @@
                 {{-- DYNAMIC PRICES | ACTIVE CART --}}
                     {{-- Subtotal --}}
                     <tr>
-                        <td></td><td></td><td></td><td></td>
+                        <td></td><td></td><td></td><td></td><td></td>
                         <td>SubTotal: </td>
                         <td>-</td>
                     </tr>

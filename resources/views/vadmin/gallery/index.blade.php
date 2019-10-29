@@ -1,155 +1,163 @@
-@extends('layouts.vadmin.main')
-@section('title', 'Vadmin | Portfolio')
-{{-- STYLE INCLUDES --}}
-@section('styles')
-@endsection
+@extends('vadmin.partials.main')
+@section('title', 'Vadmin | Listados de artículos del portfolio')
 
 {{-- HEADER --}}
 @section('header')
 	@component('vadmin.components.header-list')
 		@slot('breadcrums')
 		    <li class="breadcrumb-item"><a href="{{ url('vadmin')}}">Inicio</a></li>
-            <li class="breadcrumb-item active">Listado de Artículos</li>
+            <li class="breadcrumb-item active">Listado de artículos</li>
 		@endslot
 		@slot('actions')
 			{{-- Actions --}}
 			<div class="list-actions">
-				<a href="{{ route('portfolio.create') }}" class="btn btnBlue"><i class="icon-plus-round"></i>  Nuevo Artículo</a>
-				<button id="SearchFiltersBtn" class="btn btnBlue"><i class="icon-ios-search-strong"></i></button>
+				<a href="{{ route('gallery.create') }}" class="btn btnMain"><i class="icon-plus-round"></i>  Nuevo artículo</a>
+				<button id="SearchFiltersBtn" class="btn btnMain"><i class="icon-ios-search-strong"></i></button>
 				{{-- Edit --}}
-				<button class="EditBtn btn btnGreen Hidden"><i class="icon-pencil2"></i> Editar</button>
+				<button class="EditBtn btn btnMain Hidden"><i class="icon-pencil2"></i> Editar</button>
 				<input id="EditId" type="hidden">
+				{{-- Add Similar --}}
+				<button class="CreateFromAnotherBtn btn btnMain Hidden"><i class="icon-pencil2"></i> Publicar Similar</button>
+				<input id="CreateFromAnotherId" type="hidden">
 				{{-- Delete --}}
-				{{--  THIS VALUE MUST BE THE NAME OF THE SECTION CONTROLLER  --}}
-				<input id="ModelName" type="hidden" value="portfolio">
+				{{-- THIS VALUE MUST BE THE NAME OF THE SECTION CONTROLLER --}}
+				<input id="ModelName" type="hidden" value="catalogo">
 				<button class="DeleteBtn btn btnRed Hidden"><i class="icon-bin2"></i> Eliminar</button>
 				<input id="RowsToDeletion" type="hidden" name="rowstodeletion[]" value="">
-				{{-- If Search --}}
-				@if(isset($_GET['title']) || isset($_GET['category']))
-				<a href="{{ url('vadmin/portfolio') }}"><button type="button" class="btn btnGrey">Mostrar Todos</button></a>
-				<div class="results">{{ $articles->total() }} resultados de búsqueda</div>
-				@endif
 			</div>
 		@endslot
 		@slot('searcher')
-			@include('vadmin.portfolio.searcher')
+			{{-- @include('vadmin.catalog.searcher') --}}
 		@endslot
 	@endcomponent
 @endsection
 
 {{-- CONTENT --}}
 @section('content')
+{{-- {{dd($articles)}} --}}
 	<div class="list-wrapper">
 		{{-- Search --}}
-		{{-- Test --}}
-		<div id="TestBox" class="col-xs-12 test-box Hidden">
+		<div class="row inline-links">
+			{{-- <b>Órden:</b> 
+			<a href="{{ route('catalogo.index', ['orden_af' => 'ASC']) }}" >A-Z</a>
+			<a href="{{ route('catalogo.index', ['orden_af' => 'DESC']) }}" >Z-A</a> --}}
 		</div>
 		<div class="row">
 			@component('vadmin.components.list')
-				@slot('actions', '')
-				@slot('title', 'Listado de Usuarios')
-					@if($articles->count() == '0')
-						@slot('tableTitles', '')
-						@slot('tableContent', '')
-					@else
-					@slot('tableTitles')
+				@slot('actions')
+			
+				@endslot
+
+				@slot('title')
+					Listado de artículos de la tienda
+					@if(request()->status == '0' && request()->status != null)
+					<p>(Pausados)</p>
+					@endif
+				@endslot
+				@slot('tableTitles')
+					{{dd($articles)}}
+					@if(!$articles->count() == '0')
+						<th>
+							{{-- Uncomment to block this function to users --}}
+							{{-- @if(Auth::guard('user')->user()->role == 1 || Auth::guard('user')->user()->role == 2) --}}
+								<label class="custom-control custom-checkbox list-checkbox">
+									<input type="checkbox" class="Select-All-To-Delete custom-control-input row-checkbox">
+									<span class="custom-control-indicator"></span>
+									<span class="custom-control-description"></span>
+								</label>
+							{{-- @endif --}}
+						</th>
 						<th></th>
-						<th>Imágen</th>
+						<th>Cód.</th>
 						<th>Título</th>
-						<th>Categoría</th>
-						<th>Fecha de Creación</th>
+						<th>Variantes (Color / Talle - Stock)</th>
 						<th>Estado</th>
 					@endslot
-
 					@slot('tableContent')
 						@foreach($articles as $item)
-							<tr>
-								<td class="w-50">
-									<label class="CheckBoxes custom-control custom-checkbox list-checkbox">
-										<input type="checkbox" class="List-Checkbox custom-control-input row-checkbox" data-id="{{ $item->id }}">
-										<span class="custom-control-indicator"></span>
-										<span class="custom-control-description"></span>
+							<tr id="ItemId{{$item->id}}">
+								<td class="mw-50">
+									{{-- Uncomment to block this function to users --}}
+									{{-- @if(Auth::guard('user')->user()->role == 1 || Auth::guard('user')->user()->role == 2) --}}
+										<label class="CheckBoxes custom-control custom-checkbox list-checkbox">
+											<input type="checkbox" class="List-Checkbox custom-control-input row-checkbox" data-id="{{ $item->id }}">
+											<span class="custom-control-indicator"></span>
+											<span class="custom-control-description"></span>
+										</label>
+									{{-- @endif --}}
+								</td>
+								{{-- THUMBNAIL --}}
+								<td class="thumb">
+									<a href="{{ url('vadmin/catalogo/'.$item->id.'/edit') }}">
+										@if($item->featuredImageName())
+											<img class="CheckImg" src="{{ asset($item->featuredImageName()) }}">
+										@endif
+									</a>
+								</td>
+								<td class="mw-100"><a href="{{ url('vadmin/catalogo/'.$item->id.'/edit') }}"> #{{ $item->code }} </a>
+								</td>
+								{{-- NAME --}}
+								<td>
+									<input class="editable-input" onfocus="event.target.select()" type="text" value="{{ $item->name }}">
+									<div class="editable-input-data" data-id="{{ $item->id }}" 
+										data-route="update_catalog_field" data-field="name" data-type="string" data-action="reload" data-value="">
+									</div>
+								</td>
+								<td style="white-space: normal">
+									@foreach($item->variants as $variant)
+										<div class="small-badge-with-data">
+											<div class="detail-data"><p>{{ $variant->combination }}</p></div>
+											<div class="value-data">
+												<input class="editable-input" onfocus="event.target.select()" 
+												type="number" value="{{ $variant->stock }}" min="0">
+												<div class="editable-input-data" data-id="{{ $variant->id }}" 
+													data-route="update_variant_stock" data-field="stock" data-type="int" data-action="update" data-value="">
+												</div>
+											</div>
+										</div>
+									@endforeach
+								</td>
+								{{-- STATUS --}}
+								<td class="w-50 pad0 centered">
+									<label class="switch">
+										<input class="UpdateStatus switch-checkbox" type="checkbox" 
+										data-model="CatalogArticle" data-id="{{ $item->id }}"
+										@if($item->status == '1') checked @endif>
+										<span class="slider round"></span>
 									</label>
 								</td>
-								<td class="thumb">
-									@if(count($item->images))
-										<img src="{{ asset('webimages/portfolio/'. $item->images->first()->name ) }}">
-									@else
-										<img src="{{ asset('images/gen/default.jpg') }}">
-									@endif
-								</td>
-								<td class="show-link max-text"><a href="{{ url('vadmin/portfolio/'.$item->id) }}">{{ $item->title }}</a></td>
-								<td>{{ $item->category->name }}</td>
-								<td class="w-200">{{ transDateT($item->created_at) }}</td>
-								<td class="w-50 pad0 centered">
-									@if($item->status == '1')
-										<label class="switch">
-											<input class="PauseArticle switch-checkbox" data-id="{{ $item->id }}" type="checkbox" checked>
-											<span class="slider round"></span>
-										</label>
-									@elseif($item->status == '0')
-										<label class="switch">
-											<input class="ActivateArticle" data-id="{{ $item->id }}" type="checkbox">
-											<span class="slider round"></span>
-										</label>
-									@else 
-										Sin estado
-									@endif
-								</td>
-							</tr>						
+							</tr>					
 						@endforeach
+						@else 
+							@slot('tableTitles')
+								<th></th>
+							@endslot
+							@slot('tableContent')
+								<tr>
+									<td class="w-200">No se han encontrado artículos</td>
+								</tr>
+							@endslot
 						@endif
 				@endslot
 			@endcomponent
-			
 			{{--  Pagination  --}}
-			@if(isset($_GET['title']))
-				{!! $articles->appends(['title' => $_GET['title']])->render() !!}
-			@elseif(isset($_GET['category']))
-				{!! $articles->appends(['category' => $_GET['category']])->render() !!}
-			@else
-				{!! $articles->render() !!}
-			@endif
+			<div class="inline-links">
+				<b>Resultados por página:</b>
+				<a href="{{ route('catalogo.index', ['orden' => 'ASC', 'results' => '50', http_build_query($_GET)]) }}">50</a>
+				<a href="{{ route('catalogo.index', ['orden' => 'ASC', 'results' => '100', http_build_query($_GET)]) }}">100</a>
+			</div>
+			{{-- {!! $articles->appends(request()->query())->render() !!} --}}
 		</div>
-		<div id="Error"></div>	
+		<div id="Error"></div>
 	</div>
 @endsection
 
-{{-- SCRIPT INCLUDES --}}
 @section('scripts')
 	@include('vadmin.components.bladejs')
 @endsection
 
-{{-- CUSTOM JS SCRIPTS--}}
 @section('custom_js')
 	<script>
-	$('.PortfolioLi').addClass('open');
-	$('.PortfolioList').addClass('active');
-
-	$(document).ready(function(e) {
-		$('.PauseArticle').click(function() {
-			var cbx = $(this);
-			if (cbx[0].checked) {
-				console.log("Error en checkbox");
-			} else {
-				console.log("Pausar");
-				var id     = cbx.data('id');
-				var route = "{{ url('/vadmin/updateStatus') }}/"+id+"";
-				updateStatus(id, route, '0');
-			}
-		});
-
-		$('.ActivateArticle').click(function() {
-			var cbx = $(this);
-			if (cbx[0].checked) {
-				var id = cbx.data('id');
-				var route = "{{ url('/vadmin/updateStatus') }}/"+id+"";
-				updateStatus(id, route, '1');
-			} else {
-				console.log("Error en checkbox");
-			}
-		});
-	});
-
+		allowEnterOnForms = true;
 	</script>
 @endsection

@@ -9,8 +9,6 @@ use App\Tag;
 use App\Contact;
 use Mail;
 use App\Mail\WebContactMail;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Pagination\Paginator;
 
 class WebController extends Controller
 {
@@ -24,11 +22,6 @@ class WebController extends Controller
 	{
 		return view('web.index-es');
 	}
-
-	public function homeEs()
-	{
-		return view('web.index-es');
-	}
 	
 	public function getDownload($data){
 		
@@ -38,31 +31,31 @@ class WebController extends Controller
 		return \Response::download($file, $data, $headers);
 	}
 
-
-	public function gallery(Request $request)
+	public function portfolio(Request $request)
 	{
-		$images = array();
-		for($i = 11; $i < 131; $i++)
-		{
-			array_push($images, 'webimages/gallery/'.$i.'.jpg');
-		}
-
-		$items = $this->paginate($images, 16);
+		$images = array(
+					['images/web/portfolio/img-1.jpg', 'images/web/portfolio/img-1-full.jpg', 'Diseño de landing page responsive'],
+					['images/web/portfolio/img-2.jpg', 'images/web/portfolio/img-2-full.jpg', 'E-Commerce más sistema de gestión de venta mayorísta'],
+					['images/web/portfolio/img-3.jpg', 'images/web/portfolio/img-3-full.jpg', 'Diseño de identidad de marca | Branding'],
+					['images/web/portfolio/img-4.jpg', 'images/web/portfolio/img-4-full.jpg', 'Diseño integral para marcas'],
+					['images/web/portfolio/img-5.jpg', 'images/web/portfolio/img-5-full.jpg', 'Sitio institucional con blog de noticias autoadministable'],
+					['images/web/portfolio/img-6.jpg', 'images/web/portfolio/img-6-full.jpg', 'Sistema de gestión mayorísta con tienda online']
+		);
 
 		return view('web.portfolio.portfolio')
-			->with('items', $items);
+			->with('images', $images);
 	}
-
-	public function paginate($items, $perPage)
+	
+	// Not implemented
+	public function gallery(Request $request)
 	{
-		$pageStart = \Request::get('page', 1);
-		// Start displaying items from this number;
-		$offSet = ($pageStart * $perPage) - $perPage; 
-
-		// Get only the items you need using array_slice
-		$itemsForCurrentPage = array_slice($items, $offSet, $perPage, true);
-
-		return new LengthAwarePaginator($itemsForCurrentPage, count($items), $perPage,Paginator::resolveCurrentPage(), array('path' => Paginator::resolveCurrentPath()));
+		$articles = Article::search($request->title)->orderBy('id', 'DESC')->where('status', '1')->paginate(12);
+		$articles->each(function($articles){
+			$articles->category;
+			$articles->images;
+		}); 
+		return view('web.portfolio.portfolio')
+			->with('articles', $articles);
 	}
 
 	public function searchCategory($name)
@@ -100,7 +93,9 @@ class WebController extends Controller
 	}
 
 	public function showWithSlug($slug) {
+
 		$article = Article::where('slug', '=', $slug)->first();
+		// dd($article);
 		return view('web.portfolio.article')->with('article', $article);
 	}
 
@@ -109,27 +104,85 @@ class WebController extends Controller
 		return view('contacto');
 	}
 
-	public function sendContact(Request $request)
+	public function mail_sender(Request $request)
 	{
-		// dd($request->all());
+
+		// $MailToAddress    = "info@studiovimana.com.ar";
+		// $MailSubject      = "Mensaje desde la web";
+
+		// if (!isset($MailFromAddress) ) {
+		// 	$MailFromAddress = "info@studiovimana.com.ar";
+		// }
+
+		// $Header = "Contacto desde la Web";
+		// $Message = $Footer = "";
+
+		// if (!is_array($_POST))
+		// 	return;
+		// 	reset($_POST);
+
+		// // Genera un mensaje personalizado.
+		// $Message  = "Nombre/Empresa: ".stripslashes($_POST['name'])." \n";
+		// $Message .= "Tel.: ".stripslashes($_POST['phone'])." \n";
+		// $Message .= "E-Mail: ".stripslashes($_POST['email'])." \n";
+		// $Message .= "Consulta/Mensaje: ".stripslashes($_POST['message'])." \n";
+
+		// if ($Header) {
+		// 	$Message = $Header."\n\n".$Message."\n\n";
+		// }
+
+		// // $REMOTE_USER = (isset($_SERVER["REMOTE_USER"]))?$_SERVER["REMOTE_USER"]:"";
+		// $REMOTE_ADDR = (isset($_SERVER["REMOTE_ADDR"]))?$_SERVER["REMOTE_ADDR"]:"";
+		// // $Message .= "REMOTE USER: ". $REMOTE_USER."\n";
+		// $Message .= "I.P del contacto: ". $REMOTE_ADDR."\n";
+
+		// if ($Footer) {
+		// 	$Message .= "\n\n".$Footer;
+		// }
+
 		try{
+			// Está deshabilitada la funcion envío vía mail hasta que sea permitido el uso de SMTP desde Digital Ocean
+			// mail("$MailToAddress", "$MailSubject", "$Message", "From: $MailFromAddress");
 			$contact = new Contact();
 			$contact->fill($request->all());
 			$contact->save();
 			$subject = 'Nuevo contacto desde la web';
-			
-			try{
-				Mail::to(APP_EMAIL_1)->send(new WebContactMail($subject, $contact));
-			}
-			catch(Exception $e){ 
-				// Nothing
-			}
+
+			Mail::to(APP_EMAIL_1)->send(new WebContactMail($subject, $contact));
 			
 			return response()->json(['response' => 1,
-									 'message'    => '0']); 
+									 'error'    => '0']); 
 		} catch(Exception $e) {
 			return response()->json(['response' => 0,
-									 'message'    => $e->getMessage()]); 
+									 'error'    => $e]); 
 		}
-	}
+
+		// function ValidarDatos($campo){
+		// 	//Array con las posibles cabeceras a utilizar por un spammer
+		// 	$badHeads = array("Content-Type:",
+		// 	"MIME-Version:",
+		// 	"Content-Transfer-Encoding:",
+		// 	"Return-path:",
+		// 	"Subject:",
+		// 	"From:",
+		// 	"Envelope-to:",
+		// 	"To:",
+		// 	"bcc:",
+		// 	"cc:");
+
+		// 	foreach($badHeads as $valor){
+		// 		if(strpos(strtolower($campo), strtolower($valor)) !== false){
+		// 			header( "HTTP/1.0 403 Forbidden");
+		// 			exit;
+		// 		}
+		// 	}
+		// }
+		// ValidarDatos($_POST['name']);
+		// ValidarDatos($_POST['email']);
+		// ValidarDatos($_POST['phone']);
+		// ValidarDatos($_POST['message']);
+		}		
+
+
+
 }

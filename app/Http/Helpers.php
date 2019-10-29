@@ -1,14 +1,105 @@
 <?php
-    
-//////////////////////////////////////////////
-//         Numbers, Calcs. & Converts       //
-//////////////////////////////////////////////
+/*
+|--------------------------------------------------------------------------
+| URL AND PARAMETERS
+|--------------------------------------------------------------------------
+*/
+
+function removeParam($url, $value)
+{
+    unset($url[$value]);
+    return $url;
+}
+
+/*
+|--------------------------------------------------------------------------
+| ARRAYS
+|--------------------------------------------------------------------------
+*/
+
+// Sort a multidimensional array
+// -----------------------------
+//
+// Use:
+// sort_array_of_array($array_name, 'column_name');
+//
+// -----------------------------
+
+function sort_array_of_array(&$array, $subfield)
+{
+    $sortarray = array();
+    foreach ($array as $key => $row)
+    {
+        $sortarray[$key] = $row[$subfield];
+    }
+
+    array_multisort($sortarray, SORT_ASC, $array);
+}
+
+function sort_by_value($array, $key) {
+    //Loop through and get the values of our specified key
+    foreach($array as $k => $v) {
+        $b[] = strtolower($v[$key]);
+    } 
+    asort($b);
+    foreach($b as $k=>$v) {
+        $c[] = $array[$k];
+    }
+    return $c;
+}
+
+function orderMultiDimensionalArray ($toOrderArray, $field, $inverse = false) {  
+    $position = array();  
+    $newRow = array();  
+    foreach ($toOrderArray as $key => $row) {  
+            $position[$key]  = $row[$field];  
+            $newRow[$key] = $row;  
+    }  
+    if ($inverse) {  
+        arsort($position);  
+    }  
+    else {  
+        asort($position);  
+    }  
+    $returnArray = array();  
+    foreach ($position as $key => $pos) {       
+        $returnArray[] = $newRow[$key];  
+    }  
+    return $returnArray;  
+}  
+
+  
+/*
+|--------------------------------------------------------------------------
+| CONVERSIONS & CALCS.
+|--------------------------------------------------------------------------
+*/
+
+function showPrice($articlePrice, $articleDiscount)
+{
+    $price = calcValuePercentNeg($articlePrice, $articleDiscount);
+    return $price;
+}
 
 function calcFinalPriceConvert($cost, $percent, $currencyActualValue)
 {
     $percent = $cost * $percent / 100;
     $result  = $cost + $percent;
     $result  = $result * $currencyActualValue;
+    return $result;
+}
+
+function calcArticlePrice($price, $discount)
+{
+    $result = $price + 0;
+    
+    if($discount > 0)
+    {
+        $percent = $price * $discount / 100;
+        $result =  $price - $discount;
+        $result = convertAndRoundDecimal($result, 2);
+    }
+    
     return $result;
 }
     

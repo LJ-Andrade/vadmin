@@ -1,7 +1,10 @@
 {
     "name": "laravel/laravel",
     "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "keywords": [
+        "framework",
+        "laravel"
+    ],
     "license": "MIT",
     "type": "project",
     "require": {
@@ -9,7 +12,7 @@
         "barryvdh/laravel-dompdf": "^0.8.1",
         "fideloper/proxy": "~4.0",
         "intervention/image": "^2.4",
-        "laravel/framework": "5.6.*",
+        "laravel/framework": "^5.8.0",
         "laravel/passport": "^7.0",
         "laravel/scout": "^4.0",
         "laravel/tinker": "~1.0",
@@ -44,8 +47,7 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": [
-            ]
+            "dont-discover": []
         }
     },
     "scripts": {
@@ -64,6 +66,8 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "optimize-autoloader": true,
-        "platform": {"php": "7.2"}
+        "platform": {
+            "php": "7.2"
+        }
     }
 }

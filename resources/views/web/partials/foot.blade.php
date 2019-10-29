@@ -3,9 +3,9 @@
 	</div> --}}
 	<div class="copyright">
 		@if($lang == 'es')
-		Desarrollado por <a href="https://vimana.studio">Vimana Studio</a> - Todos los derechos reservados - {{ date('Y') }}
+		Desarrollado por <a href="https://vimanastudio.com.ar">Vimana Studio</a> - Todos los derechos reservados - {{ date('Y') }}
 		@else 
-		<a href="https://vimana.studio">Vimana Studio</a> - All rights reserved - {{ date('Y') }}
+		<a href="https://vimanastudio.com.ar">Vimana Studio</a> - All rights reserved - {{ date('Y') }}
 		@endif
 	</div>
 </footer>

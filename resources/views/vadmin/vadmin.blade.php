@@ -13,18 +13,31 @@
 	<div class="dashboard">
 		<div class="content-body"><!--native-font-stack -->
 			<section id="global-settings" class="card">
-				{{-- --}}
 				<div class="card-header">
 					<h4 class="card-title"><i class="icon-android-hand"></i> Bienvenid@ {{ Auth::user()->name }}</h4>
 				</div>
 				{{-- <div class="card-body collapse in">
 					<div class="card-block">
 						<div class="card-text">
-							Este es un mensaje de los desarrolladores	
+							<h1><i style="color: red" class="fa fa-exclamation-circle"></i> Mensaje del desarrollador</h1>
+							<hr class="softhr">
+							<p>
+								<span style="color: blue; font-size: 2rem"><i class="fas fa-fire"></i> Actualización!</span>
+								<hr class="softhr">
+
+								- Nueva barra lateral
+								- Nuevos filtros en tienda (Con mejor responsividad en móvil)
+								<hr class="softhr">
+								<span style="color: blue; font-size: 1rem; font-weight: 300"><i class="fas fa-cogs"></i> En que estoy trabajando: </span><br>
+								- El tema diseño no está cerrado, yo hice todo lo referido a estructura y estoy esperando que viole termine de diseñar algunas cosas más para implementarlo.
+								<hr class="softhr">
+								Saludos ! <b>Lea. <i class="fas fa-blind"></i></b>
+							</p>
 						</div>
 					</div>
 				</div> --}}
 			</section>
+			@if(Auth::guard('user')->user()->role == 1 || Auth::guard('user')->user()->role == 2)
 			<div class="row">
 				<div class="col-xl-6 col-md-6 col-sm-12">
 					<div class="card">
@@ -63,16 +76,19 @@
 						<div class="card-body">
 							<div class="card-block fast-access">
 								<h4 class="card-title"><i class="fas fa-paper-plane"></i> Accesos rápidos</h4>
-								<a href="{{ route('catalogo.index') }}" class="btn btnBlue"><i class="fas fa-list"></i> Artículos</a>
-								<a href="{{ route('catalogo.create') }}" class="btn btnBlue"><i class="fas fa-plus"></i> Nuevo Artículo</a>
-								<a href="{{ route('catalogo.index', ['redirect' => 'stock']) }}" class="btn btnBlue"><i class="fas fa-box-open"></i> Stock</a>
-								<a href="{{ route('orders.index', ['status' => 'Process']) }}" class="btn btnBlue"><i class="fas fa-smile-beam"></i> Pedidos Nuevos</a>
-								
+								<a href="{{ route('catalogo.index') }}" class="btn btnMain"><i class="fas fa-list"></i> Artículos</a><br>
+								<a href="{{ route('catalogo.create') }}" class="btn btnMain"><i class="fas fa-plus"></i> Nuevo Artículo</a><br>
+								<a href="{{ route('coupons.create') }}" class="btn btnMain"><i class="fas fa-divide"></i> Crear Cupón</a><br>
+								{{-- <a href="{{ route('catalogo.index', ['redirect' => 'stock']) }}" class="btn btnMain"><i class="fas fa-box-open"></i> Stock</a><br> --}}
+								<a href="{{ route('orders.index', ['status' => 'Process']) }}" class="btn btnMain"><i class="fas fa-smile-beam"></i> Pedidos Nuevos</a><br>
+								<a href="{{ url('vadmin/showOrderToProd') }}" class="btn btnMain"><i class="fa fa-eye"></i> Ver pedidos para producción</a><br>   
+								<a href="{{ url('vadmin/exportOrderToProd') }}" class="btn btnMain"><i class="fas fa-file-export"></i> Exportar pedidos para producción</a><br>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+			
 			
 			<div class="row match-height">
 				<a href="{{ route('catalogo.index') }}">
@@ -120,7 +136,16 @@
 					</div>
 				</div>
 			</div>
-
+			@else
+				<div class="card">
+					<div class="card-body">
+						<div class="card-block fast-access">
+							<h4 class="card-title"><i class="fas fa-paper-plane"></i> Accesos rápidos</h4>
+							<a href="{{ route('catalogo.index') }}" class="btn btnMain"><i class="fas fa-list"></i> Listado de Prendas</a><br>
+						</div>
+					</div>
+				</div>
+			@endif
 			
 		</div>		
 	</div>

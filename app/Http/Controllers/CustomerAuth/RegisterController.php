@@ -23,7 +23,7 @@ class RegisterController extends Controller
     | validation and creation. By default this controller uses a trait to
     | provide this functionality without requiring any additional code.
     |
-    */
+     */
 
     use RegistersUsers;
 
@@ -37,11 +37,13 @@ class RegisterController extends Controller
     protected function redirectTo()
     {
         $customer = auth()->guard('customer')->user();
-        if($customer->group == '3' && $customer->status == '0' ){
-            return '/registro-en-proceso';
-        } else {
-            return '/registro-completo';
-        }
+        // If group 3 put register to hold
+        // if($customer->group == '3' && $customer->status == '0' ){
+        //     return '/registro-en-proceso';
+        // } else {
+        //     return '/registro-completo';
+        // }
+        return '/tienda';
     }
     /**
      * Create a new controller instance.
@@ -59,6 +61,7 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
+
     protected function validator(array $data)
     {
         return Validator::make($data, [
@@ -66,79 +69,117 @@ class RegisterController extends Controller
             'surname' => 'required|string|max:255',
             'username' => 'required|string|max:20|unique:customers',
             'email' => 'required|string|email|max:255|unique:customers',
-            'cuit' => 'numeric|unique:customers',
+            'phone' => 'required|string|min:4',
             'password' => 'required|string|min:6|confirmed',
+        ], [
+            'username.required' => 'Debe ingresar un nombre de usuario',
+            'email.required' => 'Debe ingresar un email',
+            'email.email' => 'La dirección de email parece inválida',
+            'email.unique' => 'Ya hay un usuario registrado con el mismo email',
+            'password.required' => 'Debe ingresar una contraseña',
+            'password.confirmed' => 'Las contraseñas no coinciden',
+            'phone.required' => 'Debe ingresar un teléfono',
+            'phone.min' => 'El teléfono no parece correcto'
         ]);
     }
-        
+
     protected function create(array $data)
     {
         $status = '1'; // Active
         $group = '2'; // Min 
-        if(isset($data['isreseller'])){
-            if($data['isreseller'] == 'on'){
-                $status = '0'; // Suspended
-                $group = '3'; // Reseller
-            } 
-        } 
-        
-        $cuit = null;
-        $phone = null;
-        $geoProvId = null;
-        $geoLocId = null;
-        if(isset($data['cuit']))       { $cuit = $data['cuit']; }
-        if(isset($data['phone']))      { $phone = $data['phone']; }
-        if(isset($data['geoprov_id'])) { $geoProvId = $data['geoprov_id']; }
-        if(isset($data['geoloc_id']))  { $geoLocId = $data['geoloc_id']; }
+        if ($data['group'] == '3') {
+            $group = '3'; // Reseller
+        }
 
+        // $cuit = null;
+        // $dni = null;
+        // $phone = null;
+        // $geoProvId = null;
+        // $geoLocId = null;
 
+        // if (isset($data['cuit'])) {
+        //     $cuit = $data['cuit'];
+        // }
+        // if (isset($data['dni'])) {
+        //     $dni = $data['dni'];
+        // }
+        // if (isset($data['phone'])) {
+        //     $phone = $data['phone'];
+        // }
+        // if (isset($data['geoprov_id'])) {
+        //     $geoProvId = $data['geoprov_id'];
+        // }
+        // if (isset($data['geoloc_id'])) {
+        //     $geoLocId = $data['geoloc_id'];
+        // }
         return Customer::create([
             'name' => $data['name'],
             'surname' => $data['surname'],
             'username' => $data['username'],
             'email' => $data['email'],
-            'phone' => $phone,
+            'phone' => $data['phone'],
             'status' => $status,
-            'geoprov_id' => $geoProvId,
-            'geoloc_id' => $geoLocId,
-            'cuit' => $cuit,
+            // 'geoprov_id' => $geoProvId,
+            // 'geoloc_id' => $geoLocId,
+            // 'cuit' => $cuit,
+            // 'dni' => $dni,
             'password' => bcrypt($data['password']),
             'group' => $group
         ]);
     }
 
-    protected function guard(){
+    protected function guard()
+    {
         return auth()->guard('customer');
     }
 
-    public function showRegistrationForm(){
-        $geoprovs = GeoProv::pluck('name','id');
-        
-        return view('store.register')
-        ->with('geoprovs',$geoprovs);
+    public function showRegistrationForm()
+    {
+        // $geoprovs = GeoProv::pluck('name','id');
+        return view('store.register');
+            // ->with('geoprovs',$geoprovs);
+    }
+
+    public function showRegistrationFormReseller()
+    {
+        $geoprovs = GeoProv::pluck('name', 'id');
+
+        return view('store.register-reseller')
+            ->with('geoprovs', $geoprovs);
     }
 
     public function register(Request $request)
     {
+        // Custom Horrible Validations
+        if ($request->group != '2' && $request->group != '3')
+            return back()->withErrors('No se ha seleccionado un tipo de usuario');
+
+        if ($request->group == '3') {
+            if ($request->CuitOrDni == 'Cuit')
+                if (strlen($request->cuit) != 11)
+                return redirect()->back()->withErrors('El CUIT debe tener 11 números');
+
+            if ($request->CuitOrDni == 'Dni')
+                if (strlen($request->dni) != 8)
+                return redirect()->back()->withErrors('El DNI debe tener 8 números');
+
+        }
+
         $this->validator($request->all())->validate();
 
         event(new Registered($user = $this->create($request->all())));
 
         $this->guard()->login($user);
-        try{
-            if($user->group == '3'){
-                $subject = 'Solicitud de cliente mayorísta';
-                $message = 'Un usuario ha solicitado ser cliente mayorísta';
-            } else {
-                $subject = 'Nuevo usuario registrado';
-                $message = 'Nuevo usuario registrado';
-            }
+
+        try {
+            $subject = 'Nuevo usuario registrado';
+            $message = 'Un usuario se ha registrado en la tienda';
             Mail::to(APP_EMAIL_1)->send(new SendMail($subject, 'SimpleMail', $message));
         } catch (\Exception $e) {
-            //
+            // dd($e->getMessage());
         }
 
         return $this->registered($request, $user)
-                        ?: redirect($this->redirectPath());
+            ? : redirect($this->redirectPath()); 
     }
 }

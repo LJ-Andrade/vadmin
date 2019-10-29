@@ -10,6 +10,15 @@
         var id    = $('#EditId').val();
         var model = $('#ModelName').val();
         var route = "{{ url('vadmin') }}/"+model+"/"+id+"/edit";
+        // console.log(route);
+        location.replace(route);
+    });
+
+    // Create Item from another
+    $(document).on('click', '.CreateFromAnotherBtn', function(e) { 
+        var id    = $('#RowsToDeletion').val();
+        var model = $('#ModelName').val();
+        var route = "{{ url('vadmin') }}/createFromAnother/"+model+"/"+id;
         location.replace(route);
     });
 
@@ -20,11 +29,8 @@
         deleteAndReload(id, route, 'Cuidado!','Está seguro?');
     });
 
-
-
     // Editable Input
     $('.editable-input').on('change', function(e) {
-        
         let dataDiv = $(e.target).siblings('.editable-input-data');
         let route = dataDiv.attr('data-route');
         let id = dataDiv.attr('data-id');
@@ -35,7 +41,6 @@
         // Set Value on hidden div
         dataDiv.attr('data-value', value);
         updateItem(route, id, field, value, type, action);
-        
     });
 
     /*
@@ -67,7 +72,7 @@
 
     function updateItem(route, id, field, value, type, action)
     {
-        console.log(type);
+        // console.log(type);
         if(value == '' || value == undefined || value == null) {
             alert_error("", "Falta llenar el campo");
             return;
@@ -87,7 +92,8 @@
             dataType: 'JSON',
             data: data,
             beforeSend: function(){
-                fullLoader("show");
+                if(action != 'update')
+                    fullLoader("show");
             },
             success: function(data){
                 console.log(data);
@@ -103,7 +109,7 @@
             },
             error: function(data){
                console.log(data);
-               // $('#Error').html(data.responseText);
+               $('#Error').html(data.responseText);
             },
             complete: function(){
                fullLoader("hide");
@@ -226,30 +232,29 @@
                 //$('#Error').html(data.responseText);
             }
         }); 
-
     }
-
     
     /*
     |--------------------------------------------------------------------------
-    | UPDATE CUSTOMER GROUP
+    | UPDATE CART STATUS
     |--------------------------------------------------------------------------
     */
 
-    function updateCartStatus(status, cartid){
-        
+    function updateCartStatus(status, cartid, field){
         var route  = "{{ url('vadmin/updateCartStatus') }}";
-        var data = { id: cartid, status: status.value};
+        var data = { id: cartid, status: status.value, field: field};
         $.ajax({
             url: route,
             type: 'POST',
+            dataType: 'JSON',
             data: data,
             success: function(data){
-                console.log(data);
                 if(data.response == true){
                     location.reload();
                 } else {
-                    $('#Error').html(data.responseText);
+                    // $('#Error').html(data.responseText);
+                    alert_error('Ups.', data.message);
+                    console.log(data);
                 }
             },
             error: function(data){
@@ -259,6 +264,94 @@
             }
         }); 
     }
+
+    // function updateCartStatus(status, cartid){
+        
+    //     var route  = "{{ url('vadmin/updateCartStatus') }}";
+    //     var data = { id: cartid, status: status.value};
+    //     $.ajax({
+    //         url: route,
+    //         type: 'POST',
+    //         data: data,
+    //         dataType: 'JSON',
+    //         success: function(data){
+    //             console.log(data);
+    //             $('#Error').html(data.responseText);
+    //             if(data.response == true){
+    //                 location.reload();
+    //             } 
+    //             else if(data.response == false)
+    //             {
+    //                 alert_error('Mmm...', data.message);
+    //             } else {
+    //                 $('#Error').html(data.responseText);
+    //             }
+    //         },
+    //         error: function(data){
+    //             console.log(data);
+    //             //alert_error('Ha ocurrido un error');
+    //             $('#Error').html(data.responseText);
+    //         }
+    //     }); 
+    // }
+
+ 
+    //----------------------------------------------
+    //     PROVS And LOCS.
+    //----------------------------------------------
+
+    window.getGeoLocs = function(geoprov_id){
+
+    let route = "{{ url('getGeoLocs') }}/"+geoprov_id+"";
+    $.ajax({
+        url: route,
+        method: 'GET',
+        dataType: 'JSON',
+        success: function(e){
+            // Print Locs
+            var select = $('#GeoLocsSelect');
+            var actuallocid = $('#GeoLocsSelect').data('actuallocid');
+
+            select.html('');
+            for (var i = 0, len = e.geolocs.length; i < len; i++) {
+                if(actuallocid != '' && e.geolocs[i]['id'] == actuallocid){
+                    select.append("<option selected value='"+ e.geolocs[i]['id'] +"'>"+ e.geolocs[i]['name'] +"</option>");
+                } else {
+                    select.append("<option value='"+ e.geolocs[i]['id'] +"'>"+ e.geolocs[i]['name'] +"</option>");
+                }
+            }
+
+        },
+        error: function(e){
+            console.log('ERROR');
+            console.log(e);
+            $('#Error').html(e.responseText);
+        }
+    });
+
+    }
+
+
+    window.checkIfHasProvSelected = function(provs, locs)
+    {
+    let selected_provs = $(provs + ' option:selected');
+    let selected_locs = $(locs + ' option');
+    let selected_prov = $(".GeoProvSelect option:selected");
+
+    // Check if there is provs selectes
+    if(selected_provs.length != 0)
+        // If there is selected provs check if has options (locs)
+        if(selected_prov.index() != 0)
+            if(selected_locs.length == 0)
+                getGeoLocs(selected_prov.index());
+
+    }
+
+    $('.GeoProvSelect, .GeoLocsSelect').on('focus click', function(){
+    checkIfHasProvSelected('.GeoProvSelect', '.GeoLocsSelect');
+    });
+
+    checkIfHasProvSelected('.GeoProvSelect', '.GeoLocsSelect');
 
     /*
     |--------------------------------------------------------------------------
@@ -318,7 +411,6 @@
                 $('#Error').html(data.responseText);
             }
         }); 
-
     }
 
     /*

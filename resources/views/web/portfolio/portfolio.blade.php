@@ -4,55 +4,59 @@
 @section('styles')
     <style>
         body {
-            background: rgba(26,219,187,1);
-            background: -moz-linear-gradient(-45deg, rgba(26,219,187,1) 0%, rgba(48,34,199,1) 76%, rgba(48,34,199,1) 100%);
-            background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(26,219,187,1)), color-stop(76%, rgba(48,34,199,1)), color-stop(100%, rgba(48,34,199,1)));
-            background: -webkit-linear-gradient(-45deg, rgba(26,219,187,1) 0%, rgba(48,34,199,1) 76%, rgba(48,34,199,1) 100%);
-            background: -o-linear-gradient(-45deg, rgba(26,219,187,1) 0%, rgba(48,34,199,1) 76%, rgba(48,34,199,1) 100%);
-            background: -ms-linear-gradient(-45deg, rgba(26,219,187,1) 0%, rgba(48,34,199,1) 76%, rgba(48,34,199,1) 100%);
-            background: linear-gradient(135deg, rgba(26,219,187,1) 0%, rgba(48,34,199,1) 76%, rgba(48,34,199,1) 100%);
-            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1adbbb', endColorstr='#3022c7', GradientType=1 );
+            background-color: #171717
+        }
+
+        /* Prevent page movement when open modal */
+        .modal-scrollbar-measure {
+            overflow: hidden !Important; 
+        }
+
+        .navfull-top-button .bar {
+            background-color: #fff
         }
     </style>
 @endsection
 @section('content')
     <header>
-        @include('web.partials.nav')
+        @include('web.partials.nav-es')
     </header>
-    @php($lang = 'en')
-    {{-- <div class="container-fluid">
-        @include('web.portfolio.partials.filter')
-    </div> --}}
-
+    @php($lang = 'es')
     <div class="container-fluid portfolio-container">
-        <div class="row portfolio-list">
-            @foreach($items as $item)
-                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 item">
-                    <img src="{{ asset($item) }}" alt="Vimana Studio Portfolio">
-                </div>
+        <div class="row portfolio-big">
+            @foreach($images as $index => $image)
+            <a data-toggle="modal" data-target="#imgModal" class="PortfolioItem item col-md-6" data-imgsrc="{{ $image[1] }}">
+                    <img src="{{ asset($image[0]) }}" alt="{{ $image[2] }}">
+                    <div class="overlay">
+                        <div class="text">
+                            <p>{{ $image[2] }}</p>
+                        </div>
+                    </div>
+                </a>
             @endforeach
         </div>
-        <div class="row">
-            {!! $items->render(); !!}
+    </div>
+
+    <div class="modal fade" id="imgModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <img id="ModalImg" src="{{ asset('images/web/portfolio/img-1-full.jpg') }}" alt="">
+            </div>
         </div>
     </div>
+
 @endsection
 
 
 @section('scripts')
     <script type="text/javascript">
 
-        $('.Show-Mobile-Filter').click(function(){
-            
-            var filter = $('.Fiter-Inner');
-
-            if(filter.hasClass('Hidden')){
-                filter.removeClass('Hidden');
-            } else {
-                filter.addClass('Hidden');
-            }
+        $('.PortfolioItem').on('click', function(e){
+            e.preventDefault();
+            let src = $(this).data('imgsrc'); 
+            $('#ModalImg').attr('src', src);
+            console.log(src);
         });
-
     </script>
 @endsection
 

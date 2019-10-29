@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Customer;
+use App\GeoProv;
 use Auth;
 use Image;
-use File;
 use PDF;
 use Excel;
+use Cookie;
 
 class CustomerController extends Controller
 {
@@ -20,27 +21,34 @@ class CustomerController extends Controller
     */
     public function index(Request $request)
     {    
+        $pagination = $this->getSetPaginationCookie($request->get('results'));
         $group = $request->get('group');
         $status = $request->get('status');
         // Name is name, surname, username, email
         $name  = $request->get('name');
         
-        $paginate = 15;
+        $order = 'DESC';
+        $orderBy = 'created_at';
+
+        if($request->order)
+            $order = $request->order;
+        if($request->orderBy)
+            $orderBy = $request->orderBy;
 
         if(isset($group) && isset($status)){
-            $items = Customer::searchGroupStatus($group, $status)->orderBy('id', 'ASC')->paginate($paginate);    
+            $items = Customer::searchGroupStatus($group, $status)->orderBy($orderBy, $order)->paginate($pagination);    
         }
         elseif(isset($name))
         {
-            $items = Customer::searchName($name)->orderBy('id', 'ASC')->paginate($paginate); 
+            $items = Customer::searchName($name)->orderBy($orderBy, $order)->paginate($pagination); 
         }
         elseif(isset($group))
         {
-            $items = Customer::searchGroup($group)->orderBy('id', 'ASC')->paginate($paginate); 
+            $items = Customer::searchGroup($group)->orderBy($orderBy, $order)->paginate($pagination); 
         }
         else 
         {
-            $items = Customer::orderBy('id', 'ASC')->paginate($paginate); 
+            $items = Customer::orderBy($orderBy, $order)->paginate($pagination); 
         }
 
 
@@ -49,6 +57,28 @@ class CustomerController extends Controller
             ->with('name', $name)
             ->with('group', $group);
     }
+
+    public function getSetPaginationCookie($request)
+    {
+       
+        if($request)
+        {
+            Cookie::queue('store-pagination', $request, 2000);
+            $pagination = $request;
+        }
+        else
+        {   
+            if(Cookie::get('store-pagination'))
+            {
+                $pagination = Cookie::get('store-pagination');
+            }
+            else{
+                $pagination = 24;
+            }
+        } 
+        return $pagination;
+    }
+
     
     public function show($id)
     {
@@ -62,24 +92,38 @@ class CustomerController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function exportPdf($params)
+    public function exportPdf($params, $action)
     {   
         $items = $this->getData($params);
-        $pdf = PDF::loadView('vadmin.customers.invoice', array('items' => $items));
+        $pdf = PDF::loadView('vadmin.customers.invoice-pdf', array('items' => $items));
         $pdf->setPaper('A4', 'landscape');
+        if($action == 'stream')
+            return $pdf->stream('listado-clientes.pdf');
+
         return $pdf->download('listado-de-clientes.pdf');
         
     }
 
-    public function exportXls($params)
-    {   
+    // public function exportXls($params)
+    // {   
+    //     $items = $this->getData($params);
+    //     Excel::create('listado-de-clientes', function($excel) use($items){
+    //         $excel->sheet('Listado', function($sheet) use($items) {   
+    //             $sheet->loadView('vadmin.customers.invoice-excel', 
+    //             compact('items'));
+    //         });
+    //     })->export('xls');         
+    // }
+
+    public function exportSheet($params, $format)
+    {
         $items = $this->getData($params);
         Excel::create('listado-de-clientes', function($excel) use($items){
             $excel->sheet('Listado', function($sheet) use($items) {   
-                $sheet->loadView('vadmin.customers.invoice-excel', 
+                $sheet->loadView('vadmin.customers.invoice-sheet', 
                 compact('items'));
             });
-        })->export('xls');         
+        })->export($format);
     }
 
 
@@ -104,8 +148,6 @@ class CustomerController extends Controller
         return $items;
     }
 
-
-
     /*
     |--------------------------------------------------------------------------
     | CREATE
@@ -114,7 +156,10 @@ class CustomerController extends Controller
 
     public function create()
     {
-        return view('vadmin.customers.create');
+        $geoprovs = GeoProv::pluck('name','id');
+
+        return view('vadmin.customers.create')
+            ->with('geoprovs',$geoprovs);
     }
 
     public function store(Request $request)
@@ -151,43 +196,49 @@ class CustomerController extends Controller
     */
     public function edit($id)
     {
-        $Customer = Customer::findOrFail($id);
-        return view('vadmin.customers.edit', compact('Customer'));
+        $geoprovs = GeoProv::pluck('name','id');
+        $customer = Customer::findOrFail($id);
+
+        return view('vadmin.customers.edit', compact('customer'))
+            ->with('geoprovs',$geoprovs)
+            ->with('customer',$customer);
     }
 
     public function update(Request $request, $id)
     {
-        $Customer = Customer::findOrFail($id);
+        $customer = Customer::findOrFail($id);
+        
+        // 'password' => 'required|min:6|confirmed'
+        // 'password.required' => 'Debe ingresar una contraseña',
+        // 'password.confirmed' => 'Las contraseñas no coinciden'
+
         $this->validate($request,[
             'name' => 'required|max:255',
-            'Customername' => 'required|max:20|unique:customers,Customername,'.$Customer->id,
-            'email' => 'required|email|max:255|unique:customers,email,'.$Customer->id,
-            'password' => 'required|min:6|confirmed',
-            
+            'username' => 'required|max:20|unique:customers,username,'.$customer->id,
+            'email' => 'required|email|max:255|unique:customers,email,'.$customer->id,
         ],[
             'name.required' => 'Debe ingresar un nombre',
-            'Customername.required' => 'Debe ingresar un nombre de usuario',
-            'Customername.unique' => 'El nombre de usuario ya está siendo utilizado',
+            'username.required' => 'Debe ingresar un nombre de usuario',
+            'username.unique' => 'El nombre de usuario ya está siendo utilizado',
             'email.required' => 'Debe ingresar un email',
             'email.unique' => 'El email ya existe',
             'password.min' => 'El password debe tener al menos :min caracteres',
-            'password.required' => 'Debe ingresar una contraseña',
-            'password.confirmed' => 'Las contraseñas no coinciden',
         ]);
 
-        $Customer->fill($request->all());
+        $customer->fill($request->all());
 
-        $Customer->password = bcrypt($request->password);
+        // $customer->password = bcrypt($request->password);
+        
         if($request->file('avatar') != null){
             $avatar   = $request->file('avatar');
-            $filename = $Customer->Customername.'.jpg';
+            $filename = $customer->username.'.jpg';
             Image::make($avatar)->encode('jpg', 80)->fit(300, 300)->save(public_path('images/customers/'.$filename));
-            $Customer->avatar = $filename;
+            $customer->avatar = $filename;
         }
 
-        $Customer->save();
+        $customer->save();
 
-        return redirect('vadmin/customers')->with('Message', 'Usuario '. $Customer->name .'editado correctamente');
+        return redirect('vadmin/customers')->with('Message', 'Usuario '. $customer->name .'editado correctamente');
     }
 
     // ---------- Update Avatar --------------- //

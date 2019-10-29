@@ -27,7 +27,7 @@
 			</div>
 		</div>
 		{{-- Contact Form --}}
-{{--		<div class="row contact-form">
+		<div class="row contact-form">
 			{!! Form::open(['id' => 'MainContactForm', 'class' => 'row']) !!}
 				{{ csrf_field() }}
 				<div class="col-md-6">
@@ -43,7 +43,7 @@
 				</div>
 			{!! Form::close() !!}
 		</div>
---}}
+
 		{{-- Form Responses --}}
 		<div class="row centered">
 			<div id="FormResponse"></div>

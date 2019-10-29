@@ -9,6 +9,9 @@ use App\Customer;
 use App\Shipping;
 use App\Payment;
 use App\Traits\CartTrait;
+use Log;
+// Eliminar carbon despues de testear
+use Carbon\Carbon;
 
 class CartsController extends Controller
 {
@@ -74,24 +77,116 @@ class CartsController extends Controller
             return back()->with('message', 'Error al actualizar: '. $e->getMessage());
         }
     }
-    
+
     public function updateStatus(Request $request)
     {
+        // dd($request->all());
         $cart = Cart::findOrFail($request->id);
-        try {
-            $cart->status = $request->status;
-            $cart->save();
-            return response()->json([
-                'response' => true,
-                'newstatus' => $cart->status
-            ]); 
-        }  catch (\Exception $e) {
-            return response()->json([
-                'response'   => false,
-                'error'    => 'Error: '.$e->getMessage()
-            ]);    
-        } 
+        if($request->field == 'payment_status')
+        {
+            try 
+            {
+                $cart->payment_status = $request->status;
+                $cart->save();
+                return response()->json([
+                    'response' => true,
+                    'newstatus' => $cart->payment_status
+                ]); 
+            }  
+            catch (\Exception $e) 
+            {
+                return response()->json([
+                    'response'   => false,
+                    'error'    => 'Error: '.$e->getMessage()
+                ]);    
+            }    
+        }
+        else
+        {   
+            if($request->status == "Active")
+            {
+                $existingActiveCart = Cart::where('customer_id', $cart->customer_id)->where('status', 'Active')->first();
+                if($existingActiveCart)
+                {
+                    
+                    return response()->json([
+                        'response' => false,
+                        'message' => "El cliente ya tiene un carro de compras abierto"
+                        ]); 
+                }
+                foreach($cart->items as $item)
+                {
+                    $this->updateVariantStock($item->variant->id, -$item->quantity);
+                    // $this->updateCartItemStock($item->article_id, -$item->quantity);
+                }
+
+            }
+
+            try {
+                if($request->status == "Canceled")
+                {
+                    foreach($cart->items as $item)
+                    {
+                        $this->updateVariantStock($item->variant->id, $item->quantity);
+                        // $this->updateCartItemStock($item->article_id, $item->quantity);
+                    }
+                }
+                         
+                $cart->status = $request->status;
+                $cart->save();
+                return response()->json([
+                    'response' => true,
+                    'newstatus' => $cart->status
+                ]); 
+            }  catch (\Exception $e) {
+                return response()->json([
+                    'response'   => false,
+                    'error'    => 'Error: '.$e->getMessage()
+                ]);    
+            } 
+        }
     }
+
+    
+    // public function updateStatus(Request $request)
+    // {
+    //     $cart = Cart::findOrFail($request->id);
+    //     $oldStatus = $cart->status;
+
+    //     if($oldStatus == 'Canceled')
+    //     {
+    //         return response()->json([
+    //             'response' => false,
+    //             'message' => 'Estás tratando de revivir una órden cancelada. Esta función aún no ha sido diseñada.'
+    //         ]); 
+    //     }
+
+    //     if($request->status == "Canceled")
+    //     {
+    //         foreach($cart->items as $item)
+    //         {
+    //             $this->updateVariantStock($item->variant->id, $item->quantity);
+    //         }
+    //     }
+        
+    //     try 
+    //     {
+    //         $cart->status = $request->status;
+    //         $cart->save();
+    //         return response()->json([
+    //             'response' => true,
+    //             'newstatus' => $cart->status
+    //         ]); 
+    //     }  
+
+    //     catch (\Exception $e) 
+    //     {
+    //         return response()->json([
+    //             'response'   => false,
+    //             'error'    => 'Error: '.$e->getMessage()
+    //         ]);    
+    //     } 
+    // }
     
     /*
     |--------------------------------------------------------------------------
@@ -133,8 +228,12 @@ class CartsController extends Controller
         $cart = Cart::find($request->itemid);
         try
         {
-            foreach($cart->items as $item){
-                $this->updateCartItemStock($item->article->id, $item->quantity);
+            if($cart->status != 'Canceled')
+            {
+                foreach($cart->items as $item)
+                {
+                    $this->updateVariantStock($item->variant->id, $item->quantity);
+                }
             }
             $cart->delete();
         }
@@ -154,8 +253,15 @@ class CartsController extends Controller
         {
             foreach ($ids as $id) {
                 $cart = Cart::find($id);
-                foreach($cart->items as $item){
-                    $this->updateCartItemStock($item->article->id, $item->quantity);
+                // If order has been canceled dont return stock (Its been returned before)
+                if($cart->status != 'Canceled')
+                {
+                    foreach($cart->items as $item){
+                        // Check if original article exists
+                        if($item->article != null)
+                            if($item->variant)
+                                $this->updateVariantStock($item->variant->id, $item->quantity);
+                    }
                 }
                 $cart->delete();
             }
@@ -165,6 +271,7 @@ class CartsController extends Controller
         }  
         catch (\Exception $e)
         {
+            dd($e);
             return response()->json([
                 'success'   => false,
                 'error'    => 'Error: '.$e->getMessage()
@@ -172,5 +279,21 @@ class CartsController extends Controller
         } 
     }
 
+    public function testDelete()
+    {
+        $maxTime = 24;
+        $time = Carbon::now()->subHour($maxTime);
+
+        $oldCarts = Cart::where('status','ACTIVE')->where('created_at', '<=', $time)->get();
+        
+        $ids = [];
+        foreach($oldCarts as $oldCart)
+        {
+            // Log::info("Carro de compras " . $oldCart->id . " (".$oldCart->created_at.") eliminado");
+            array_push($ids, $oldCart->id);
+        }
+        
+        $this->manageOldCarts($ids, 'cancel');
+    }
 
 }

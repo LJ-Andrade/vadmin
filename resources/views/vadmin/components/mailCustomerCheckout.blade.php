@@ -6,9 +6,14 @@
         @endcomponent
     @endslot
 
-#<center>Hemos recibido su por su compra</center>
-###<center> Nos pondremos en contacto a la brevedad</center>
+#<center>Hemos recibido tu compra</center>
 
+###<center> Tu pedido tiene un tiempo de elaboración de entre <b>4 y 7 días corridos</b> desde este momento. <br>
+    Te contactaremos para que realices el pago y coordinar juntos detalles del despacho. <br> 
+    Cualquier duda te dejamos nuestro <b> WhatsApp 1133212292</b>
+</center>
+
+###<center> Nos pondremos en contacto a la brevedad
 #<center> Muchas gracias !</center>
 
     @slot('subcopy')
@@ -20,7 +25,7 @@
     {{-- Footer --}}
     @slot('footer')
         @component('mail::footer')
-        Mensaje enviado desde <b>Vadmin</b> | Desarrollado por <a href="https://vimana.studio">Vimana Studio</a>
+        Mensaje enviado desde <b>Vadmin</b> | Desarrollado por <a href="https://vimana.studio/es">Vimana Studio</a>
         @endcomponent
     @endslot
 @endcomponent

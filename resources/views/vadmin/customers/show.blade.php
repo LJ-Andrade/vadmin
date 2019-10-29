@@ -16,24 +16,26 @@
 @section('content')
     <div class="row">
         @component('vadmin.components.container')
-            @slot('title')
-                 <span style="color: #ada8a8">Perfil | </span>{{ $customer->name }}
+        @slot('title')
+                <span style="color: #ada8a8">Perfil | </span>{{ $customer->name }} <br>
+                <span class="small"> Compras realizadas: {{ $customer->staticstics('totalCarts')}} | </span>  
+                <span class="small"> Prendas compradas: {{ $customer->staticstics('totalItems')}} | </span>
+                <span class="small"> Total gastado: $ {{ $customer->staticstics('totalSpent')}}<br> </span>
             @endslot
             @slot('content')
                 <div class="col-md-3">
                     <div class="round-image-card">
                         <div class="inner">
                             <div class="image">
-                                <img id="Avatar" src="{{ asset('webimages/customers/'.$customer->avatar ) }}" class="Image-Container CheckImg" alt="">
-                                {{-- @if($customer->avatar == '')
-                                    <img id="Avatar" class="Image-Container CheckImg" src="{{ asset('images/users/default.jpg') }}" alt="Imágen de Usuario">
-                                @else	
-                                    <img id="Avatar" class="Image-Container CheckImg" src="{{ asset('images/users/'.$customer->avatar) }}" alt="Imágen de Usuario">
-                                @endif --}}
-                                {{-- <span class="over-text">Cambiar imágen</span> --}}
+                                <img id="Avatar" src="{{ asset('webimages/customers/'.$customer->avatar ) }}" class="Image-Container" alt="">
                             </div>
                         </div>
                     </div>
+                    
+                    {{-- EDIT BUTTON --}}
+                    {{-- <a href="{{ url('vadmin/customers/'. $customer->id .'/edit') }}" class="btn btnMain"><i class="icon-pencil2"></i> Editar</a> --}}
+
+
                     {{-- <div class="ActionContainer Hidden">
                         <hr class="softhr">
                         {!! Form::open(['url' => 'vadmin/updateCustomerAvatar', 'method' => 'POST', 'class' => 'UpdateAvatarForm Hidden', 'files' => true]) !!}
@@ -87,6 +89,10 @@
                         <div class="row item">
                             <div class="label"><b>Cuit: </b></div>
                             <span class="data">{{ $customer->cuit }}</span>
+                        </div><br>
+                        <div class="row item">
+                            <div class="label"><b>Dni: </b></div>
+                            <span class="data">{{ $customer->dni }}</span>
                         </div><br>
                         <div class="row item">
                             <div class="label"><b>Tipo de cliente: </b></div>

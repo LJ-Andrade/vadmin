@@ -5,7 +5,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>@yield('title')</title>
-		<meta name="description" content="Somos un equipo de trabajo dedicado a desarrollar contenido visual e interactivo" />
+		<meta name="description" content="Somos un equipo de diseñadores y programadores dedicado a desarrollar contenido visual e interactivo" />
 		<meta name="keywords" content="Diseño Web, diseño grafico, web, sitio web, paginas web, programacion, sistemas, administracion, gestores, contenido, publicidad, internet, redes sociales" />
 		<meta name="author" content="Vimana Studio" />
 		<meta name="theme-color" content="#0d1d41"><!-- Chrome, Firefox OS and Opera -->
@@ -17,9 +17,9 @@
 		<meta property="og:title"       content="Diseño Web y Diseño Gráfico" />
 		<meta property="og:description" content="Somos un equipo de trabajo dedicado a desarrollar contenido visual e interactivo" />
 		<meta property="og:image"       content="{{ asset('webimages/logos/main-logo.png') }}" />
-		<meta name="twitter:title"      content="Studio Vimana" />
+		<meta name="twitter:title"      content="Vimana Studio" />
 		<meta name="twitter:image"      content="{{ asset('webimages/logos/main-logo.png') }}" />
-		<meta name="twitter:url"        content="https://vimana.studio" />
+		<meta name="twitter:url"        content="https://vimanastudio.com.ar" />
 		{{-- Vendor --}}
 		<link rel="stylesheet" type="text/css" href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}">
 		<link rel="stylesheet" href="{{ asset('vendor/font-awesome/css/all.css') }}">
@@ -29,7 +29,6 @@
 		@yield('styles')
 	</head>
 	<body>
-		
 		<!-- Google Tag Manager (noscript) -->
 		<noscript>
 			<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TM4GWS3" height="0" width="0" style="display: none; visibility: hidden"></iframe>
@@ -90,7 +89,6 @@
 					});
 				});
 			});
-			<script type="text/javascript">var subscribersSiteId='8c70baf8-147e-4cde-a566-af525b1819a3';</script><script type="text/javascript" src="https://cdn.subscribers.com/assets/subscribers.js"></script>
 		</script>
 	</body>
 </html>

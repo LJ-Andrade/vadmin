@@ -28,7 +28,6 @@
                 <li><a href="https://www.facebook.com/studiograficovimana" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
                 <li><a href="https://twitter.com/StudioVimana" target="_blank"><i class="fab fa-twitter"></i></a></li>
                 <li><a href="https://www.behance.net/studiovimana" target="_blank"><i class="fab fa-behance"></i></a></li>
-                <li><a href="https://plus.google.com/u/0/+StudioVimana" target="_blank"><i class="fab fa-google-plus-g"></i></a></li>
             </ul>
         </div>
     </div>

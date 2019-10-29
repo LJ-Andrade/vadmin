@@ -118,7 +118,7 @@
                     Creamos sistemas dedicados a facilitar la organización de su empresa.<br> 
                     Hacemos que sea más fácil vender y para su cliente, más fácil comprar.
                 </p>
-                <a href="#Contact" class="btn btn-gradient" onclick="fillDemo()">Solicite una demo</a>
+                <a href="#Contact" class="btn btn-gradient" onclick="fillDemo()">Contactanos</a>
                 <div class="img-icon-container">
                     <div class="icon"><img src="{{ asset('images/web/icon-cube.png') }}" alt="Vimana Studio - Square Icon"></div>
                     <div class="content">
@@ -173,7 +173,7 @@
 
 {{---------- Work Planification ------------}}
 {{------------------------------------------}}
-<section class="work-planification">
+{{-- <section class="work-planification">
     <div class="container">
         <div class="row-centered">
             <h1>¿ Querés saber como trabajamos ?</h1>
@@ -213,9 +213,9 @@
                     </p>
                 </div>
             </div>
-        </div> {{-- / row --}}
-    </div> {{-- / container-fluid --}}
-</section> {{-- / work-planification --}}
+        </div>
+    </div> 
+</section>  --}}
 <div id="Error"></div>
 @include('web.partials.contact-es')
 @endsection
