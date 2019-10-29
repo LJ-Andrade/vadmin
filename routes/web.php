@@ -59,7 +59,7 @@ Route::group(['prefix'=> 'vadmin'], function() {
 
 Route::get('/', ['as' => 'web', 'uses' => 'WebController@home']);
 // Route::get('contacto', function(){ return view('web.web.contacto'); });
-Route::post('send-contact', ['as' => 'send-contact', 'uses' => 'WebController@sendContact']);
+Route::post('send-contact', ['as' => 'send-contact', 'uses' => 'WebController@mail_sender']);
 
 /*
 |--------------------------------------------------------------------------
