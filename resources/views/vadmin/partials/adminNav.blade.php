@@ -417,11 +417,11 @@
 		</li>
 		@endif
 		{{-- MESSAGES --}}
-		{{-- <li class="{{ Menu::activeMenu('mensajes_recibidos') }}"><a href="{{ url('vadmin/mensajes_recibidos/*') }}" class="menu-item"><i class="icon-envelop"></i> Mensajes 
+		<li class="{{ Menu::activeMenu('mensajes_recibidos') }}"><a href="{{ url('vadmin/mensajes_recibidos/*') }}" class="menu-item"><i class="icon-envelop"></i> Mensajes 
 			@if($newMessages->count() > 0) 
 				<span class="tag tag-primary tag-pill float-xs-right mr-2"><span class="MessagesAmmount">{{ $newMessages->count() }}</span></span>
 			@endif
-		</a></li> --}}
+		</a></li>
 		{{-- STATISTICS --}}
 		<li class="has-sub is-shown {{ Menu::activeMenu('users') }}"><a href="#" data-i18n="nav.menu_levels.second_level_child.main" class="menu-item">
 			<i class="fas fa-chart-bar"></i> Estadísticas</a>
