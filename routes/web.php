@@ -238,7 +238,7 @@ Route::group(['prefix' => 'vadmin', 'middleware' => ['active-user', 'admin']], f
     // -- MESSAGES --
     Route::get('/mensajes_recibidos/{status}', 'VadminController@storedContacts');
     Route::post('buscar_mensajes_recibidos', ['as' => 'searchStoredContact', 'uses' => 'VadminController@searchStoredContact']);
-    Route::get('mensajes_recibidos/{id}', 'VadminController@showStoredContact');
+    Route::get('mensaje/{id}', 'VadminController@showStoredContact');
     Route::post('setMessageAsReaded', 'VadminController@setMessageAsReaded');
     
     // -- PORTFOLIO --

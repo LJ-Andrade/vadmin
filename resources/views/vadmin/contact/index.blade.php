@@ -68,7 +68,7 @@
 										<span class="custom-control-description"></span>
 									</label>
 								</td>
-								<td class="show-link max-text"><a href="{{ url('vadmin/mensajes_recibidos/'.$item->id) }}"> {{ $item->name }} </a></td>
+								<td class="show-link max-text"><a href="{{ url('vadmin/mensaje/'.$item->id) }}"> {{ $item->name }} </a></td>
 								<td>{{ $item->email }}</td>
 								<td>{{ $item->phone }}</td>
 								<td class="max-text">{{ $item->message }}</td>
